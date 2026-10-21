@@ -1,0 +1,706 @@
+<title>Zeitleiste Revolution 1848/49</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<style>
+@font-face { font-family: "BriLliant"; src: url(data:font/ttf;base64,{{FONT}}) format("truetype"); font-display: swap; }
+
+/* Layout: Kopfzeile wie im Leopoldinum-Arbeitsblatt, darunter eine senkrechte Zeitachse mit aufklappbaren Ereignissen in drei Phasen */
+:root {
+  --navy: #1F3553;
+  --orange: #E87722;
+  --ink: #222222;
+  --muted: #5a6577;
+  --bg: #ffffff;
+  --box: #EEF1F5;
+  --line: #c9d1dc;
+  --on-navy: #ffffff;
+  --ff-head: "BriLliant", "Arial", sans-serif;
+  --ff-body: Arial, "Helvetica Neue", Helvetica, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --navy: #a9bfdd; --orange: #f08a3a; --ink: #e4e8ee; --muted: #9aa6b8;
+    --bg: #0e1724; --box: #172436; --line: #2c3c53; --on-navy: #0e1724; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --navy: #a9bfdd; --orange: #f08a3a; --ink: #e4e8ee; --muted: #9aa6b8;
+  --bg: #0e1724; --box: #172436; --line: #2c3c53; --on-navy: #0e1724; color-scheme: dark;
+}
+
+body { background: var(--bg); color: var(--ink); font-family: var(--ff-body); font-size: 16px; line-height: 1.55; }
+.wrap { max-width: 920px; margin: 0 auto; padding-block: 0 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+/* Logo-Varianten je nach Farbschema */
+.logo-dark { display: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .logo-light { display: none; } :root:not([data-theme="light"]) .logo-dark { display: block; } }
+:root[data-theme="dark"] .logo-light { display: none; }
+:root[data-theme="dark"] .logo-dark { display: block; }
+
+.kopf { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 18px 10px; border-bottom: 1.5px solid var(--orange); }
+.kopf .meta { font-size: 13px; color: var(--navy); letter-spacing: .02em; }
+.kopf img { height: 54px; width: auto; }
+
+h1, h2, h3 { font-family: var(--ff-head); font-weight: normal; color: var(--navy); text-wrap: balance; margin: 0; }
+h1 { font-size: clamp(40px, 9vw, 66px); line-height: 1.05; margin-top: 28px; }
+h2 { font-size: 34px; line-height: 1.15; }
+h3 { font-size: 26px; }
+.lead { max-width: 65ch; margin: 12px 0 0; font-size: 17px; }
+
+.box { background: var(--box); border-left: 4px solid var(--navy); padding: 14px 18px; margin-top: 24px; }
+.box h2 { font-size: 30px; margin-bottom: 8px; }
+.box p { margin: 6px 0; max-width: 70ch; }
+.box ul { margin: 6px 0; padding-left: 20px; }
+.box li { margin: 4px 0; }
+.hinweis { font-size: 13px; color: var(--muted); }
+.kz { display: inline-block; min-width: 2.2em; font-weight: bold; color: var(--orange); }
+
+.leitfrage { margin-top: 24px; border: 1.5px solid var(--navy); padding: 14px 18px; }
+.leitfrage .lbl { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); }
+.leitfrage p { margin: 4px 0 0; font-size: 18px; font-weight: bold; color: var(--navy); }
+
+/* Werkzeugleiste */
+.tools { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); margin-top: 28px; padding-block: 10px; border-bottom: 1px solid var(--line); display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.tools button { font: inherit; font-size: 14px; color: var(--navy); background: var(--bg); border: 1.5px solid var(--navy); padding: 5px 12px; cursor: pointer; }
+.tools button[aria-pressed="true"] { background: var(--navy); color: var(--on-navy); }
+.tools button:focus-visible, summary:focus-visible { outline: 3px solid var(--orange); outline-offset: 2px; }
+.tools .sep { flex: 1 1 auto; }
+
+/* Phasen */
+.phase { margin-top: 36px; }
+.phase-kopf { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; padding-bottom: 6px; border-bottom: 2px solid var(--navy); }
+.phase-kopf .zeit { font-size: 14px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.phase-intro { margin: 10px 0 0; max-width: 70ch; color: var(--muted); }
+
+/* Zeitachse */
+.achse { list-style: none; margin: 18px 0 0; padding: 0; position: relative; }
+.achse::before { content: ""; position: absolute; left: 7px; top: 6px; bottom: 6px; width: 2px; background: var(--line); }
+.ev { position: relative; padding-left: 34px; margin-bottom: 12px; }
+.ev::before { content: ""; position: absolute; left: 1px; top: 15px; width: 10px; height: 10px; border: 2px solid var(--navy); background: var(--bg); border-radius: 50%; }
+.ev.schluessel::before { background: var(--navy); }
+.ev > details { border: 1px solid var(--line); background: var(--bg); }
+.ev > details[open] { border-color: var(--navy); }
+.ev summary { list-style: none; cursor: pointer; padding: 10px 14px; display: grid; grid-template-columns: 9.5em 1fr auto; gap: 4px 14px; align-items: baseline; }
+.ev summary::-webkit-details-marker { display: none; }
+.ev .datum { font-weight: bold; color: var(--navy); font-variant-numeric: tabular-nums; font-size: 14px; }
+.ev .titel { font-weight: bold; min-width: 0; }
+.ev .kurz { grid-column: 2 / 4; color: var(--muted); font-size: 15px; min-width: 0; }
+.ev .pfeil { color: var(--navy); font-size: 14px; transition: transform .2s; }
+.ev details[open] > summary .pfeil { transform: rotate(90deg); }
+.tag { display: inline-block; font-size: 11px; font-weight: bold; letter-spacing: .06em; text-transform: uppercase; border: 1px solid var(--orange); color: var(--orange); padding: 0 5px; margin-left: 6px; vertical-align: 2px; }
+@media (max-width: 560px) {
+  .ev summary { grid-template-columns: 1fr auto; }
+  .ev .datum { grid-column: 1 / 2; }
+  .ev .pfeil { grid-column: 2; grid-row: 1; }
+  .ev .titel, .ev .kurz { grid-column: 1 / 3; }
+}
+
+.inhalt { padding: 4px 14px 16px; border-top: 1px solid var(--line); display: grid; gap: 14px; }
+.inhalt p { margin: 8px 0 0; max-width: 70ch; }
+.inhalt ul { margin: 6px 0 0; padding-left: 20px; max-width: 70ch; }
+.inhalt li { margin: 3px 0; }
+.lbl2 { font-size: 12px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); margin-top: 10px; }
+.begriffe { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.begriffe span { background: var(--box); color: var(--navy); font-size: 13px; padding: 2px 8px; }
+.lp { font-size: 13px; color: var(--muted); }
+.lp b { color: var(--navy); }
+
+.fragen { background: var(--box); padding: 12px 14px; }
+.fragen h3 { font-size: 26px; }
+.fragen ol { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 10px; }
+.frage { display: grid; grid-template-columns: 1.6em 1fr; gap: 0 8px; }
+.frage .nr { font-weight: bold; color: var(--orange); }
+.frage .op { font-weight: bold; color: var(--navy); }
+.frage .afb { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.frage .txt { min-width: 0; }
+.eh { margin-top: 6px; }
+.eh summary { cursor: pointer; font-size: 13px; color: var(--navy); text-decoration: underline; text-underline-offset: 3px; }
+.eh .eh-text { border-left: 3px solid var(--navy); padding: 4px 0 4px 10px; margin-top: 6px; font-size: 15px; }
+.eh .eh-text p { margin: 4px 0; }
+body.ohne-eh .eh { display: none; }
+
+.fuss { margin-top: 40px; padding-top: 8px; border-top: 1px solid var(--navy); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; font-size: 12px; color: var(--muted); }
+.leer { color: var(--muted); font-style: italic; margin-top: 16px; }
+
+@media (prefers-reduced-motion: reduce) { .ev .pfeil { transition: none; } }
+</style>
+
+<div class="wrap">
+  <header class="kopf">
+    <div class="meta">Geschichte · Jahrgangsstufe 12 · Die Revolution von 1848/49</div>
+    <div>
+      <img class="logo-light" src="data:image/png;base64,{{LOGO_NAVY}}" alt="Gymnasium Leopoldinum Passau">
+      <img class="logo-dark" src="data:image/png;base64,{{LOGO_WEISS}}" alt="Gymnasium Leopoldinum Passau">
+    </div>
+  </header>
+
+  <h1>Die Revolution von 1848/49</h1>
+  <p class="lead">Zeitleiste vom Wiener Kongress bis zur Reaktionsära, mit Nachwirkungen bis zum Grundgesetz. Jedes Ereignis lässt sich aufklappen: Hintergrund, Grundbegriffe, Lehrplanbezug und Nachfragen mit Operatoren nach LehrplanPLUS. Zu jeder Nachfrage gibt es einen aufklappbaren Erwartungshorizont.</p>
+
+  <div class="leitfrage">
+    <div class="lbl">Leitfrage der Sequenz</div>
+    <p>Gescheitert oder folgenreich? Welche Bedeutung hat die Revolution von 1848/49 für die Entstehung einer bürgerlichen Gesellschaft und eines demokratischen Verfassungsstaats in Deutschland?</p>
+  </div>
+
+  <section class="box" aria-labelledby="lp-h">
+    <h2 id="lp-h">Lehrplanbezug G12, Lernbereich 1</h2>
+    <p>Erster Teilbereich im Ausbildungsabschnitt 12.1 (ISB-Kennung 12.1.1, ca. 10 Std.). Die Kompetenzerwartungen sinngemäß:</p>
+    <ul>
+      <li><span class="kz">K1</span>die Bedeutung der Revolution 1848/49 für die Ausbildung einer bürgerlichen Gesellschaft und eines demokratischen Verfassungsstaats in Deutschland erläutern</li>
+      <li><span class="kz">K2</span>ihre Bedeutung für die Demokratisierung Deutschlands aus zeitgenössischer und heutiger Perspektive beurteilen</li>
+      <li><span class="kz">K3</span>die Ambivalenz zwischen Rückzug ins Private und politischem Engagement als Folge der restaurativen Politik im Deutschen Bund erklären</li>
+    </ul>
+    <p>Inhalte zu den Kompetenzen: politisches Engagement gesellschaftlicher Gruppen vor 1848 · wirtschaftliche und soziale Voraussetzungen der Revolution · Februarrevolution in Frankreich · Märzereignisse in Preußen und Bayern · Paulskirchenparlament und Verfassungsdebatten.</p>
+    <p class="hinweis">Kompetenzerwartungen sinngemäß wiedergegeben. Vor dem Einsatz bitte mit dem Wortlaut auf lehrplanplus.bayern.de abgleichen (gA und eA unterscheiden sich in der Tiefe).</p>
+  </section>
+
+  <section class="box" aria-labelledby="op-h">
+    <h2 id="op-h">Operatoren</h2>
+    <p><b>AFB I</b> nennen, beschreiben, wiedergeben · <b>AFB II</b> erklären, erläutern, analysieren, vergleichen, einordnen, herausarbeiten · <b>AFB III</b> beurteilen, bewerten, erörtern, überprüfen, Stellung nehmen</p>
+  </section>
+
+  <nav class="tools" aria-label="Ansicht">
+    <button type="button" id="f-alle" data-phase="alle" aria-pressed="true">Alle Phasen</button>
+    <button type="button" id="f-vormaerz" data-phase="vormaerz" aria-pressed="false">Vormärz</button>
+    <button type="button" id="f-revolution" data-phase="revolution" aria-pressed="false">Revolution</button>
+    <button type="button" id="f-reaktion" data-phase="reaktion" aria-pressed="false">Reaktion &amp; Wirkung</button>
+    <button type="button" id="f-bayern" aria-pressed="false">Bayern-Bezug</button>
+    <span class="sep"></span>
+    <button type="button" id="t-auf" aria-pressed="false">Alle aufklappen</button>
+    <button type="button" id="t-eh" aria-pressed="true">Erwartungshorizonte</button>
+  </nav>
+
+  <main id="zeitleiste"></main>
+
+  <section class="box" aria-labelledby="syn-h">
+    <h2 id="syn-h">Abschlussfragen zur Sequenz</h2>
+    <ol class="fragen" style="background:none;padding:0;list-style:none" id="synthese"></ol>
+  </section>
+
+  <footer class="fuss">
+    <span>Gymnasium Leopoldinum Passau</span>
+    <span>Geschichte 12 · Revolution 1848/49</span>
+  </footer>
+</div>
+
+<script>
+const PHASEN = [
+  { id: "vormaerz", titel: "Restauration und Vormärz", zeit: "1815–1847",
+    intro: "Der Deutsche Bund sichert die Fürstenherrschaft. Liberale und nationale Bewegungen werden unterdrückt, während Industrialisierung und Massenarmut die Gesellschaft verändern." },
+  { id: "revolution", titel: "Die Revolution", zeit: "Februar 1848 – Juli 1849",
+    intro: "Von den Märzforderungen über die Paulskirche bis zur Reichsverfassungskampagne: Einheit und Freiheit sollen zugleich erreicht werden." },
+  { id: "reaktion", titel: "Reaktion und Wirkung", zeit: "1849 bis heute",
+    intro: "Die alten Mächte kehren zurück. Viele Ideen von 1848 wirken dennoch weiter, bis in Weimarer Verfassung und Grundgesetz." }
+];
+
+const EREIGNISSE = [
+  /* ---------- VORMÄRZ ---------- */
+  { phase: "vormaerz", datum: "1814/15", titel: "Wiener Kongress und Deutscher Bund", schluessel: true,
+    kurz: "Neuordnung Europas nach Napoleon; 39 souveräne Staaten im lockeren Deutschen Bund.",
+    text: `<p>Unter Leitung des österreichischen Staatskanzlers Metternich ordnen die Großmächte Europa nach den Prinzipien <b>Restauration</b>, <b>Legitimität</b> und <b>Solidarität der Monarchen</b>. Die Deutsche Bundesakte (8. Juni 1815) schafft keinen Nationalstaat, sondern einen Staatenbund souveräner Fürsten mit dem Bundestag in Frankfurt als Gesandtenkongress.</p>
+      <p>Artikel 13 verspricht „landständische Verfassungen“, lässt Zeitpunkt und Form aber offen. Die Hoffnungen aus den Befreiungskriegen auf Einheit und Mitsprache werden enttäuscht.</p>`,
+    begriffe: ["Restauration", "Legitimität", "Deutscher Bund", "Staatenbund"],
+    lp: "K3 · Ausgangslage im Deutschen Bund",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum die Ordnung von 1815 die Erwartungen des liberalen Bürgertums enttäuschte.",
+        eh: `<p>Befreiungskriege als nationale Mobilisierung; Erwartung von Nationalstaat und Verfassung. Stattdessen Staatenbund souveräner Fürsten, keine gesamtdeutsche Volksvertretung, Art. 13 vage. Prinzip der Legitimität stellt Fürstensouveränität über Volkssouveränität.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob der Deutsche Bund eher ein Instrument der Friedenssicherung oder der Unterdrückung war.",
+        eh: `<p>Pro Friedenssicherung: Gleichgewicht in Mitteleuropa, lange Phase ohne Krieg zwischen den Großmächten. Pro Unterdrückung: Bundesbeschlüsse 1819/1832 gegen Presse, Universitäten und Vereine. Abwägendes Urteil, das beide Funktionen aufeinander bezieht.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "18.10.1817", titel: "Wartburgfest",
+    kurz: "Burschenschaften fordern nationale Einheit; Verbrennung missliebiger Schriften.",
+    text: `<p>Rund 500 Studenten aus protestantischen Universitäten feiern auf der Wartburg den 300. Jahrestag der Reformation und den Sieg bei Leipzig 1813. Die 1815 in Jena gegründete Urburschenschaft trägt Schwarz-Rot-Gold. Gefordert werden Einheit und Verfassung.</p>
+      <p>Am Rand verbrennen Teilnehmer Schriften und Symbole, die sie als reaktionär oder „undeutsch“ ansehen, darunter auch Werke jüdischer Autoren. Die Nationalbewegung zeigt hier früh auch franzosenfeindliche und antijüdische Züge.</p>`,
+    begriffe: ["Burschenschaft", "Nationalbewegung", "Schwarz-Rot-Gold"],
+    lp: "Inhalt: politisches Engagement gesellschaftlicher Gruppen vor 1848",
+    fragen: [
+      { op: "Nennen", afb: "I", q: "Nennen Sie Träger und Ziele der Nationalbewegung um 1817.",
+        eh: `<p>Studenten, Professoren, Teile des Bildungsbürgertums; Ziele: nationale Einheit, Verfassung, bürgerliche Freiheiten.</p>` },
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie die Ambivalenz der frühen Nationalbewegung am Beispiel des Wartburgfests.",
+        eh: `<p>Emanzipatorisch: Forderung nach Mitbestimmung und Verfassung gegen die Fürstenherrschaft. Ausgrenzend: Feindbild Frankreich, Verbrennung von Schriften, antijüdische Tendenzen. Nationalismus kann liberal und exklusiv zugleich sein.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "26.05.1818", titel: "Verfassung des Königreichs Bayern", bayern: true,
+    kurz: "Bayern wird konstitutionelle Monarchie mit Zwei-Kammer-Landtag.",
+    text: `<p>Maximilian I. Joseph erlässt eine Verfassung: Der König bleibt Träger der gesamten Staatsgewalt, bindet sich aber an die Verfassung. Der Landtag besteht aus einer Kammer der Reichsräte (Adel, Kirche, vom König ernannte Mitglieder) und einer Kammer der Abgeordneten, die nach einem stark eingeschränkten Wahlrecht bestimmt wird. Der Landtag wirkt bei Steuern und Gesetzen mit.</p>
+      <p>Die Verfassung soll auch die neuen fränkischen und schwäbischen Landesteile und die Pfalz an den Gesamtstaat binden. Süddeutsche Verfassungen (Baden, Bayern, Württemberg) werden zu Kristallisationspunkten des Frühliberalismus.</p>`,
+    begriffe: ["Konstitutionelle Monarchie", "Monarchisches Prinzip", "Zensuswahlrecht"],
+    lp: "K1 · Verfassungsentwicklung vor 1848",
+    fragen: [
+      { op: "Beschreiben", afb: "I", q: "Beschreiben Sie die Machtverteilung zwischen König und Landtag nach der Verfassung von 1818.",
+        eh: `<p>König: Staatsoberhaupt, Exekutive, Gesetzesinitiative, Ernennung der Minister. Landtag: Zustimmung zu Steuern und Gesetzen, kein Einfluss auf die Regierungsbildung. Zwei Kammern, Abgeordnetenkammer nach Besitz und Stand gewählt.</p>` },
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die bayerische Verfassung von 1818 mit den Verfassungsforderungen der Liberalen von 1848.",
+        eh: `<p>1818: gewährte (oktroyierte) Verfassung, monarchisches Prinzip, keine Grundrechte im heutigen Sinn, eingeschränktes Wahlrecht. 1848: Volkssouveränität bzw. Vereinbarung, Ministerverantwortlichkeit, Grundrechtskatalog, breiteres Wahlrecht, Pressefreiheit.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "Sept. 1819", titel: "Karlsbader Beschlüsse", schluessel: true,
+    kurz: "Nach dem Mord an Kotzebue: Zensur, Überwachung der Universitäten, Verbot der Burschenschaften.",
+    text: `<p>Der Burschenschafter Karl Ludwig Sand ermordet im März 1819 den Schriftsteller August von Kotzebue. Metternich nutzt die Tat: Auf Konferenzen in Karlsbad werden Beschlüsse vorbereitet, die der Bundestag am 20. September 1819 annimmt.</p>
+      <ul><li>Vorzensur für Zeitungen und Schriften unter 20 Bogen</li><li>Staatliche Bevollmächtigte überwachen die Universitäten, missliebige Professoren werden entlassen</li><li>Burschenschaften werden verboten</li><li>Zentraluntersuchungskommission in Mainz gegen „demagogische Umtriebe“</li></ul>`,
+    begriffe: ["Zensur", "Demagogenverfolgung", "Metternich’sches System"],
+    lp: "K3 · restaurative Politik im Deutschen Bund",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, wie die Karlsbader Beschlüsse das politische Verhalten des Bürgertums veränderten.",
+        eh: `<p>Öffentliche politische Betätigung wird riskant: Zensur, Berufsverbote, Verfolgung. Folge ist ein Ausweichen in unpolitische Bereiche (Familie, Vereine, Kunst) oder in getarnte Formen der Öffentlichkeit (Gesangs- und Turnvereine, Feste). Verbindung zu K3.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob die Beschlüsse langfristig ihr Ziel erreichten.",
+        eh: `<p>Kurzfristig erfolgreich (Unterdrückung der Burschenschaften, Kontrolle der Presse). Langfristig nicht: liberale und nationale Ideen verbreiten sich weiter, 1832 und 1848 brechen sie offen aus. Repression verschärft die Entfremdung zwischen Bürgertum und Obrigkeit.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "ca. 1815–1848", titel: "Biedermeier: Rückzug ins Private",
+    kurz: "Häuslichkeit, Hausmusik und Geselligkeit prägen die bürgerliche Lebenswelt.",
+    text: `<p>Der Begriff (später geprägt, ursprünglich spöttisch) bezeichnet eine bürgerliche Kultur der Innerlichkeit: Wohnkultur, Familie, Hausmusik, Lesezirkel, Spaziergänge. Ein bekanntes Bild ist Carl Spitzwegs „Der arme Poet“ (1839, München).</p>
+      <p>Der Rückzug ist zugleich Folge der Repression und Raum bürgerlicher Selbstorganisation: In Vereinen, Lesegesellschaften und Museumsgesellschaften üben Bürger Wahl, Satzung und Debatte ein. Vormärz und Biedermeier bezeichnen zwei Seiten derselben Epoche.</p>`,
+    begriffe: ["Biedermeier", "Vormärz", "Vereinswesen", "Öffentlichkeit"],
+    lp: "K3 · Ambivalenz Rückzug ins Private / politisches Engagement",
+    fragen: [
+      { op: "Charakterisieren", afb: "II", q: "Charakterisieren Sie die bürgerliche Lebenswelt des Biedermeier.",
+        eh: `<p>Familie als Mittelpunkt, Rollentrennung der Geschlechter, Bildung und Kunst als Statusmerkmal, Geselligkeit im Verein, Distanz zur Politik.</p>` },
+      { op: "Erörtern", afb: "III", q: "Erörtern Sie, ob „Biedermeier“ und „Vormärz“ Gegensätze sind oder sich ergänzen.",
+        eh: `<p>Gegensatz: Rückzug vs. politisches Engagement, Anpassung vs. Opposition. Ergänzung: beide Reaktionen auf dieselbe Repression; Vereine als „Schule der Demokratie“; viele Menschen lebten beides. Kernaussage von K3: Ambivalenz statt sauberer Trennung.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "Juli 1830", titel: "Julirevolution in Frankreich",
+    kurz: "Sturz Karls X.; Bürgerkönig Louis-Philippe. Unruhen auch in deutschen Staaten.",
+    text: `<p>In Paris wird der Bourbone Karl X. gestürzt, Louis-Philippe wird „König der Franzosen“. Das Ereignis wirkt als Signal: In Braunschweig, Kurhessen, Sachsen und Hannover kommt es zu Unruhen, die zu neuen Verfassungen führen. Der polnische Aufstand 1830/31 und die Emigration vieler Polen lösen in Deutschland eine Welle der Polenbegeisterung aus.</p>`,
+    begriffe: ["Julimonarchie", "Polenbegeisterung"],
+    lp: "Inhalt: europäischer Kontext",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum Frankreich für die deutsche Opposition Vorbild und Signalgeber war.",
+        eh: `<p>Frankreich hatte 1789 und 1830 gezeigt, dass Monarchien gestürzt und Verfassungen erkämpft werden können; Nähe zum Südwesten; Ideen der Menschen- und Bürgerrechte. 1830 und 1848 lösen Pariser Ereignisse jeweils Bewegungen in Deutschland aus.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "27.–30.05.1832", titel: "Hambacher Fest und Gaibacher Konstitutionsfest", bayern: true, schluessel: true,
+    kurz: "Größte politische Massenversammlung des Vormärz in der bayerischen Pfalz.",
+    text: `<p>Auf dem Hambacher Schloss bei Neustadt (Pfalz, damals bayerisch) versammeln sich zwischen 20 000 und 30 000 Menschen: Bürger, Handwerker, Bauern, Studenten, auch Frauen und polnische Emigranten. Die Organisatoren Philipp Jakob Siebenpfeiffer und Johann Georg August Wirth fordern Volkssouveränität, nationale Einheit und ein freies, föderiertes Europa. Anlass ist auch der Protest gegen die Zensur und die wirtschaftliche Not der Pfälzer Winzer.</p>
+      <p>Am 27. Mai 1832 feiern in Gaibach (Unterfranken) Tausende die bayerische Verfassung. Hier steht die konstitutionelle Monarchie im Zentrum, nicht die Republik.</p>
+      <p>Folge: Der Bundestag verschärft mit den „Sechs Artikeln“ (28. Juni) und den „Zehn Artikeln“ (5. Juli 1832) die Repression, politische Vereine und Versammlungen werden verboten. Ludwig I. lässt Redner verfolgen.</p>`,
+    begriffe: ["Volkssouveränität", "Pressefreiheit", "Republik", "Repression"],
+    lp: "Inhalt: politisches Engagement gesellschaftlicher Gruppen vor 1848 · Bezug Bayern",
+    fragen: [
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie Hambacher Fest und Gaibacher Fest hinsichtlich Teilnehmern und politischen Zielen.",
+        eh: `<p>Hambach: sozial breit, national und europäisch, teils republikanisch, Volkssouveränität. Gaibach: Bekenntnis zur bayerischen Verfassung, gemäßigt-konstitutionell, regionaler Bezug. Gemeinsam: Forderung nach Teilhabe; Unterschied in Radikalität und Bezugsrahmen (Nation vs. Einzelstaat).</p>` },
+      { op: "Analysieren", afb: "II", q: "Analysieren Sie, welche Rolle wirtschaftliche Not für die Mobilisierung in der Pfalz spielte.",
+        eh: `<p>Zollgrenzen und Steuern belasten Weinbau und Handel; soziale Unzufriedenheit verbindet sich mit politischen Forderungen. Hinweis: Hambach war nicht nur ein Fest des Bildungsbürgertums.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie die Reaktion des Deutschen Bundes auf Hambach.",
+        eh: `<p>Aus Sicht der Fürsten konsequent; tatsächlich treibt die Repression Oppositionelle ins Exil oder in die Radikalisierung. Die Forderungen werden nicht gelöst, nur unterdrückt (Vorgeschichte von 1848).</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "01.01.1834", titel: "Deutscher Zollverein",
+    kurz: "Wirtschaftliche Einigung unter preußischer Führung, ohne Österreich.",
+    text: `<p>Ein gemeinsamer Binnenmarkt ohne Zollgrenzen entsteht für die meisten deutschen Staaten, darunter Bayern und Württemberg. Österreich bleibt draußen. Handel, Verkehr (erste Eisenbahn Nürnberg–Fürth 1835) und Industrialisierung profitieren. Die wirtschaftliche Einheit weist auf eine kleindeutsche Lösung voraus.</p>`,
+    begriffe: ["Zollverein", "Industrialisierung", "Kleindeutsch"],
+    lp: "Inhalt: wirtschaftliche Voraussetzungen",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie den Zusammenhang zwischen Zollverein und der späteren nationalen Frage.",
+        eh: `<p>Wirtschaftliche Verflechtung unter preußischer Führung ohne Österreich; Interessen des Wirtschaftsbürgertums an einheitlichem Markt, Maßen, Recht; Präzedenz für eine kleindeutsche Einigung.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "Nov./Dez. 1837", titel: "Göttinger Sieben",
+    kurz: "Sieben Professoren protestieren gegen den Verfassungsbruch in Hannover und werden entlassen.",
+    text: `<p>König Ernst August von Hannover hebt das Staatsgrundgesetz von 1833 auf. Sieben Göttinger Professoren, darunter die Brüder Jacob und Wilhelm Grimm, Friedrich Christoph Dahlmann und Georg Gottfried Gervinus, verweigern dies unter Berufung auf ihren Eid. Sie werden entlassen, drei des Landes verwiesen. Spendenaktionen im ganzen Bund zeigen eine wachsende bürgerliche Öffentlichkeit. Dahlmann, Gervinus und Jacob Grimm sitzen 1848 in der Paulskirche.</p>`,
+    begriffe: ["Verfassungsbruch", "Bildungsbürgertum", "Öffentliche Meinung"],
+    lp: "Inhalt: politisches Engagement gesellschaftlicher Gruppen vor 1848",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, warum der Protest von sieben Professoren eine so große Wirkung hatte.",
+        eh: `<p>Hohes Ansehen der Professoren; Argument des Rechts (Eid, Verfassung) statt Revolution; Solidarität über Landesgrenzen; Märtyrerrolle. Zeigt Gewicht des Bildungsbürgertums.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "1840/41", titel: "Rheinkrise und nationale Lieder",
+    kurz: "Französische Ansprüche auf den Rhein lösen eine nationale Welle aus.",
+    text: `<p>Als in Frankreich der Rhein als Grenze gefordert wird, entsteht in Deutschland eine breite nationale Begeisterung. Lieder wie „Die Wacht am Rhein“ (Max Schneckenburger) und das „Lied der Deutschen“ (August Heinrich Hoffmann von Fallersleben, 1841 auf Helgoland) entstehen. Der Nationalismus wird zur Massenbewegung, auch getragen von Turn- und Gesangvereinen.</p>`,
+    begriffe: ["Nationalismus", "Turnbewegung", "Sängerbewegung"],
+    lp: "Inhalt: politisches Engagement gesellschaftlicher Gruppen vor 1848",
+    fragen: [
+      { op: "Herausarbeiten", afb: "II", q: "Arbeiten Sie aus der ersten Strophe des „Lieds der Deutschen“ das Verständnis von Nation heraus.",
+        eh: `<p>Einheit über die Einzelstaaten hinweg; geografischer Raum „von der Maas bis an die Memel“ als großdeutsche, teils übergreifende Vorstellung; „über alles“ meint im Kontext Einheit vor Partikularismus, nicht Überlegenheit über andere Völker. Hinweis auf spätere Umdeutung. Quelle im Unterricht vollständig vorlegen.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "4.–6.06.1844", titel: "Weberaufstand in Schlesien",
+    kurz: "Hungerrevolte in Peterswaldau und Langenbielau, vom preußischen Militär niedergeschlagen.",
+    text: `<p>Heimweber leiden unter Konkurrenz durch maschinell erzeugte Textilien und unter dem Druck der Verleger. Sie zerstören Häuser und Geschäftsbücher eines Unternehmers. Militär schlägt den Aufstand nieder, es gibt Tote. Der Aufstand wird zum Symbol des <b>Pauperismus</b>, der Massenarmut vor der Hochindustrialisierung (Heinrich Heine: „Die schlesischen Weber“, 1844).</p>`,
+    begriffe: ["Pauperismus", "Verlagssystem", "Soziale Frage"],
+    lp: "Inhalt: wirtschaftliche und soziale Voraussetzungen",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie die Ursachen des Pauperismus in den 1840er-Jahren.",
+        eh: `<p>Bevölkerungswachstum ohne ausreichend Arbeitsplätze; Krise des Handwerks und der Heimarbeit durch Maschinenkonkurrenz; Bauernbefreiung mit Ablösungslasten; Missernten. Industrie noch zu schwach, um die Menschen aufzunehmen.</p>` },
+      { op: "Erörtern", afb: "III", q: "Erörtern Sie, ob der Weberaufstand ein politischer oder ein sozialer Protest war.",
+        eh: `<p>Sozial: Hunger, Lohnforderungen, Angriffe gegen einzelne Unternehmer, kein Programm. Politisch: Wirkung in der Öffentlichkeit, Debatte über soziale Frage, Bezug zu frühsozialistischen Ideen. Ergebnis: primär sozialer Protest mit politischer Folgewirkung.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "1845–1847", titel: "Agrar- und Wirtschaftskrise", schluessel: true,
+    kurz: "Kartoffelfäule, Missernten, Teuerung und Handelskrise verschärfen die Not.",
+    text: `<p>Die Kartoffelfäule und Getreidemissernten treiben die Lebensmittelpreise stark in die Höhe. 1847 kommt es in vielen Städten zu Hungerkrawallen. Eine Handels- und Gewerbekrise führt zu Arbeitslosigkeit. Die Krise gilt als letzte große „Hungerkrise alten Typs“ und schafft die soziale Unruhe, in der sich 1848 die bürgerlichen Forderungen mit Protesten von Handwerkern und Bauern verbinden.</p>`,
+    begriffe: ["Teuerung", "Hungerkrise", "Krise alten Typs"],
+    lp: "Inhalt: wirtschaftliche und soziale Voraussetzungen",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, wie wirtschaftliche Not und politische Unzufriedenheit 1847/48 zusammenwirkten.",
+        eh: `<p>Not mobilisiert Unterschichten; das Bürgertum formuliert politische Forderungen; die Obrigkeit verliert Legitimität, weil sie weder Not lindert noch Mitsprache gewährt. Gemeinsame Gegnerschaft, aber unterschiedliche Ziele (Brot vs. Verfassung), was später Konflikte innerhalb der Revolution erklärt.</p>` }
+    ] },
+
+  { phase: "vormaerz", datum: "Sept./Okt. 1847", titel: "Offenburg und Heppenheim",
+    kurz: "Radikale Demokraten und gemäßigte Liberale formulieren getrennte Programme.",
+    text: `<p>In Offenburg (12. September 1847) beschließen badische Demokraten um Friedrich Hecker und Gustav Struve ein Programm mit Volksbewaffnung, progressiver Einkommensteuer und Ausgleich zwischen Arbeit und Kapital. In Heppenheim (10. Oktober 1847) treffen sich gemäßigte Liberale aus mehreren Staaten und fordern eine Nationalvertretung beim Zollverein.</p>
+      <p>Damit ist die Spaltung der Opposition in <b>Liberale</b> (konstitutionelle Monarchie, Reformen) und <b>Demokraten</b> (Volkssouveränität, teils Republik, soziale Forderungen) schon vor der Revolution sichtbar.</p>`,
+    begriffe: ["Liberalismus", "Demokraten", "Volkssouveränität", "Konstitutionalismus"],
+    lp: "Inhalt: politisches Engagement gesellschaftlicher Gruppen vor 1848 · K1",
+    fragen: [
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die Ziele der Offenburger und der Heppenheimer Versammlung.",
+        eh: `<p>Offenburg: Volkssouveränität, Volksbewaffnung, soziale Reformen, Pressefreiheit, Schwurgerichte; radikal-demokratisch. Heppenheim: nationale Volksvertretung, Reformen im Einvernehmen mit den Fürsten; gemäßigt-liberal. Gemeinsam: Einheit und Freiheit, Ablehnung des Metternich’schen Systems.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, inwiefern die Spaltung der Opposition bereits das spätere Scheitern andeutet.",
+        eh: `<p>Uneinigkeit über Staatsform und Methoden (Reform vs. Revolution) schwächt die Bewegung gegenüber der Gegenrevolution; Liberale fürchten soziale Revolution mehr als die Fürsten. Gegenposition: Pluralität ist normal; Scheitern hatte vor allem machtpolitische Gründe (Militär, Österreich, Preußen).</p>` }
+    ] },
+
+  /* ---------- REVOLUTION ---------- */
+  { phase: "revolution", datum: "22.–24.02.1848", titel: "Februarrevolution in Paris", schluessel: true,
+    kurz: "Louis-Philippe dankt ab; Frankreich wird Republik mit allgemeinem Männerwahlrecht.",
+    text: `<p>Nach dem Verbot eines Reformbanketts errichten Pariser Bürger und Arbeiter Barrikaden. Der König flieht, die Zweite Republik wird ausgerufen. Sie führt das allgemeine Männerwahlrecht ein und richtet Nationalwerkstätten für Arbeitslose ein. Die Nachricht erreicht innerhalb weniger Tage die deutschen Staaten und löst dort die Märzrevolution aus.</p>
+      <p>Im selben Monat erscheint in London das „Manifest der Kommunistischen Partei“ von Karl Marx und Friedrich Engels, das 1848 aber noch kaum Wirkung entfaltet.</p>`,
+    begriffe: ["Zweite Republik", "Allgemeines Wahlrecht"],
+    lp: "Inhalt: Februarrevolution in Frankreich",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, warum die Pariser Ereignisse so schnell auf die deutschen Staaten übergriffen.",
+        eh: `<p>Vorbereiteter Boden (Krise 1847, Programme 1847); schnelle Nachrichtenwege (Presse, Eisenbahn, Telegrafie im Aufbau); Furcht der Fürsten vor einem französischen Szenario macht sie nachgiebig; Erinnerung an 1789 und 1830.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "27.02.1848", titel: "Mannheimer Volksversammlung: Märzforderungen",
+    kurz: "Erstes Programm der deutschen Revolution, rasch in vielen Staaten aufgegriffen.",
+    text: `<p>Eine Volksversammlung in Mannheim richtet eine Petition an die badische Kammer. Die Forderungen verbreiten sich als „Märzforderungen“:</p>
+      <ul><li>Pressefreiheit</li><li>Schwurgerichte</li><li>Volksbewaffnung mit freier Wahl der Offiziere</li><li>ein deutsches Parlament</li></ul>
+      <p>Hinzu kommen in vielen Petitionen Vereins- und Versammlungsfreiheit, Abschaffung feudaler Lasten und Vereidigung des Militärs auf die Verfassung.</p>`,
+    begriffe: ["Märzforderungen", "Petition", "Schwurgericht"],
+    lp: "K1 · Forderungen der bürgerlichen Bewegung",
+    fragen: [
+      { op: "Einordnen", afb: "II", q: "Ordnen Sie die Märzforderungen den Zielen „Einheit“ und „Freiheit“ zu.",
+        eh: `<p>Freiheit: Presse-, Vereins-, Versammlungsfreiheit, Schwurgerichte, Volksbewaffnung (Schutz vor fürstlichem Militär). Einheit: deutsches Parlament. Hinweis: Volksbewaffnung zielt auf Machtfrage.</p>` },
+      { op: "Überprüfen", afb: "III", q: "Überprüfen Sie, welche Märzforderungen heute im Grundgesetz verwirklicht sind.",
+        eh: `<p>Pressefreiheit Art. 5, Versammlungsfreiheit Art. 8, Vereinigungsfreiheit Art. 9, Gesetzlicher Richter Art. 101; Parlament (Bundestag) Art. 38 ff. Volksbewaffnung nicht; Wehrpflicht/Parlamentsarmee als andere Antwort auf die Machtfrage.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "4.–20.03.1848", titel: "Märzrevolution in Bayern", bayern: true, schluessel: true,
+    kurz: "Zeughaussturm in München, Märzproklamation, Abdankung Ludwigs I.",
+    text: `<p>Die Affäre König Ludwigs I. mit der Tänzerin Lola Montez hat sein Ansehen stark beschädigt; sie muss München im Februar 1848 verlassen. Am 4. März stürmen Münchner Bürger das Zeughaus und bewaffnen sich. In der <b>Märzproklamation</b> vom 6. März sagt der König Reformen zu: Ministerverantwortlichkeit, Pressefreiheit, Schwurgerichte, Wahlrechtsreform, Vereidigung des Heeres auf die Verfassung.</p>
+      <p>Am 20. März 1848 dankt Ludwig I. zugunsten seines Sohnes Maximilian II. ab. Bayern verändert sich ohne Barrikadenkämpfe; der neue König setzt Reformen um, etwa die Ablösung grundherrlicher Lasten, bleibt aber gegenüber einer gesamtdeutschen Lösung unter preußischer Führung zurückhaltend.</p>`,
+    begriffe: ["Märzproklamation", "Ministerverantwortlichkeit", "Ablösung der Grundlasten"],
+    lp: "Inhalt: Märzereignisse in Bayern",
+    fragen: [
+      { op: "Beschreiben", afb: "I", q: "Beschreiben Sie den Verlauf der Märzereignisse in München.",
+        eh: `<p>Montez-Affäre und Unruhen im Februar; 4. März Zeughaussturm; 6. März Proklamation mit Reformzusagen; 20. März Abdankung; Maximilian II. setzt Märzministerium und Reformgesetze um.</p>` },
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die Märzereignisse in Bayern und in Preußen hinsichtlich Verlauf und Ergebnis.",
+        eh: `<p>Bayern: weitgehend unblutig, persönliche Krise des Monarchen, Thronwechsel, Reformen. Preußen: Barrikadenkämpfe mit vielen Toten, König bleibt im Amt, demütigende Zugeständnisse, liberales Märzministerium. Gemeinsam: Fürsten weichen zurück, Militär und Verwaltung bleiben intakt.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob man in Bayern von einer „Revolution“ sprechen kann.",
+        eh: `<p>Dafür: Druck der Straße, Bewaffnung von Bürgern, Herrscherwechsel, Verfassungsreform. Dagegen: keine Umwälzung der Staatsordnung, Monarchie und Dynastie bleiben, Reformen „von oben“. Begriffsklärung Revolution/Reform erwartet.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "09.03.1848", titel: "Schwarz-Rot-Gold wird Bundesfarbe",
+    kurz: "Der Bundestag erklärt die Farben der Nationalbewegung zu Farben des Deutschen Bundes.",
+    text: `<p>Unter dem Druck der Ereignisse übernimmt der Bundestag in Frankfurt die bis dahin verfolgten Farben der Burschenschaften und des Hambacher Fests. Die Farben stehen fortan für Einheit und Freiheit und werden 1919 und 1949 wieder aufgegriffen (Art. 22 GG).</p>`,
+    begriffe: ["Nationalsymbole"],
+    lp: "K2 · Wirkung bis heute",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum sich Weimarer Republik und Bundesrepublik bewusst auf Schwarz-Rot-Gold beriefen.",
+        eh: `<p>Anknüpfung an demokratisch-freiheitliche Tradition von 1832/1848 statt an Schwarz-Weiß-Rot des Kaiserreichs; Legitimation der Demokratie durch eine eigene Geschichte.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "13.03.1848", titel: "Revolution in Wien, Sturz Metternichs",
+    kurz: "Der Symbolfigur der Restauration bleibt nur die Flucht nach England.",
+    text: `<p>Studenten, Bürger und Arbeiter erzwingen in Wien den Rücktritt Metternichs. Der Kaiser verspricht eine Verfassung. Zugleich erheben sich Ungarn, Italiener, Tschechen: Österreich ist ein Vielvölkerstaat, in dem die nationale Frage anders liegt als in Preußen. Das wird für die Frage „großdeutsch oder kleindeutsch“ entscheidend.</p>`,
+    begriffe: ["Vielvölkerstaat", "Nationalitätenfrage"],
+    lp: "Inhalt: Märzereignisse (europäischer Kontext)",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, warum der Sturz Metternichs symbolisch so bedeutsam war.",
+        eh: `<p>Metternich verkörperte das System von 1815; sein Sturz zeigt, dass die Restauration am Ende ist; Signalwirkung für Berlin und andere Hauptstädte.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "18.–21.03.1848", titel: "Barrikadenkämpfe in Berlin", schluessel: true,
+    kurz: "Über 250 Tote; Friedrich Wilhelm IV. zieht das Militär ab und reitet mit Schwarz-Rot-Gold durch Berlin.",
+    text: `<p>Bei einer Kundgebung vor dem Schloss fallen Schüsse. In den folgenden Barrikadenkämpfen sterben vor allem Handwerker, Gesellen und Arbeiter, die „Märzgefallenen“. Am 19. März befiehlt der König den Abzug der Truppen („An meine lieben Berliner“) und muss sich vor den aufgebahrten Toten verneigen. Am 21. März zeigt er sich mit schwarz-rot-goldener Armbinde und erklärt, Preußen gehe fortan in Deutschland auf.</p>
+      <p>Ein liberales Märzministerium (Camphausen, Hansemann) wird eingesetzt, eine preußische Nationalversammlung gewählt. Armee, Adel und Bürokratie bleiben jedoch intakt.</p>`,
+    begriffe: ["Märzgefallene", "Märzministerien", "Preußische Nationalversammlung"],
+    lp: "Inhalt: Märzereignisse in Preußen",
+    fragen: [
+      { op: "Analysieren", afb: "II", q: "Analysieren Sie die soziale Zusammensetzung der Märzgefallenen und ziehen Sie Schlüsse auf die Träger der Revolution.",
+        eh: `<p>Mehrheit Handwerker, Gesellen, Arbeiter, wenige Akademiker. Die Straße wird von Unterschichten getragen, das Parlament von Bildungs- und Besitzbürgertum: soziale Kluft innerhalb der Revolution.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob der Umritt des Königs am 21. März ein echter Kurswechsel oder Taktik war.",
+        eh: `<p>Taktik: König behält Armee, lehnt Volkssouveränität ab, später Gegenrevolution und Ablehnung der Kaiserkrone. Kurswechsel (begrenzt): kurzzeitige Zugeständnisse, Märzministerium, Verfassungsversprechen. Begründetes Urteil auf Grundlage seines späteren Handelns.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "31.03.–03.04.1848", titel: "Vorparlament in Frankfurt",
+    kurz: "Vertreter der Landtage und Oppositionelle bereiten Wahlen zur Nationalversammlung vor.",
+    text: `<p>Das Vorparlament beschließt, eine Nationalversammlung wählen zu lassen. Wahlberechtigt sollen „selbstständige“ volljährige Männer sein, was die Einzelstaaten unterschiedlich auslegen; meist wird indirekt über Wahlmänner gewählt. Der Antrag der Demokraten, sich als Revolutionsorgan auf Dauer zu erklären, scheitert. Mehrheit: Weg der Vereinbarung mit den Fürsten.</p>`,
+    begriffe: ["Vorparlament", "Vereinbarungsprinzip", "Indirekte Wahl"],
+    lp: "K1 · Weg zur Nationalversammlung",
+    fragen: [
+      { op: "Erörtern", afb: "III", q: "Erörtern Sie die Entscheidung des Vorparlaments für den Weg der Vereinbarung statt der Revolution.",
+        eh: `<p>Für Vereinbarung: Legitimität, Vermeidung von Bürgerkrieg, Fürsten noch stark, Angst vor sozialer Revolution. Dagegen: Fürsten behalten Militär und Verwaltung, Gegenrevolution möglich. Bezug zum späteren Scheitern.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "April 1848", titel: "Heckerzug in Baden",
+    kurz: "Republikanischer Aufstand Friedrich Heckers, nach wenigen Tagen niedergeschlagen.",
+    text: `<p>Friedrich Hecker ruft in Konstanz die Republik aus und zieht mit Freischaren Richtung Karlsruhe. Bei Kandern (20. April) werden sie von Bundestruppen geschlagen; Hecker flieht in die Schweiz und später in die USA. Die Gemäßigten distanzieren sich. Der Zug zeigt die Grenzen der revolutionären Republikaner.</p>`,
+    begriffe: ["Republik", "Freischaren"],
+    lp: "K1 · Spektrum der Revolution",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum die gemäßigten Liberalen den Heckerzug ablehnten.",
+        eh: `<p>Bekenntnis zu konstitutioneller Monarchie und Vereinbarung; Angst vor Bürgerkrieg und sozialer Revolution; Gefährdung des parlamentarischen Wegs, der gerade beginnt.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "18.05.1848", titel: "Eröffnung der Nationalversammlung in der Paulskirche", schluessel: true,
+    kurz: "Erstes gesamtdeutsches Parlament; Präsident wird Heinrich von Gagern.",
+    text: `<p>In der Frankfurter Paulskirche tritt das erste frei gewählte gesamtdeutsche Parlament zusammen. Die Abgeordneten sind überwiegend Akademiker, Juristen, Beamte und Professoren („Professorenparlament“); Handwerker, Arbeiter und Bauern sind kaum vertreten, Frauen haben kein Wahlrecht.</p>
+      <p>Es bilden sich Fraktionen, benannt nach ihren Versammlungslokalen (z. B. Café Milani, Casino, Württemberger Hof, Donnersberg). Spektrum von Rechts (konservativ) über rechtes und linkes Zentrum (Liberale) bis Links (Demokraten).</p>`,
+    begriffe: ["Nationalversammlung", "Fraktion", "Professorenparlament", "Parlamentarismus"],
+    lp: "Inhalt: Paulskirchenparlament · K1",
+    fragen: [
+      { op: "Analysieren", afb: "II", q: "Analysieren Sie die Zusammensetzung der Nationalversammlung und deren Folgen für ihre Politik.",
+        eh: `<p>Dominanz des Bildungsbürgertums: hohe juristische Kompetenz, aber wenig Nähe zu sozialen Problemen der Unterschichten; Vorrang von Verfassungs- und Rechtsfragen vor sozialer Frage; Abhängigkeit von Fürsten, da kein eigenes Machtmittel.</p>` },
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, inwiefern die Fraktionsbildung ein Schritt zum modernen Parlamentarismus war.",
+        eh: `<p>Organisierte Meinungsbildung, Programme, Abstimmungsdisziplin; Vorformen politischer Parteien; Einübung parlamentarischer Verfahren (Geschäftsordnung, Ausschüsse).</p>` }
+    ] },
+
+  { phase: "revolution", datum: "28./29.06.1848", titel: "Provisorische Zentralgewalt",
+    kurz: "Erzherzog Johann wird Reichsverweser; eine Reichsregierung ohne eigene Machtmittel.",
+    text: `<p>Die Nationalversammlung schafft eine provisorische Zentralgewalt und wählt den Habsburger Erzherzog Johann zum Reichsverweser. Er ernennt ein Reichsministerium. Die Einzelstaaten behalten aber Verwaltung, Steuern und vor allem ihre Armeen; Preußen und Österreich lassen ihre Truppen nicht auf den Reichsverweser vereidigen.</p>`,
+    begriffe: ["Reichsverweser", "Zentralgewalt"],
+    lp: "K1 · Machtfrage",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, warum die Zentralgewalt gegenüber den Einzelstaaten schwach blieb.",
+        eh: `<p>Kein eigenes Heer, keine eigenen Steuern, keine Verwaltung; Abhängigkeit vom guten Willen Preußens und Österreichs; Legitimität allein durch Parlament.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "Aug./Sept. 1848", titel: "Malmö und Septemberunruhen",
+    kurz: "Preußen schließt ohne Frankfurt Waffenstillstand mit Dänemark; Unruhen in Frankfurt.",
+    text: `<p>Im Krieg um Schleswig-Holstein schließt Preußen am 26. August 1848 den Waffenstillstand von Malmö, ohne die Zentralgewalt zu fragen. Die Nationalversammlung lehnt ihn zunächst ab, stimmt ihm dann aber zu, weil sie keine Machtmittel hat. Daraufhin kommt es am 18. September in Frankfurt zu Aufständen; die konservativen Abgeordneten Lichnowsky und Auerswald werden ermordet. Preußische und österreichische Truppen schlagen den Aufstand nieder.</p>`,
+    begriffe: ["Schleswig-Holstein-Frage", "Machtlosigkeit des Parlaments"],
+    lp: "K1/K2 · Scheitern an der Machtfrage",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum Malmö als Wendepunkt der Revolution gilt.",
+        eh: `<p>Die Nationalversammlung zeigt sich abhängig von Preußen; Ansehensverlust bei der Bevölkerung; Spaltung zwischen Parlament und radikaler Straße; das Parlament ruft Truppen der Fürsten zum eigenen Schutz.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "1848/49", titel: "Neue Akteure: Arbeiter- und Frauenbewegung",
+    kurz: "Arbeiterverbrüderung, demokratische Vereine und erste Frauenzeitung.",
+    text: `<p>Ende August/Anfang September 1848 gründet ein Arbeiterkongress in Berlin die <b>Allgemeine Deutsche Arbeiterverbrüderung</b> (Stephan Born). Gefordert werden Arbeitsschutz, Bildung, Selbsthilfe. Vielerorts entstehen demokratische, konstitutionelle, katholische Vereine sowie Handwerkerkongresse: politische Öffentlichkeit in bislang unbekanntem Ausmaß.</p>
+      <p>Frauen beteiligen sich an Vereinen, Spendensammlungen und auf den Barrikaden, dürfen aber in der Paulskirche nur auf der Galerie zuhören. Louise Otto gibt ab April 1849 die „Frauen-Zeitung“ heraus.</p>`,
+    begriffe: ["Arbeiterverbrüderung", "Vereinswesen", "Frauenbewegung", "Politisierung"],
+    lp: "K1 · bürgerliche Gesellschaft und politische Teilhabe",
+    fragen: [
+      { op: "Herausarbeiten", afb: "II", q: "Arbeiten Sie heraus, welche Gruppen 1848 erstmals politisch organisiert auftraten.",
+        eh: `<p>Arbeiter und Gesellen, Handwerker, Katholiken, Frauen in Ansätzen; Vereine und Presse als Medien. Ergebnis: Politisierung breiter Schichten, Vorstufen von Parteien und Verbänden.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, inwiefern 1848 für Frauen und Unterschichten eine „bürgerliche“ Revolution mit Grenzen war.",
+        eh: `<p>Grundrechte und Wahlrecht gelten für Männer; soziale Forderungen kaum aufgenommen; dennoch erste Organisation und Öffentlichkeit, Anknüpfungspunkte für spätere Bewegungen (Frauenwahlrecht 1918).</p>` }
+    ] },
+
+  { phase: "revolution", datum: "Okt./Nov. 1848", titel: "Gegenrevolution in Wien und Berlin", schluessel: true,
+    kurz: "Wien wird militärisch erobert, Robert Blum erschossen; Preußen löst seine Nationalversammlung auf.",
+    text: `<p>Kaiserliche Truppen unter Windischgrätz erobern Ende Oktober das aufständische Wien. Der Frankfurter Abgeordnete Robert Blum wird trotz Immunität am 9. November 1848 standrechtlich erschossen.</p>
+      <p>In Berlin rückt General Wrangel am 10. November ein, die preußische Nationalversammlung wird verlegt und aufgelöst. Am 5. Dezember 1848 oktroyiert der König eine Verfassung, die einige liberale Zugeständnisse enthält, aber die Krone stärkt.</p>`,
+    begriffe: ["Gegenrevolution", "Oktroyierte Verfassung", "Immunität"],
+    lp: "K1/K2 · Wende der Revolution",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie, warum die Gegenrevolution im Herbst 1848 Erfolg hatte.",
+        eh: `<p>Militär blieb loyal zu den Monarchen; Bürgertum gespalten und angsterfüllt vor Radikalisierung; Parlament ohne Machtmittel; Österreich und Preußen gewinnen Handlungsfähigkeit zurück.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie die Hinrichtung Robert Blums als Signal an die Paulskirche.",
+        eh: `<p>Missachtung parlamentarischer Immunität zeigt Ohnmacht des Frankfurter Parlaments; Österreich erkennt dessen Autorität nicht an. Symbolfigur der Demokraten.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "27.12.1848", titel: "Grundrechte des deutschen Volkes", schluessel: true,
+    kurz: "Erster gesamtdeutscher Grundrechtskatalog, als Reichsgesetz verkündet.",
+    text: `<p>Noch vor der Verfassung verkündet die Nationalversammlung die Grundrechte. Sie umfassen unter anderem Gleichheit vor dem Gesetz und Aufhebung der Standesvorrechte, Freizügigkeit, Freiheit der Person, Abschaffung der Todesstrafe (mit Ausnahmen), Meinungs- und Pressefreiheit, Glaubens- und Gewissensfreiheit, Versammlungs- und Vereinsfreiheit, Freiheit von Wissenschaft und Lehre sowie die Aufhebung der Grundherrschaft.</p>
+      <p>Mehrere große Staaten, darunter Preußen, Österreich, Bayern und Hannover, setzen sie nicht in Kraft. 1851 hebt der Bundestag sie auf. Sie wirken aber als Vorbild für Weimar 1919 und das Grundgesetz 1949.</p>`,
+    begriffe: ["Grundrechte", "Rechtsgleichheit", "Rechtsstaat"],
+    lp: "K1 · demokratischer Verfassungsstaat · K2",
+    fragen: [
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die Grundrechte von 1848 mit den Grundrechten des Grundgesetzes (Art. 1–19).",
+        eh: `<p>Gemeinsam: Freiheitsrechte (Meinung, Presse, Glauben, Versammlung, Wissenschaft), Gleichheit vor dem Gesetz. Unterschiede: GG beginnt mit Menschenwürde, Grundrechte binden alle Staatsgewalt unmittelbar (Art. 1 Abs. 3), Verfassungsgericht, Gleichberechtigung von Mann und Frau (Art. 3 Abs. 2); 1848 Aufhebung feudaler Lasten zeitgebunden.</p>` },
+      { op: "Bewerten", afb: "III", q: "Bewerten Sie die Bedeutung der Grundrechte für die Entwicklung des Rechtsstaats in Deutschland.",
+        eh: `<p>Trotz kurzer Geltung Maßstab und Vorbild; Teile wurden in Länderverfassungen und im Kaiserreich (Rechtsgleichheit, Gewerbefreiheit) verwirklicht; direkte Anknüpfung 1919 und 1949. Grenzen: Nichtumsetzung, Aufhebung 1851.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "Okt. 1848 – März 1849", titel: "Großdeutsch oder kleindeutsch?",
+    kurz: "Österreichs Gesamtstaatsverfassung vom 4. März 1849 macht die großdeutsche Lösung unmöglich.",
+    text: `<p>Die Nationalversammlung streitet, ob Österreich mit seinen deutschsprachigen Gebieten zum Reich gehören soll (<b>großdeutsch</b>) oder ob ein Reich ohne Österreich unter preußischer Führung entstehen soll (<b>kleindeutsch</b>). Die Paragraphen 2 und 3 des Verfassungsentwurfs erlauben eine Verbindung mit nichtdeutschen Ländern nur in Personalunion, was den Vielvölkerstaat Österreich zerreißen würde.</p>
+      <p>Österreich unter Ministerpräsident Schwarzenberg beharrt auf einem ungeteilten Gesamtstaat (Märzverfassung, 4. März 1849). Damit setzt sich in Frankfurt die kleindeutsche Lösung durch.</p>`,
+    begriffe: ["Großdeutsche Lösung", "Kleindeutsche Lösung", "Personalunion"],
+    lp: "Inhalt: Verfassungsdebatten der Paulskirche",
+    fragen: [
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die Argumente für die groß- und die kleindeutsche Lösung.",
+        eh: `<p>Großdeutsch: historische Reichstradition, katholischer Süden, Einschluss der Deutschösterreicher, Ablehnung preußischer Vorherrschaft. Kleindeutsch: realisierbar, Zollverein, Österreichs Vielvölkerproblem, protestantisch-preußische Führung, wirtschaftliche Stärke Preußens.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob die Nationalversammlung die nationale Frage überhaupt lösen konnte.",
+        eh: `<p>Grenze der Nation unklar (Österreich, Posen, Schleswig, Böhmen); Konflikt mit anderen Nationalbewegungen; Lösung hing an Zustimmung der Großmächte Preußen und Österreich. Ergebnis: ohne Machtmittel kaum lösbar.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "28.03.1849", titel: "Reichsverfassung und Kaiserwahl", schluessel: true,
+    kurz: "Verfassung des Deutschen Reiches; Friedrich Wilhelm IV. wird zum Erbkaiser gewählt.",
+    text: `<p>Die Reichsverfassung sieht vor:</p>
+      <ul><li>Bundesstaat mit Reichsgewalt und Einzelstaaten</li><li>erblicher Kaiser als Staatsoberhaupt mit aufschiebendem (suspensivem) Veto</li><li>Reichstag aus Staatenhaus (Vertreter der Länder) und Volkshaus</li><li>Volkshaus nach allgemeinem, gleichem, geheimem und direktem Wahlrecht für Männer (Reichswahlgesetz vom 12. April 1849)</li><li>verantwortliche Reichsminister, Reichsgericht, Grundrechtskatalog</li></ul>
+      <p>Die Nationalversammlung wählt Friedrich Wilhelm IV. von Preußen mit 290 Stimmen bei 248 Enthaltungen zum Kaiser. Das Zugeständnis an die Linke beim Wahlrecht sicherte die Mehrheit für das Erbkaisertum.</p>`,
+    begriffe: ["Reichsverfassung", "Bundesstaat", "Erbkaisertum", "Suspensives Veto", "Allgemeines Männerwahlrecht"],
+    lp: "Inhalt: Verfassungsdebatten · K1 demokratischer Verfassungsstaat",
+    fragen: [
+      { op: "Analysieren", afb: "II", q: "Analysieren Sie das Verfassungsschema der Reichsverfassung im Hinblick auf Gewaltenteilung und Volkssouveränität.",
+        eh: `<p>Legislative: Reichstag (zwei Kammern) mit Kaiser; Exekutive: Kaiser mit verantwortlichen Ministern; Judikative: Reichsgericht. Volkssouveränität über das Volkshaus, eingeschränkt durch Erbmonarchie und Staatenhaus. Mischung aus monarchischen, föderalen und demokratischen Elementen.</p>` },
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie den Kompromiss zwischen Liberalen und Demokraten, der zur Verabschiedung führte.",
+        eh: `<p>Liberale (Erbkaiserliche um Gagern) erhalten das Erbkaisertum; Linke erhält allgemeines, gleiches Männerwahlrecht und suspensives Veto. Ohne diesen Tausch keine Mehrheit.</p>` },
+      { op: "Vergleichen", afb: "II", q: "Vergleichen Sie die Reichsverfassung von 1849 mit dem Grundgesetz.",
+        eh: `<p>Gemeinsam: Bundesstaat, Zweikammersystem (Bundesrat/Staatenhaus), Grundrechte, unabhängige Gerichtsbarkeit. Unterschiede: Erbkaiser vs. gewählter Bundespräsident, keine parlamentarische Verantwortlichkeit der Regierung im heutigen Sinn, Frauenwahlrecht, Bundesverfassungsgericht, wehrhafte Demokratie.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "03. & 28.04.1849", titel: "Ablehnung der Kaiserkrone",
+    kurz: "Friedrich Wilhelm IV. weist die Krone zurück; 28 kleinere Staaten erkennen die Verfassung an.",
+    text: `<p>Am 3. April 1849 empfängt der König die Kaiserdeputation, verlangt aber die Zustimmung der Fürsten. Am 28. April lehnt er Krone und Verfassung endgültig ab. Er sah in der Krone ein Produkt der Revolution, unvereinbar mit seinem Gottesgnadentum; in Briefen äußerte er sich darüber verächtlich. Hinzu kamen Rücksicht auf Österreich und Russland.</p>
+      <p>28 kleinere Staaten erkennen die Verfassung an, Preußen, Österreich, Bayern, Sachsen und Hannover nicht. Österreich und Preußen ziehen ihre Abgeordneten ab.</p>`,
+    begriffe: ["Gottesgnadentum", "Kaiserdeputation"],
+    lp: "K1/K2 · Scheitern der Verfassung",
+    fragen: [
+      { op: "Erklären", afb: "II", q: "Erklären Sie die Gründe für die Ablehnung der Kaiserkrone.",
+        eh: `<p>Monarchisches Selbstverständnis (Gottesgnadentum, keine Krone aus Volkshand); Ablehnung von Volkssouveränität und suspensivem Veto; außenpolitische Rücksicht auf Österreich und Russland; Gegenrevolution in Preußen bereits erfolgreich.</p>` },
+      { op: "Analysieren", afb: "II", q: "Analysieren Sie einen Brief Friedrich Wilhelms IV. zur Kaiserkrone (z. B. an Bunsen, Dezember 1848) auf sein Herrschaftsverständnis.",
+        eh: `<p>Quelle vollständig und mit Fundstelle vorlegen. Erwartet: Gottesgnadentum vs. Volkssouveränität, Abwertung des Parlaments, Bezug zu legitimen Fürsten. Hinweis: privater Brief, nicht öffentliche Erklärung.</p>` }
+    ] },
+
+  { phase: "revolution", datum: "Mai–Juli 1849", titel: "Reichsverfassungskampagne: Dresden, Pfalz, Baden", bayern: true, schluessel: true,
+    kurz: "Aufstände für die Reichsverfassung werden von preußischen Truppen niedergeschlagen; Rastatt fällt am 23. Juli.",
+    text: `<p>Demokraten kämpfen nun für die Durchsetzung der Reichsverfassung. In Dresden (3.–9. Mai, mit Beteiligung Richard Wagners und Gottfried Sempers) wird ein Aufstand niedergeschlagen.</p>
+      <p>In der <b>bayerischen Pfalz</b> bildet sich im Mai eine Revolutionsregierung, die sich von Bayern lossagt, weil München die Reichsverfassung ablehnt. In Baden flieht der Großherzog, eine provisorische Regierung übernimmt mit Unterstützung von Teilen des Militärs. Preußische Truppen unter Prinz Wilhelm (dem späteren Kaiser Wilhelm I.) schlagen die Aufstände im Juni/Juli nieder. Mit der Kapitulation der Festung Rastatt am 23. Juli 1849 endet die Revolution. Standgerichte verhängen Todesurteile, Tausende emigrieren.</p>
+      <p>Das nach Stuttgart ausgewichene Rumpfparlament wird am 18. Juni 1849 von württembergischem Militär aufgelöst.</p>`,
+    begriffe: ["Reichsverfassungskampagne", "Rumpfparlament", "Emigration"],
+    lp: "K1/K2 · Bezug Bayern (Pfalz)",
+    fragen: [
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie, warum sich die Pfalz im Mai 1849 gegen die bayerische Regierung stellte.",
+        eh: `<p>Bayern lehnt die Reichsverfassung ab; liberale und demokratische Tradition der Pfalz (Hambach, französisches Recht); räumliche Distanz zu München; Sympathie für Baden.</p>` },
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie, ob die Reichsverfassungskampagne noch Erfolgschancen hatte.",
+        eh: `<p>Kaum: Preußen militärisch überlegen, Bürgertum großenteils passiv oder ablehnend, Kampagne regional begrenzt, Nationalversammlung zerfallen. Bedeutung eher symbolisch: Bekenntnis zur Verfassung als Rechtsgrundlage.</p>` }
+    ] },
+
+  /* ---------- REAKTION & WIRKUNG ---------- */
+  { phase: "reaktion", datum: "1849–1851", titel: "Reaktionsära und Wiederherstellung des Bundes", schluessel: true,
+    kurz: "Dreiklassenwahlrecht, Olmützer Punktation, Aufhebung der Grundrechte.",
+    text: `<p>Preußen führt im Mai 1849 das <b>Dreiklassenwahlrecht</b> ein und erlässt am 31. Januar 1850 eine revidierte Verfassung, die bis 1918 gilt. Ein preußischer Unionsplan scheitert an Österreich und Russland (Olmützer Punktation, 29. November 1850). 1851 wird der Deutsche Bund wiederhergestellt. Mit dem Bundesreaktionsbeschluss vom 23. August 1851 werden die Grundrechte aufgehoben, Presse und Vereine erneut überwacht.</p>
+      <p>Einige Errungenschaften bleiben: Ablösung der Feudallasten, Verfassungen in Preußen und anderen Staaten, Parlamente in den Einzelstaaten.</p>`,
+    begriffe: ["Reaktion", "Dreiklassenwahlrecht", "Olmützer Punktation"],
+    lp: "K2 · zeitgenössische Bewertung",
+    fragen: [
+      { op: "Herausarbeiten", afb: "II", q: "Arbeiten Sie heraus, welche Ergebnisse der Revolution trotz Reaktion erhalten blieben.",
+        eh: `<p>Bauernbefreiung bzw. Ablösung der Grundlasten; Verfassung und Landtag in Preußen; politisierte Öffentlichkeit, Vereine; Erfahrung parlamentarischer Arbeit; Symbole; Programme, die 1866/71 und 1919 wieder aufgegriffen werden.</p>` },
+      { op: "Erläutern", afb: "II", q: "Erläutern Sie Funktionsweise und Folgen des preußischen Dreiklassenwahlrechts.",
+        eh: `<p>Wähler nach Steueraufkommen in drei Klassen mit gleichem Stimmgewicht; öffentliche, indirekte Wahl; Bevorzugung der Wohlhabenden; konservative Mehrheiten in Preußen bis 1918.</p>` }
+    ] },
+
+  { phase: "reaktion", datum: "ab 1849", titel: "Die „Forty-Eighters“: Emigration",
+    kurz: "Zehntausende Deutsche wandern aus, viele in die USA.",
+    text: `<p>Nach der Niederlage verlassen zahlreiche Demokraten das Land, z. B. Friedrich Hecker und Carl Schurz, der in den USA Senator und Innenminister wird. Die „Forty-Eighters“ engagieren sich gegen die Sklaverei und im Bürgerkrieg auf Seiten der Union. Für Deutschland bedeutet die Emigration einen Verlust an demokratischem Potenzial.</p>`,
+    begriffe: ["Emigration", "Forty-Eighters"],
+    lp: "K2 · Folgen",
+    fragen: [
+      { op: "Beurteilen", afb: "III", q: "Beurteilen Sie die Folgen der Emigration für die politische Kultur in Deutschland.",
+        eh: `<p>Schwächung der demokratischen Linken; Liberale passen sich an (Realpolitik, später Nationalliberale unter Bismarck); Demokratie gilt vielen als „gescheitert“. Gegenposition: Ideen leben in Vereinen, Presse, Arbeiterbewegung weiter.</p>` }
+    ] },
+
+  { phase: "reaktion", datum: "1919 und 1949", titel: "Nachwirkung in Weimar und im Grundgesetz", schluessel: true,
+    kurz: "Grundrechte, Bundesstaat und Schwarz-Rot-Gold werden aufgegriffen.",
+    text: `<p>Die Weimarer Nationalversammlung 1919 und der Parlamentarische Rat 1948/49 knüpfen ausdrücklich an 1848 an: Grundrechtskatalog, föderaler Aufbau, Zweikammersystem, Schwarz-Rot-Gold. Die Paulskirche wird nach dem Zweiten Weltkrieg wiederaufgebaut und 1948 zum 100. Jahrestag eingeweiht. Sie gilt heute als Ort der Demokratiegeschichte.</p>
+      <p>In der Geschichtswissenschaft ist umstritten, ob man von einer „gescheiterten“ Revolution sprechen sollte oder eher von einer folgenreichen, deren Ziele zeitversetzt verwirklicht wurden. Diskutiert wird auch die These eines deutschen „Sonderwegs“.</p>`,
+    begriffe: ["Demokratietradition", "Erinnerungskultur", "Sonderweg-These"],
+    lp: "K2 · Bewertung aus heutiger Perspektive",
+    fragen: [
+      { op: "Erörtern", afb: "III", q: "Erörtern Sie die These, die Revolution von 1848/49 sei gescheitert.",
+        eh: `<p>Gescheitert: keine Einheit, Verfassung nie in Kraft, Grundrechte aufgehoben, Gegenrevolution, Emigration. Nicht gescheitert: Bauernbefreiung, Verfassungsstaaten, politisierte Gesellschaft, Parteienvorformen, Vorbild für 1919/1949, nationale Symbole. Urteil mit Kriterien (kurz- vs. langfristig, Einheit vs. Freiheit).</p>` },
+      { op: "Stellung nehmen", afb: "III", q: "Nehmen Sie Stellung zu der Frage, ob die Paulskirche ein geeigneter Erinnerungsort der deutschen Demokratie ist.",
+        eh: `<p>Dafür: erstes gesamtdeutsches Parlament, Grundrechte, Symbolkraft. Dagegen/kritisch: Ausschluss von Frauen und Unterschichten, nationale Exklusion (z. B. Posen-Debatte), Scheitern. Reflektierte Gegenwartsperspektive (K2).</p>` }
+    ] }
+];
+
+const SYNTHESE = [
+  { op: "Erläutern", afb: "II", q: "Erläutern Sie die Bedeutung der Revolution von 1848/49 für die Ausbildung einer bürgerlichen Gesellschaft in Deutschland. (K1)",
+    eh: `<p>Politisierung, Vereine und Presse, Fraktionen als Vorformen von Parteien, Rechtsgleichheit und Aufhebung feudaler Lasten, Selbstverständnis des Bürgertums als politischer Akteur; Grenzen: Ausschluss von Frauen, soziale Kluft zu Unterschichten.</p>` },
+  { op: "Beurteilen", afb: "III", q: "Beurteilen Sie die Bedeutung der Revolution für die Demokratisierung Deutschlands aus zeitgenössischer und aus heutiger Perspektive. (K2)",
+    eh: `<p>Zeitgenössisch: Enttäuschung, Resignation, Emigration; Konservative sehen sich bestätigt; Liberale wenden sich der Realpolitik zu. Heute: Anfang der parlamentarischen und grundrechtlichen Tradition, Bezugspunkt für Weimar und GG. Beide Perspektiven ausdrücklich unterscheiden.</p>` },
+  { op: "Erklären", afb: "II", q: "Erklären Sie die Ambivalenz zwischen Rückzug ins Private und politischem Engagement im Vormärz als Folge der Restaurationspolitik. (K3)",
+    eh: `<p>Repression (1819, 1832) verhindert offene Politik → Biedermeier; zugleich Vereine, Feste, Presse als verdeckte politische Öffentlichkeit; Not der 1840er-Jahre und Februarrevolution machen aus latentem Engagement offene Bewegung.</p>` }
+];
+
+/* ---------- Rendern ---------- */
+const root = document.getElementById("zeitleiste");
+let nr = 0;
+
+function frageHTML(f, i) {
+  return `<li class="frage"><span class="nr">${i + 1}</span><div class="txt">
+    <span class="op">${f.op}</span> <span class="afb">(AFB ${f.afb})</span><br>${f.q}
+    <details class="eh"><summary>Erwartungshorizont</summary><div class="eh-text">${f.eh}</div></details></div></li>`;
+}
+
+PHASEN.forEach(ph => {
+  const sec = document.createElement("section");
+  sec.className = "phase";
+  sec.dataset.phase = ph.id;
+  const items = EREIGNISSE.filter(e => e.phase === ph.id).map(e => {
+    nr++;
+    return `<li class="ev${e.schluessel ? " schluessel" : ""}" data-bayern="${e.bayern ? 1 : 0}">
+      <details id="ev-${nr}">
+        <summary>
+          <span class="datum">${e.datum}</span>
+          <span class="titel">${e.titel}${e.bayern ? '<span class="tag">Bayern</span>' : ""}</span>
+          <span class="pfeil" aria-hidden="true">▶</span>
+          <span class="kurz">${e.kurz}</span>
+        </summary>
+        <div class="inhalt">
+          <div>${e.text}</div>
+          <div><div class="lbl2">Grundbegriffe</div><div class="begriffe">${e.begriffe.map(b => `<span>${b}</span>`).join("")}</div></div>
+          <div class="lp"><b>Lehrplanbezug:</b> ${e.lp}</div>
+          <div class="fragen"><h3>Nachfragen</h3><ol>${e.fragen.map(frageHTML).join("")}</ol></div>
+        </div>
+      </details></li>`;
+  }).join("");
+  sec.innerHTML = `<div class="phase-kopf"><h2>${ph.titel}</h2><span class="zeit">${ph.zeit}</span></div>
+    <p class="phase-intro">${ph.intro}</p><ol class="achse">${items}</ol>`;
+  root.appendChild(sec);
+});
+const leer = document.createElement("p");
+leer.className = "leer"; leer.hidden = true;
+leer.textContent = "In dieser Phase gibt es kein Ereignis mit Bayern-Bezug. Filter „Nur Bayern-Bezug“ ausschalten, um alle zu sehen.";
+root.appendChild(leer);
+
+document.getElementById("synthese").innerHTML = SYNTHESE.map(frageHTML).join("");
+
+/* ---------- Steuerung ---------- */
+let phase = "alle", nurBayern = false;
+const phasenBtns = document.querySelectorAll(".tools [data-phase]");
+function filtern() {
+  let sichtbar = 0;
+  document.querySelectorAll(".phase").forEach(sec => {
+    const phaseOk = phase === "alle" || sec.dataset.phase === phase;
+    let n = 0;
+    sec.querySelectorAll(".ev").forEach(ev => {
+      const ok = phaseOk && (!nurBayern || ev.dataset.bayern === "1");
+      ev.hidden = !ok; if (ok) n++;
+    });
+    sec.hidden = n === 0; sichtbar += n;
+  });
+  leer.hidden = sichtbar > 0;
+}
+phasenBtns.forEach(b => b.addEventListener("click", () => {
+  phase = b.dataset.phase;
+  phasenBtns.forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  filtern();
+}));
+const bBtn = document.getElementById("f-bayern");
+bBtn.addEventListener("click", () => {
+  nurBayern = !nurBayern; bBtn.setAttribute("aria-pressed", String(nurBayern)); filtern();
+});
+const aufBtn = document.getElementById("t-auf");
+aufBtn.addEventListener("click", () => {
+  const auf = aufBtn.getAttribute("aria-pressed") !== "true";
+  document.querySelectorAll(".ev > details").forEach(d => { d.open = auf; });
+  aufBtn.setAttribute("aria-pressed", String(auf));
+  aufBtn.textContent = auf ? "Alle zuklappen" : "Alle aufklappen";
+});
+const ehBtn = document.getElementById("t-eh");
+function setEH(an) {
+  document.body.classList.toggle("ohne-eh", !an);
+  ehBtn.setAttribute("aria-pressed", String(an));
+  try { localStorage.setItem("zl1848-eh", an ? "1" : "0"); } catch (e) {}
+}
+ehBtn.addEventListener("click", () => setEH(ehBtn.getAttribute("aria-pressed") !== "true"));
+try { if (localStorage.getItem("zl1848-eh") === "0") setEH(false); } catch (e) {}
+</script>
