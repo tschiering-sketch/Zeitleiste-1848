@@ -80,6 +80,12 @@ table.m td,table.m th{border:.8pt solid #999;padding:1.5mm 2mm;vertical-align:to
 .order .nr{width:8mm;height:6mm;border:1pt solid #111;flex:none}
 .bonus{border:1.5pt dashed var(--folder);padding:3mm 4.5mm;break-inside:avoid}
 .bonus h4{margin:0 0 1.5mm;text-transform:uppercase;letter-spacing:.06em;font-stretch:85%}
+.mat.hasfig{break-inside:auto}
+/* Telegramm-Blatt */
+.sealed .cut{font-family:"Courier Prime",monospace;font-size:9pt;color:#555;text-align:center;margin-bottom:6mm}
+.figs{display:flex;gap:4mm}.fig{margin:0;max-width:110mm}.figimg img{width:100%;border:1mm solid #fff;box-shadow:0 0 0 .4pt #999}
+.fig figcaption{font-size:8.5pt;color:#4a4a4a;font-family:"Courier Prime",monospace}
+.telegram{margin-top:3mm;font-size:11pt}
 /* Chiffrierscheibe */
 .strip{font-family:"Courier Prime",monospace;font-weight:700;font-size:12pt;letter-spacing:2.6mm;border:1pt dashed #111;padding:2mm 3mm;white-space:nowrap;overflow:hidden}
 .cryp{font-family:"Courier Prime",monospace;font-weight:700;font-size:12pt;letter-spacing:.15em;border:1pt dashed #111;padding:3mm;word-break:break-all}
@@ -117,9 +123,9 @@ function matHTML(m) {
   body = qrize(body);
   if (m.figs) body += `<div style="display:flex;gap:4mm;flex-wrap:wrap;margin-top:2mm">${m.figs.map(f => f.sensitive
     ? `<div class="warnbox" style="flex:1"><b>Fotos der Leichenschau</b><p>Im Druck nicht abgebildet. Sie sind nur in der App zu sehen, unscharf gestellt und mit Warnhinweis.</p></div>`
-    : `<figure style="margin:0;flex:1 1 60mm;max-width:${m.wide && m.figs.length===1 ? "150mm" : "80mm"}"><img src="${D.IMG[f.img]}" style="width:100%;border:1mm solid #fff;box-shadow:0 0 0 .4pt #999"><figcaption class="small" style="font-family:'Courier Prime',monospace">${esc(f.cap)}</figcaption></figure>`).join("")}</div>`;
+    : `<figure style="margin:0;flex:1 1 60mm;max-width:${m.wide && m.figs.length===1 ? "100mm" : "80mm"}"><img src="${D.IMG[f.img]}" style="width:100%;border:1mm solid #fff;box-shadow:0 0 0 .4pt #999"><figcaption class="small" style="font-family:'Courier Prime',monospace">${esc(f.cap)}</figcaption></figure>`).join("")}</div>`;
   if (m.img && D.IMG[m.img] && !D.IMG[m.img].startsWith("__")) body = `<div class="photo"><img src="${D.IMG[m.img]}" alt=""><div>${body}</div></div>`;
-  return `<article class="mat"><header><div><span class="mno">M ${m.no}</span> <h4>${esc(m.title)}</h4></div><span class="kind ${m.kind}">${kindLabel[m.kind]}</span></header>${body}<div class="src">${esc(m.src)}</div></article>`;
+  return `<article class="mat${m.figs ? " hasfig" : ""}"><header><div><span class="mno">M ${m.no}</span> <h4>${esc(m.title)}</h4></div><span class="kind ${m.kind}">${kindLabel[m.kind]}</span></header>${body}<div class="src">${esc(m.src)}</div></article>`;
 }
 
 const lines = n => `<div class="lines">${"<div></div>".repeat(n)}</div>`;
@@ -152,9 +158,12 @@ function akteHTML(a) {
   const mats = `<section class="page"><h2 class="sec">Akte ${a.no} · Beweismittel</h2>${a.mats.map(matHTML).join("")}</section>`;
   const qs = `<section class="page"><h2 class="sec">Akte ${a.no} · Ermittlungsbogen</h2>
     ${a.qs.map((q, i) => qHTML(q, "Ermittlungsfrage " + (i + 1))).join("")}
-    ${a.reveal ? `<p class="small">Nach Frage 2 geht das Originaltelegramm vom 24. Juni 1922 ein. Es wird in der App angezeigt.</p>` : ""}
+    ${a.reveal ? `<p class="small">Nach Frage 2 geht das Originaltelegramm vom 24. Juni 1922 ein. Es liegt verschlossen bei (eigenes Blatt) und wird auch in der App angezeigt.</p>` : ""}
     <div class="bonus"><h4>${esc(a.bonus.title)}</h4><p>${a.bonus.intro}</p>${qHTML(a.bonus.q, "Zusatzfrage")}</div></section>`;
-  return cover + mats + qs;
+  const tele = a.reveal ? `<section class="page"><div class="sealed"><div class="cut">✂ ── Eigenes Blatt / Umschlag: erst öffnen, wenn eure Prognose (Frage 2) steht ──</div>
+    <h2 class="sec">Akte ${a.no} · Eingang 24. Juni 1922</h2>
+    <article class="mat"><header><div><span class="mno">M ${a.no === "V" ? "5.4" : a.no}</span> <h4>Telegramm aus Berlin an den badischen Staatspräsidenten</h4></div><span class="kind q">Originalquelle</span></header>${a.reveal.html}</article></div></section>` : "";
+  return cover + mats + qs + tele;
 }
 
 function wrap(title, body) {
