@@ -115,6 +115,9 @@ function matHTML(m) {
       <div class="strip" style="margin-top:2mm">${A}</div><div class="strip" style="margin-top:2mm">${A}${A}</div>`;
   }
   body = qrize(body);
+  if (m.figs) body += `<div style="display:flex;gap:4mm;flex-wrap:wrap;margin-top:2mm">${m.figs.map(f => f.sensitive
+    ? `<div class="warnbox" style="flex:1"><b>Fotos der Leichenschau</b><p>Im Druck nicht abgebildet. Sie sind nur in der App zu sehen, unscharf gestellt und mit Warnhinweis.</p></div>`
+    : `<figure style="margin:0;flex:1 1 60mm;max-width:${m.wide && m.figs.length===1 ? "150mm" : "80mm"}"><img src="${D.IMG[f.img]}" style="width:100%;border:1mm solid #fff;box-shadow:0 0 0 .4pt #999"><figcaption class="small" style="font-family:'Courier Prime',monospace">${esc(f.cap)}</figcaption></figure>`).join("")}</div>`;
   if (m.img && D.IMG[m.img] && !D.IMG[m.img].startsWith("__")) body = `<div class="photo"><img src="${D.IMG[m.img]}" alt=""><div>${body}</div></div>`;
   return `<article class="mat"><header><div><span class="mno">M ${m.no}</span> <h4>${esc(m.title)}</h4></div><span class="kind ${m.kind}">${kindLabel[m.kind]}</span></header>${body}<div class="src">${esc(m.src)}</div></article>`;
 }
@@ -165,7 +168,7 @@ const intro = `<section class="page"><div class="cover">
   <div class="telegram">Reichsfinanzminister a.D. Matthias Erzberger bei Bad Griesbach im Schwarzwald erschossen. Begleiter Abg. Diez schwer verletzt. Zwei Täter flüchtig. Soko Griesbach wird gebildet.</div>
   <div class="stamp" style="top:auto;bottom:118mm;right:10mm">Ermittlungsakten</div>
   <div class="auftrag">Ihr seid die Ermittlerinnen und Ermittler der Sonderkommission. Löst die Akten I bis V der Reihe nach. Antworten gebt ihr in der App ein, die euch Hinweise gibt und die nächste Akte freischaltet. Notizen macht ihr auf den Ermittlungsbögen. Den Bericht an den Staatsanwalt führt eure Aktenführung von Anfang an mit.</div>
-  <div class="warnbox"><b>Hinweis zu den Materialien</b><p>Dieser Fall ist echt. Er handelt von Mord, Hass und Antisemitismus. Einige Quellen sind verletzend, ein Foto (nur über QR-Code) zeigt den Toten. Wenn euch etwas belastet, sprecht eure Lehrkraft an.</p></div>
+  <div class="warnbox"><b>Hinweis zu den Materialien</b><p>Dieser Fall ist echt. Er handelt von Mord, Hass und Antisemitismus. Einige Quellen sind verletzend. Fotos des Toten sind nicht abgedruckt, sondern nur in der App zu sehen, unscharf gestellt und mit Warnhinweis. Wenn euch etwas belastet, sprecht eure Lehrkraft an.</p></div>
   <div class="qrbox">${QR[APP_URL]}<span><b>Zur App „Soko Griesbach“</b><br>QR-Code scannen oder den Link der Lehrkraft nutzen</span></div>
   <table><tr><td>Kennzeichnung</td><td><div style="display:flex;flex-wrap:wrap;gap:2mm"><span class="kind q">Originalquelle</span><span class="kind d">Darstellung</span><span class="kind r">Rekonstruktion · Spielmaterial</span></div></td></tr><tr><td>Team</td><td>&nbsp;</td></tr></table>
 </div></section>`;

@@ -98,6 +98,17 @@ p{margin:0}
 .doc p+p{margin-top:.6em}
 .doc .fr{font-family:var(--font-frak);font-size:1.35rem;line-height:1.1}
 .src{font-size:.75rem;color:var(--ink-soft);border-top:1px solid var(--rule);padding-top:6px}
+.figs{display:flex;flex-wrap:wrap;gap:12px}
+.fig{margin:0;display:grid;gap:6px;flex:1 1 220px;min-width:0}
+.fig{max-width:400px}
+.mat.wide .fig:only-child{max-width:760px}
+.figimg{position:relative;background:#111;border:4px solid var(--paper);box-shadow:0 1px 4px var(--shade);overflow:hidden}
+.figimg img{display:block;width:100%;height:auto;filter:sepia(.2) contrast(1.05)}
+.fig figcaption{font-size:.82rem;color:var(--ink-soft);font-family:var(--font-doc)}
+.fig.sens img{filter:blur(22px) grayscale(1);transform:scale(1.1)}
+.fig.sens.open img{filter:sepia(.2);transform:none}
+.fig.sens .reveal{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%)}
+.fig.sens.open .reveal{display:none}
 .photo{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
 .photo img{width:110px;height:auto;border:4px solid var(--paper);box-shadow:0 1px 3px var(--shade);filter:sepia(.25) contrast(1.05)}
 @media (max-width:420px){.photo{grid-template-columns:1fr}.photo img{width:140px}}
@@ -235,7 +246,7 @@ textarea.inp{width:100%;min-height:96px;resize:vertical;font-family:var(--font-d
 <script>
 (() => {
 "use strict";
-const IMG = {erzberger:"__IMG_erzberger__",helfferich:"__IMG_helfferich__",rathenau:"__IMG_rathenau__",kahr:"__IMG_kahr__"};
+const IMG = {erzberger:"__IMG_erzberger__",helfferich:"__IMG_helfferich__",rathenau:"__IMG_rathenau__",kahr:"__IMG_kahr__",tatortskizze:"__IMG_tatortskizze__",boeschung:"__IMG_boeschung__",leichenschau:"__IMG_leichenschau__",fahndungsfoto:"__IMG_fahndungsfoto__",killinger:"__IMG_killinger__",hoffmann:"__IMG_hoffmann__"};
 const DURATION = 70; // Minuten Fahndungszeit (Akten 1–5); Einstieg 5' + Lagebesprechung 15' kommen hinzu
 const PENALTY = [1,2,4];
 const PIN = "1921";
@@ -272,28 +283,19 @@ const AKTEN = [
    src:"Nachgestellte Aussage. Der Inhalt folgt der Rekonstruktion des Tathergangs bei Cord Gebhardt: Der Fall des Erzberger-Mörders Heinrich Tillessen, Tübingen 1995, S. 42–48."},
   {no:"1.3", kind:"d", title:"Befund am Leichnam", html:`<dl class="kv"><dt>Opfer</dt><dd>Matthias Erzberger, geb. 20.9.1875, Zentrumsabgeordneter</dd><dt>Treffer</dt><dd><b>acht</b> Schusstreffer</dd><dt>Todesursache</dt><dd>zwei Kopfschüsse aus nächster Nähe, beide für sich allein tödlich</dd><dt>Fundort</dt><dd>unterhalb der Straße; das Opfer war nach den ersten Schüssen eine Böschung hinabgerutscht</dd><dt>Zweites Opfer</dt><dd>Carl Diez, mehrere Schussverletzungen, überlebt</dd></dl>`,
    src:"Zusammenfassung nach Gebhardt 1995, S. 42–48, und dem Artikel „Matthias Erzberger“ der deutschsprachigen Wikipedia, Abschnitt Ermordung."},
-  {no:"1.4", kind:"q", title:"Tatortfoto der Polizei, 1921", html:`<div class="warnbox"><b>Achtung: Das Foto zeigt den Toten</b><p>Die Polizei ließ den Tatort 1921 von einem Fotografen aus Oberkirch aufnehmen. Das Foto zeigt Matthias Erzberger tot am Boden. Öffnet es nur, wenn ihr euch das zutraut. Für die Lösung braucht ihr es nicht.</p><a class="ext" href="${commons("Matthias Erzberger Tatortfoto 1921.webp")}" target="_blank" rel="noopener">Tatortfoto öffnen ↗</a></div>`,
-   src:"Fotografen Theodor oder Otto Busam, Oberkirch (Baden), im Auftrag der Polizei, 1921. Gemeinfrei. Abgedruckt in: Haus der Geschichte Baden-Württemberg (Hg.): Matthias Erzberger. Ein Wegbereiter der deutschen Demokratie, Stuttgart 2011."},
-  {no:"1.5", kind:"r", title:"Tatortskizze (nicht maßstäblich)", wide:true, html:`<div class="mapbox" style="max-width:640px"><svg viewBox="0 0 640 250" role="img" aria-label="Skizze: Kurhaus Griesbach links, Kniebisstraße steigt nach rechts zur Alexanderschanze, Tatort an einer Böschung auf dem Rückweg">
-   <rect class="map-bg" x="0" y="0" width="640" height="250"/>
-   <path d="M40 210 C 170 200, 230 150, 330 140 S 520 70, 610 40" stroke="currentColor" stroke-width="10" fill="none" opacity=".25"/>
-   <path d="M40 210 C 170 200, 230 150, 330 140 S 520 70, 610 40" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="2 6"/>
-   <rect x="22" y="196" width="44" height="30" fill="none" stroke="currentColor" stroke-width="2"/>
-   <text x="18" y="244" font-size="13" fill="currentColor" font-family="Archivo,sans-serif">Kurhaus Griesbach</text>
-   <text x="520" y="30" font-size="13" fill="currentColor" font-family="Archivo,sans-serif">→ Alexanderschanze</text>
-   <text x="380" y="92" font-size="13" fill="currentColor" font-family="Archivo,sans-serif" transform="rotate(-18 380 92)">Kniebisstraße</text>
-   <path d="M300 152 L 300 200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
-   <text x="245" y="218" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">Böschung</text>
-   <g fill="#ac2a20"><circle cx="318" cy="142" r="6"/><circle cx="300" cy="198" r="7"/></g>
-   <text x="330" y="168" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">erste Schüsse (Rückweg)</text>
-   <text x="312" y="203" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">Fundort Erzberger</text>
-   <text x="460" y="236" font-size="11" fill="currentColor" font-family="Archivo,sans-serif" opacity=".7">Flucht der Täter: zu Fuß</text>
-  </svg></div>`,
-   src:"Schematische Rekonstruktion für das Spiel nach der Tatbeschreibung bei Gebhardt 1995. Heute erinnert ein Gedenkstein in einer Kehre der B 28 zwischen Bad Griesbach und Freudenstadt an die Tat."},
+  {no:"1.4", kind:"q", title:"Tatortfoto der Polizei: die Böschung", figs:[{img:"boeschung", alt:"Waldhang mit Fichten, Schwarzweißfoto", cap:"Beschriftung im Lichtbildalbum: „Böschung“. ⊗ = Landstraße, ⊕ = Fundort der Leiche"}],
+   html:`<p>Die Kriminalpolizei klebte ihre Tatortaufnahmen in ein Album. Dieses Foto zeigt den Hang unterhalb der Straße, den Erzberger nach den ersten Schüssen hinabrutschte.</p>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lichtbildmappe aus dem Ermittlungsverfahren 1921/22, Permalink 5-68430. Lizenz CC BY 3.0. Ausschnitt."},
+  {no:"1.5", kind:"q", title:"Tatortskizze der Kriminalpolizei Offenburg", wide:true, figs:[{img:"tatortskizze", alt:"Handgezeichnete Karte von Bad Griesbach mit Straße, Kehren und nummerierten Punkten", cap:"Zeichenerklärung (auf der Skizze): 1 Umkehrpunkt Erzbergers · 2 Umkehrpunkt der Täter · 3 Tatort · 4 Vermutlicher Abkürzungsweg der Täter"}],
+   html:`<p>Aufschrift: „Staatl. Kriminalpolizeistelle Offenburg, Erkennungsdienst. Skizze Mordprozess Erzberger“. Sucht auf der Skizze den Ort Griesbach, die Straße nach Osten und die Punkte 1 bis 4.</p>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Fünf Pläne des Tatorts und der Umgebung, Permalink 5-68524. Die Skizze liegt in den Akten zum zweiten Verfahren (1946–1952) und entstand vermutlich für den Prozess gegen Tillessen. Lizenz CC BY 3.0."},
   {no:"1.6", kind:"r", title:"Meldezettel, Gasthaus „Zum Goldenen Engel“, Ulm", html:`<div class="doc"><p>Wengengasse 21 · Zimmer Nr. 11<br>Aufenthalt: 19. bis 21. August 1921</p><p>1. <b>Ernst Berkner</b>, Kaufmann, aus Jena<br>2. <b>Rudolf Briese</b>, stud. jur., aus Würzburg</p></div>`,
    src:"Nach den erhaltenen Meldezetteln wiedergegeben, zitiert bei Günter Randecker: Erzberger-Attentäter schmiedeten die Mordpläne auch von Ulm aus, Schwäbische Zeitung, 24.8.2021. Die Gestaltung ist nachgestellt."},
   {no:"1.7", kind:"d", title:"Ermittlungsnotiz: Anfragen in Beuron", html:`<dl class="kv"><dt>8.–19. Aug.</dt><dd>Familie Erzberger macht Urlaub im Hotel „Waldeck“ in Beuron (Donautal).</dd><dt>19. Aug., 6.23 Uhr</dt><dd>Die Familie reist aus Beuron ab.</dd><dt>19. Aug., 16 Uhr</dt><dd>Zwei Männer fragen auf dem Postamt Beuron nach Erzbergers neuer Adresse. Ohne Erfolg. Das Postamt meldet den Vorgang nach Berlin, aber Erzberger wird nicht gewarnt.</dd><dt>20. Aug.</dt><dd>Telefongespräch aus Ulm mit einem Klosterbruder der Erzabtei Beuron: Erzberger sei „ins Renchtal“ gefahren.</dd></dl>`,
-   src:"Nach Randecker, Schwäbische Zeitung, 24.8.2021, der sich auf Meldezettel und Akten stützt."}
+   src:"Nach Randecker, Schwäbische Zeitung, 24.8.2021, der sich auf Meldezettel und Akten stützt."},
+  {no:"1.8", kind:"q", title:"Lichtbilder der Leichenschau, 1921", figs:[{img:"leichenschau", sensitive:true, alt:"Fotos des Leichnams mit Schussverletzungen", cap:"Albumseite mit Aufnahmen der Leichenschau. Markiert sind die Einschüsse."}],
+   html:`<div class="warnbox"><b>Achtung: Diese Fotos zeigen den Toten</b><p>Die Aufnahmen sind unscharf gestellt. Ihr braucht sie für die Lösung nicht. Deckt sie nur auf, wenn ihr euch das zutraut.</p><a class="ext" href="${commons("Matthias Erzberger Tatortfoto 1921.webp")}" target="_blank" rel="noopener">Weiteres Polizeifoto: Erzberger am Fundort ↗</a></div>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lichtbildmappe, Permalink 5-68430, CC BY 3.0. Verlinktes Foto: Theodor oder Otto Busam, Oberkirch, im Auftrag der Polizei 1921, gemeinfrei (Wikimedia Commons)."}
  ],
  qs:[
   {type:"choice", q:"Wo genau wurde Erzberger angegriffen?", opts:["Im Kurpark direkt vor dem Kurhaus Griesbach","Auf der Kniebisstraße oberhalb von Griesbach, auf dem Rückweg eines Spaziergangs Richtung Alexanderschanze","Am Bahnhof Oppenau beim Aussteigen","Im Gasthaus „Zum Goldenen Engel“ in Ulm"], a:1,
@@ -364,7 +366,10 @@ const AKTEN = [
   {no:"3.3", kind:"q", title:"Foto: Marine-Brigade Ehrhardt in Berlin, März 1920", html:`<p>Beim Kapp-Putsch marschiert die Brigade in Berlin ein. Auf den Stahlhelmen tragen die Soldaten ein Hakenkreuz, schon 1920 ein Zeichen der völkischen Rechten.</p><a class="ext" href="${commons("Bundesarchiv Bild 119-1983-0012, Kapp-Putsch, Marienbrigade Erhardt in Berlin.jpg")}" target="_blank" rel="noopener">Foto im Bundesarchiv-Bestand öffnen ↗</a>`,
    src:"Bundesarchiv, Bild 119-1983-0012, Fotograf unbekannt, März 1920, CC BY-SA 3.0 DE."},
   {no:"3.4", kind:"d", title:"Ermittlungsnotizen nach der Tat (ungeordnet)", html:`<ul class="doc" style="margin:0;padding-left:1.2em;display:grid;gap:6px"><li>Nov./Dez. 1921: Beide leben unter falschem Namen in Budapest und schließen sich einem ungarischen Freikorps an. Dieses hatte ihnen schon bei der Planung Schutz zugesagt.</li><li>Unmittelbar nach der Tat: Die Täter fahren zurück in die Stadt, in der sie seit April 1921 in einer Zentrale arbeiten.</li><li>Tillessen versteckt sich zunächst in den Alpen und wechselt dann über Salzburg ins Burgenland an der österreichisch-ungarischen Grenze.</li><li>31. August 1921: Die Täter verlassen München.</li><li>Später: Ungarn lehnt die Auslieferung ab, weil es kein Abkommen gibt.</li></ul>`,
-   src:"Nach den Artikeln „Heinrich Tillessen“ und „Heinrich Schulz (Attentäter)“ der deutschsprachigen Wikipedia."}
+   src:"Nach den Artikeln „Heinrich Tillessen“ und „Heinrich Schulz (Attentäter)“ der deutschsprachigen Wikipedia."},
+  {no:"3.5", kind:"q", title:"Lichtbilder der Gesuchten", wide:true, figs:[{img:"fahndungsfoto", alt:"Zwei Porträtfotos, beschriftet Schulz, H. und Tillessen, Hch.", cap:"Beschriftung: „Schulz, H.“ (links) und „Tillessen, Hch.“ (rechts)"}],
+   html:`<p>Mit diesen Fotos fahndet die Polizei nach den beiden Männern. Vergleicht sie mit den Fahndungsblättern M 3.1 und M 3.2.</p>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lichtbildmappe aus dem Ermittlungsverfahren 1921/22, Permalink 5-68430. Lizenz CC BY 3.0."}
  ],
  qs:[
   {type:"choice", q:"Was verbindet Tillessen und Schulz vor allem?", opts:["Sie studierten zusammen in Würzburg.","Beide sind ehemalige Offiziere und dienten in der Marine-Brigade Ehrhardt, einem Freikorps, das 1920 am Kapp-Putsch beteiligt war.","Beide waren Mitglieder der SPD.","Beide arbeiteten als Kaufleute in Jena."], a:1,
@@ -395,7 +400,10 @@ const AKTEN = [
   {no:"4.3", kind:"q", title:"Aus der Satzung der O.C.", html:`<div class="doc"><p>Ziel: „Bekämpfung alles Anti- und Internationalen, des Judentums, der Sozialdemokratie und der linksradikalen Parteien“.</p><p>Jedes Mitglied muss versichern, „deutscher Abstammung“ zu sein.</p></div><div class="doc"><p>Aus dem Geheimstatut: „Verräter verfallen der Feme.“</p></div><p class="small">Feme bedeutet hier, dass ein angeblicher „Verräter“ ohne Gericht hingerichtet wird (Fememord).</p>`,
    src:"Satzungszitate nach dem Artikel „Organisation Consul“ der deutschsprachigen Wikipedia. Geheimstatut zitiert nach Randecker, Schwäbische Zeitung, 24.8.2021."},
   {no:"4.4", kind:"d", title:"Personen in der Zentrale", html:`<dl class="kv"><dt>Hermann Ehrhardt</dt><dd>„Consul“, Leiter der Organisation</dd><dt>Alfred Hoffmann</dt><dd>Stabschef, leitet faktisch die Zentrale</dd><dt>Karl Tillessen</dt><dd>stellvertretender Leiter, Bruder des Täters Heinrich Tillessen</dd><dt>Manfred von Killinger</dt><dd>ehemaliger Torpedoboot-Kommandant, Leiter der militärischen Abteilung, Mitglied im „Germanenorden“. Er gibt Ende Juli oder Anfang August 1921 zwei Männern seiner Abteilung einen Auftrag und hilft ihnen danach bei der Flucht über Österreich nach Ungarn.</dd><dt>Heinrich Tillessen, Heinrich Schulz</dt><dd>seit dem 30. April 1921 in der Zentrale. Tillessen verschickt dort die Zeitschrift „Der Wiking“.</dd></dl><a class="ext" href="${commons("Ehrhardt1920.jpg")}" target="_blank" rel="noopener">Foto: Ehrhardt beim Kapp-Putsch 1920 ↗</a>`,
-   src:"Nach Sabrow (HLB), den Artikeln „Manfred von Killinger“ und „Heinrich Tillessen“ der deutschsprachigen Wikipedia sowie Martin Sabrow: Der Rathenaumord, München 1994, S. 23–27. Foto: Nationaal Archief NL, gemeinfrei."}
+   src:"Nach Sabrow (HLB), den Artikeln „Manfred von Killinger“ und „Heinrich Tillessen“ der deutschsprachigen Wikipedia sowie Martin Sabrow: Der Rathenaumord, München 1994, S. 23–27. Foto: Nationaal Archief NL, gemeinfrei."},
+  {no:"4.4 b", kind:"q", title:"Erkennungsdienst: Personenlichtbilder", wide:true, figs:[{img:"killinger", alt:"Polizeifotos Manfred von Killinger im Profil, frontal und mit Hut", cap:"„v. Killinger, Manfred“"},{img:"hoffmann", alt:"Polizeifotos Alfred Hoffmann im Profil, frontal und mit Hut", cap:"„Hoffmann, Alfred“"}],
+   html:`<p>Aus dem Album „Personen-Lichtbilder“ der Ermittler: erkennungsdienstliche Aufnahmen zweier Männer aus der Münchner Zentrale, jeweils im Profil, von vorn und mit Hut.</p>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lichtbildmappe „Personen-Lichtbilder“ aus dem Ermittlungsverfahren 1921/22, Permalink 5-68430. Lizenz CC BY 3.0. Ausschnitte."}
  ],
  qs:[
   {type:"cipher", q:"Entschlüsselt die Nachricht (M 4.1). Wie lautet die Adresse der Zentrale?", accept:["trautenwolf"], hintAccept:"Schreibt die Straße und die Hausnummer.",
@@ -568,7 +576,7 @@ function renderStart(){
         <div class="card"><h4>Kriminalrat-Akten</h4><p>Wer schnell ist, löst die Zusatzakte am Ende jeder Akte. Sie ist anspruchsvoller und freiwillig.</p></div>
       </div>
     </div>
-    <div class="sec"><div class="warnbox"><b>Hinweis zu den Materialien</b><p>Dieser Fall ist echt. Er handelt von Mord, Hass und Antisemitismus. Einige Quellen sind verletzend, ein Foto zeigt den Toten. Solche Materialien sind gekennzeichnet und müssen nicht geöffnet werden. Wenn euch etwas belastet, sprecht eure Lehrkraft an.</p></div></div>
+    <div class="sec"><div class="warnbox"><b>Hinweis zu den Materialien</b><p>Dieser Fall ist echt. Er handelt von Mord, Hass und Antisemitismus. Einige Quellen sind verletzend, und Polizeifotos zeigen den Toten. Diese Fotos sind unscharf gestellt und gekennzeichnet. Ihr müsst sie nicht aufdecken. Wenn euch etwas belastet, sprecht eure Lehrkraft an.</p></div></div>
   </div>`;
   view.querySelector("#team").addEventListener("input", e => { S.team = e.target.value; save(); });
   const bs = view.querySelector("#btnStart");
@@ -579,7 +587,8 @@ function renderStart(){
 /* ---------- Akte ---------- */
 function matHTML(m){
   const img = m.img && IMG[m.img] && !IMG[m.img].startsWith("__") ? `<img src="${IMG[m.img]}" alt="Porträtfoto">` : "";
-  const body = img ? `<div class="photo">${img}<div>${m.html}</div></div>` : m.html;
+  let body = img ? `<div class="photo">${img}<div>${m.html}</div></div>` : m.html;
+  if (m.figs) body += `<div class="figs">${m.figs.map(f => `<figure class="fig ${f.sensitive?"sens":""}"><div class="figimg"><img src="${IMG[f.img]}" alt="${esc(f.alt)}" loading="lazy">${f.sensitive?`<button type="button" class="btn red reveal">Foto aufdecken</button>`:""}</div><figcaption>${esc(f.cap)}</figcaption></figure>`).join("")}</div>`;
   return `<article class="mat ${m.wide?"wide":""}"><header><div><span class="mno">M ${m.no}</span> <h4 style="display:inline">${esc(m.title)}</h4></div><span class="kind ${m.kind}">${kindLabel[m.kind]}</span></header>${body}<div class="src">${esc(m.src)}</div></article>`;
 }
 
@@ -652,6 +661,7 @@ function renderAkte(a){
 }
 
 function wireAkte(a){
+  view.querySelectorAll(".reveal").forEach(b => b.addEventListener("click", () => b.closest(".fig").classList.add("open")));
   view.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click", () => check(a, b.dataset.check)));
   view.querySelectorAll(".order").forEach(ol => ol.addEventListener("click", e => {
     const b = e.target.closest("[data-mv]"); if(!b) return;

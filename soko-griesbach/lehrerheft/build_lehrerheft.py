@@ -131,7 +131,7 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 <li><b>Mehrere Geräte pro Team:</b> Jedes Gerät hat seinen eigenen Stand. Sobald ein Gerät eine Akte löst, erscheint ein <b>Funkcode</b>. Die anderen Geräte geben ihn über „Funkcode eingeben“ ein und sind auf demselben Stand.</li>
 <li><b>Hinweise:</b> drei Stufen pro Akte, kosten 1, 2 bzw. 4 Minuten. Stufe 3 enthält den Lösungsweg.</li>
 <li><b>Fahndungsuhr:</b> 70 Minuten. Bei Ablauf erscheint „Die Täter sind über die Grenze“, das Spiel läuft aber weiter. Es gibt keine Rangliste, sondern einen gemeinsamen Countdown.</li>
-<li><b>Fotos:</b> Porträts von Erzberger, Helfferich, Kahr und Rathenau sind eingebettet. Andere Fotos (Tatortfoto, Tillessen, Pöhner, Ehrhardt, Brigade Ehrhardt) öffnen sich über Links bzw. QR-Codes bei Wikimedia Commons. Die Geräte brauchen dafür Internet.</li>
+<li><b>Fotos:</b> In die App eingebettet sind Originalaufnahmen der Ermittler aus dem Staatsarchiv Freiburg: das Tatortfoto der Böschung (M 1.4), die Tatortskizze der Kriminalpolizei Offenburg (M 1.5), die Fotos der Leichenschau (M 1.8, unscharf gestellt, erst per Klick sichtbar), die Fahndungsfotos von Schulz und Tillessen (M 3.5) und die erkennungsdienstlichen Aufnahmen von Killinger und Hoffmann (M 4.4 b). Dazu kommen Porträts von Erzberger, Helfferich, Kahr und Rathenau. Nur verlinkt (Internet nötig) sind das Polizeifoto Erzbergers am Fundort, Pöhner, Ehrhardt und die Brigade Ehrhardt.</li>
 </ul>
 
 <h2 class="pb">5  Lösungen und Funkcodes</h2>
@@ -140,7 +140,7 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 <h2 class="pb">6  Inhaltswarnung und Umgang mit Belastung</h2>
 <div class="warn"><b>Vorschlag zum Vorlesen:</b> „Wir ermitteln heute in einem echten Mordfall. Ihr werdet Quellen lesen, die voller Hass und Antisemitismus sind, und ein Polizeifoto des Toten ist verlinkt. Das Foto müsst ihr nicht öffnen, für die Lösung braucht ihr es nicht. Wenn euch etwas belastet, gebt mir ein Zeichen.“</div>
 <ul>
-<li>Das <b>Tatortfoto</b> (Polizei 1921, gemeinfrei) ist nur über einen Link mit Warnhinweis erreichbar und nicht im Druck abgebildet.</li>
+<li>Die <b>Fotos der Leichenschau</b> (M 1.8) sind in der App unscharf gestellt und werden erst per Klick sichtbar. Im Druck sind sie nicht abgebildet. Das Polizeifoto Erzbergers am Fundort ist nur verlinkt. Das Tatortfoto der Böschung (M 1.4) zeigt keinen Menschen.</li>
 <li>Der antisemitische Hetzvers in M 5.2 ist gerahmt und eingeordnet. Bitte in der Lagebesprechung ausdrücklich als Beispiel für Antisemitismus thematisieren und nicht vorlesen lassen.</li>
 <li>Beim Gegenwartsbezug können Schülerinnen und Schüler mit eigenen Erfahrungen von Rassismus oder Bedrohung im Netz betroffen sein. Daher auf Freiwilligkeit achten. Auf Unterstützungsangebote (Vertrauenslehrkraft, Schulpsychologie) hinweisen.</li>
 </ul>
@@ -184,12 +184,13 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 <h3>Bilder</h3>
 <ul>
 <li>Erzberger, Helfferich, Rathenau: Bain News Service, Library of Congress (George Grantham Bain Collection), keine bekannten Rechte. Kahr: Artur Braun 1920, gemeinfrei (Wikimedia Commons).</li>
-<li>Nur verlinkt: Tatortfoto 1921 (Busam, Oberkirch, gemeinfrei), Tillessen 1921 (Spaarnestad, gemeinfrei), Pöhner (gemeinfrei), Ehrhardt 1920 (Nationaal Archief, gemeinfrei), Brigade Ehrhardt (Bundesarchiv Bild 119-1983-0012, CC BY-SA 3.0 DE).</li>
+<li>Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lizenz CC BY 3.0: Lichtbildmappe aus dem Ermittlungsverfahren 1921/22, Permalink 5-68430 (Tatort Böschung, Leichenschau, Fahndungsfotos Schulz und Tillessen, Personenlichtbilder Killinger und Hoffmann), sowie „Fünf Pläne des Tatorts und der Umgebung“, Permalink 5-68524 (Tatortskizze; liegt bei den Akten des Verfahrens 1946–1952). Online sind je Akte nur die ersten zehn Seiten frei zugänglich.</li>
+<li>Nur verlinkt: Polizeifoto am Fundort 1921 (Busam, Oberkirch, gemeinfrei), Tillessen 1921 (Spaarnestad, gemeinfrei), Pöhner (gemeinfrei), Ehrhardt 1920 (Nationaal Archief, gemeinfrei), Brigade Ehrhardt (Bundesarchiv Bild 119-1983-0012, CC BY-SA 3.0 DE).</li>
 </ul>
 <h3>Kennzeichnung und offene Punkte</h3>
 <div class="info">
 <ul>
-<li><b>Rekonstruktion bzw. Spielmaterial</b> (in Gestaltung oder Wortlaut nachgestellt, inhaltlich belegt): Fernspruch 1.1, Aussage Diez 1.2, Tatortskizze 1.5, Meldezettel 1.6 (Inhalt belegt, Gestaltung nachgestellt), Chiffre 4.1 (frei erfunden; belegt ist nur, dass chiffrierte Anweisungen gefunden wurden), Telegramm vom 24.6.1922.</li>
+<li><b>Rekonstruktion bzw. Spielmaterial</b> (in Gestaltung oder Wortlaut nachgestellt, inhaltlich belegt): Fernspruch 1.1, Aussage Diez 1.2, Meldezettel 1.6 (Inhalt belegt, Gestaltung nachgestellt), Chiffre 4.1 (frei erfunden; belegt ist nur, dass chiffrierte Anweisungen gefunden wurden), Telegramm vom 24.6.1922.</li>
 <li><b>Redner am 27.9.1921:</b> GHDI nennt Reichspräsident Ebert. Der Text selbst („Ich eröffne die erste Sitzung …“, „Vorsitzenden dieses Hauses“) weist auf Reichstagspräsident Paul Löbe hin. Diese Zuschreibung ergibt sich aus dem Text, bitte vor dem Einsatz im Original (Reichstagsprotokolle online) gegenprüfen.</li>
 <li><b>Nur über eine Quelle belegt:</b> das Geheimstatut „Verräter verfallen der Feme“ (Randecker 2021) und die Begleitung durch den Salzburger Polizeipräsidenten (Lexikon der Politischen Strafprozesse).</li>
 <li><b>Hetzvers zu Rathenau:</b> vielfach zitiert. Die Seitenangabe bei Sabrow 1999 wurde nicht am Original geprüft.</li>
