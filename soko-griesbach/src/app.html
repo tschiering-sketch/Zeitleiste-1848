@@ -1,0 +1,933 @@
+<title>Soko Griesbach 1921</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=UnifrakturMaguntia&display=swap">
+<style>
+/* Layout: Schreibtisch der Kriminalpolizei – Aktenregister links (Reiter), aufgeschlagene Akte rechts, Kopfleiste mit Fahndungsuhr */
+:root{
+  --desk:#e3e5dd; --paper:#fbf8ef; --paper-2:#f0e9d6; --ink:#1c2531; --ink-soft:#505a63;
+  --rule:#cbc4b0; --stamp:#ac2a20; --folder:#c4943f; --folder-ink:#2a1f0c; --ok:#2e6a39; --warn:#8a5d00;
+  --focus:#1f4fd1; --shade:rgba(28,37,49,.08); --veil:rgba(20,24,28,.82);
+  --font-ui:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --font-doc:"Courier Prime","Courier New",Courier,monospace;
+  --font-frak:"UnifrakturMaguntia","Old English Text MT",Georgia,serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --desk:#121517; --paper:#1d2124; --paper-2:#262b2f; --ink:#ebe5d5; --ink-soft:#aaa597;
+  --rule:#3b4145; --stamp:#e5594d; --folder:#d2a650; --folder-ink:#1a1306; --ok:#72c180; --warn:#e1b44b;
+  --focus:#8fb0ff; --shade:rgba(0,0,0,.35); --veil:rgba(0,0,0,.85); color-scheme:dark}}
+:root[data-theme="dark"]{
+  --desk:#121517; --paper:#1d2124; --paper-2:#262b2f; --ink:#ebe5d5; --ink-soft:#aaa597;
+  --rule:#3b4145; --stamp:#e5594d; --folder:#d2a650; --folder-ink:#1a1306; --ok:#72c180; --warn:#e1b44b;
+  --focus:#8fb0ff; --shade:rgba(0,0,0,.35); --veil:rgba(0,0,0,.85); color-scheme:dark}
+
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{background:var(--desk);color:var(--ink);font-family:var(--font-ui);font-size:16px;line-height:1.5}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--ink)}
+a{color:inherit}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px}
+h1,h2,h3{text-wrap:balance;line-height:1.15;margin:0}
+p{margin:0}
+
+/* Kopfleiste */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--ink);color:var(--paper);
+  padding-block:10px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));
+  display:flex;flex-wrap:wrap;gap:8px 18px;align-items:center;justify-content:space-between}
+.brand{display:flex;flex-direction:column;min-width:0}
+.brand b{font-stretch:75%;font-weight:800;letter-spacing:.08em;text-transform:uppercase;font-size:1.05rem}
+.brand span{font-size:.78rem;opacity:.75;letter-spacing:.04em}
+.clock{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.timer{font-family:var(--font-doc);font-weight:700;font-size:1.5rem;font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.timer.low{color:#ffb4a8}
+.pen{font-size:.78rem;opacity:.8}
+.barbtn{background:transparent;border:1px solid currentColor;color:inherit;border-radius:3px;padding:6px 10px;font-size:.85rem;cursor:pointer;font-stretch:85%;font-weight:600;letter-spacing:.03em}
+.barbtn:hover{background:rgba(255,255,255,.1)}
+@media (max-width:600px){.brand span,.pen{display:none}.bar{padding-block:6px}.timer{font-size:1.25rem}}
+
+/* Grundraster */
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:20px 60px;max-width:1280px;margin:0 auto}
+.layout{display:grid;grid-template-columns:250px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.layout{grid-template-columns:minmax(0,1fr)}}
+
+/* Aktenregister */
+.register{display:flex;flex-direction:column;gap:6px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+@media (max-width:860px){.register{position:static;flex-direction:row;overflow-x:auto;padding-bottom:6px}}
+.tab{display:grid;grid-template-columns:auto 1fr auto;gap:2px 10px;align-items:center;text-align:left;width:100%;
+  background:var(--folder);color:var(--folder-ink);border:0;border-radius:4px 14px 14px 4px;padding:9px 12px;cursor:pointer;
+  box-shadow:0 1px 0 var(--shade);min-width:190px}
+.tab .no{font-family:var(--font-doc);font-weight:700;font-size:.85rem}
+.tab .t{font-stretch:85%;font-weight:700;line-height:1.2}
+.tab .st{font-size:.72rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.tab .sub{grid-column:2/4;font-size:.75rem;opacity:.8}
+.tab[aria-current="true"]{outline:3px solid var(--ink);outline-offset:-3px}
+.tab.locked{background:var(--paper-2);color:var(--ink-soft);cursor:not-allowed}
+.tab.done .st{color:var(--ok)}
+.tab.side{background:var(--paper);color:var(--ink);border:1px solid var(--rule)}
+
+/* Akte */
+.akte{background:var(--paper);border:1px solid var(--rule);border-radius:3px;box-shadow:0 2px 0 var(--shade),0 12px 30px var(--shade);min-width:0}
+.akte-head{border-bottom:2px solid var(--ink);padding:20px 24px 16px;display:grid;gap:8px;position:relative}
+.aktenz{font-family:var(--font-doc);font-size:.85rem;color:var(--ink-soft);display:flex;flex-wrap:wrap;gap:4px 16px}
+.akte-head h2{font-stretch:78%;font-weight:800;font-size:clamp(1.6rem,3.6vw,2.4rem);letter-spacing:.01em;text-transform:uppercase}
+.rolle{display:inline-flex;gap:8px;flex-wrap:wrap}
+.chip{font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border:1.5px solid var(--ink);padding:2px 8px;border-radius:2px}
+.chip.red{border-color:var(--stamp);color:var(--stamp)}
+.stamp{position:absolute;right:22px;top:18px;transform:rotate(-8deg);border:3px double var(--stamp);color:var(--stamp);
+  font-family:var(--font-doc);font-weight:700;font-size:1.1rem;padding:4px 12px;letter-spacing:.12em;opacity:.85;text-transform:uppercase}
+.sec{padding:20px 24px;border-bottom:1px dashed var(--rule);display:grid;gap:14px}
+.sec:last-child{border-bottom:0}
+.sec h3{font-stretch:85%;font-size:1.05rem;letter-spacing:.08em;text-transform:uppercase}
+.auftrag{font-size:1.05rem;max-width:68ch}
+.auftrag strong{background:linear-gradient(transparent 60%,color-mix(in srgb,var(--folder) 45%,transparent) 60%)}
+
+/* Beweismittel */
+.mats{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,330px),1fr));gap:16px}
+.mat{background:var(--paper-2);border:1px solid var(--rule);padding:14px 16px 12px;display:flex;flex-direction:column;gap:10px;min-width:0;position:relative}
+.mat.wide{grid-column:1/-1}
+.mat header{display:flex;justify-content:space-between;gap:8px;align-items:baseline;flex-wrap:wrap}
+.mat .mno{font-family:var(--font-doc);font-weight:700}
+.mat h4{margin:0;font-stretch:88%;font-size:1rem;line-height:1.25}
+.kind{font-size:.68rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;white-space:nowrap}
+.kind.q{background:var(--ink);color:var(--paper)}
+.kind.d{border:1px solid var(--ink-soft);color:var(--ink-soft)}
+.kind.r{border:1px dashed var(--stamp);color:var(--stamp)}
+.doc{font-family:var(--font-doc);font-size:.95rem;line-height:1.55;white-space:normal}
+.doc p+p{margin-top:.6em}
+.doc .fr{font-family:var(--font-frak);font-size:1.35rem;line-height:1.1}
+.src{font-size:.75rem;color:var(--ink-soft);border-top:1px solid var(--rule);padding-top:6px}
+.photo{display:grid;grid-template-columns:auto 1fr;gap:12px;align-items:start}
+.photo img{width:110px;height:auto;border:4px solid var(--paper);box-shadow:0 1px 3px var(--shade);filter:sepia(.25) contrast(1.05)}
+@media (max-width:420px){.photo{grid-template-columns:1fr}.photo img{width:140px}}
+.ext{display:inline-flex;gap:6px;align-items:center;font-weight:700;font-size:.9rem;border:1.5px solid var(--ink);padding:6px 10px;border-radius:3px;text-decoration:none;width:fit-content}
+.ext:hover{background:var(--ink);color:var(--paper)}
+.warnbox{border:2px solid var(--stamp);padding:10px 12px;font-size:.9rem;display:grid;gap:8px}
+.warnbox b{color:var(--stamp);letter-spacing:.05em;text-transform:uppercase;font-size:.8rem}
+dl.kv{display:grid;grid-template-columns:max-content 1fr;gap:3px 12px;margin:0;font-size:.92rem}
+dl.kv dt{font-weight:700;font-stretch:88%}
+dl.kv dd{margin:0}
+@media (max-width:420px){dl.kv{grid-template-columns:1fr}dl.kv dd{margin-bottom:4px}}
+.quote{font-family:var(--font-doc);border-left:3px solid var(--ink);padding-left:12px}
+
+/* Fragen */
+.qs{display:grid;gap:16px}
+.q{border:1.5px solid var(--ink);background:var(--paper);padding:14px 16px;display:grid;gap:10px}
+.q.ok{border-color:var(--ok)}
+.q .qt{font-weight:700;max-width:70ch}
+.q .qn{font-family:var(--font-doc);color:var(--ink-soft);font-size:.85rem}
+.opts{display:grid;gap:6px}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 9px;border:1px solid var(--rule);border-radius:3px;cursor:pointer;background:var(--paper-2)}
+.opt input{margin-top:4px;accent-color:var(--ink)}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.inp{border:1.5px solid var(--ink);background:var(--paper);padding:7px 9px;border-radius:2px;min-width:0}
+.inp.n{width:5.5em;font-family:var(--font-doc);font-weight:700}
+.inp.w{width:min(100%,420px)}
+select.inp{max-width:100%}
+.btn{background:var(--ink);color:var(--paper);border:0;border-radius:3px;padding:8px 14px;font-weight:700;cursor:pointer;font-stretch:88%;letter-spacing:.03em}
+.btn:hover{filter:brightness(1.15)}
+.btn.ghost{background:transparent;color:var(--ink);border:1.5px solid var(--ink)}
+.btn.red{background:var(--stamp);color:#fff}
+.btn[disabled]{opacity:.45;cursor:not-allowed}
+.fb{font-size:.92rem;padding:8px 10px;border-radius:3px}
+.fb.ok{background:color-mix(in srgb,var(--ok) 14%,transparent);border-left:4px solid var(--ok)}
+.fb.no{background:color-mix(in srgb,var(--stamp) 12%,transparent);border-left:4px solid var(--stamp)}
+.order{list-style:none;margin:0;padding:0;display:grid;gap:6px}
+.order li{display:grid;grid-template-columns:auto 1fr auto;gap:10px;align-items:center;background:var(--paper-2);border:1px solid var(--rule);padding:6px 8px}
+.order .pos{font-family:var(--font-doc);font-weight:700}
+.order .mv{display:flex;gap:4px}
+.order .mv button{border:1px solid var(--ink);background:var(--paper);border-radius:2px;width:30px;height:30px;cursor:pointer}
+.match{display:grid;gap:8px}
+.match .mrow{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,220px);gap:10px;align-items:center;background:var(--paper-2);border:1px solid var(--rule);padding:8px}
+@media (max-width:560px){.match .mrow{grid-template-columns:1fr}}
+
+/* Hinweise */
+.hints{display:grid;gap:10px}
+.hintrow{display:flex;flex-wrap:wrap;gap:8px}
+.hint{border-left:4px solid var(--warn);background:color-mix(in srgb,var(--warn) 10%,transparent);padding:8px 12px;font-size:.95rem}
+.hint b{font-stretch:85%;letter-spacing:.04em}
+
+/* Bonus */
+.bonus{border:2px dashed var(--folder);padding:14px 16px;display:grid;gap:10px}
+.bonus h4{margin:0;font-stretch:85%;letter-spacing:.06em;text-transform:uppercase}
+
+/* Abschluss einer Akte */
+.solved{background:var(--ink);color:var(--paper);padding:16px 20px;display:grid;gap:8px}
+.solved .code{font-family:var(--font-doc);font-size:1.6rem;font-weight:700;letter-spacing:.2em}
+
+/* Karte */
+.mapbox{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+.mapbox svg{display:block;min-width:620px;width:100%;height:auto}
+.city circle{fill:var(--paper);stroke:var(--ink);stroke-width:2;cursor:pointer}
+.city text{fill:var(--ink);font-family:var(--font-ui);font-size:13px;font-weight:600;cursor:pointer}
+.city .hit{fill:transparent;cursor:pointer}
+.city.sel circle{fill:var(--stamp);stroke:var(--stamp)}
+.city:focus-visible circle{stroke:var(--focus);stroke-width:4}
+.region{fill:var(--ink-soft);font-family:var(--font-ui);font-size:15px;font-weight:800;letter-spacing:.3em;opacity:.35}
+.route{stroke:var(--stamp);stroke-width:3;fill:none;stroke-dasharray:7 5}
+.map-bg{fill:var(--paper-2)}
+.map-grid{stroke:var(--rule);stroke-width:1}
+
+/* Chiffrierscheibe */
+.cipher{display:grid;gap:8px}
+.alpha{font-family:var(--font-doc);font-weight:700;overflow-x:auto;white-space:nowrap;background:var(--paper);border:1px solid var(--rule);padding:6px 8px;letter-spacing:.25em}
+.alpha .dim{color:var(--ink-soft)}
+.cryp{font-family:var(--font-doc);font-weight:700;font-size:1.1rem;letter-spacing:.18em;word-break:break-all;background:var(--paper);border:1px dashed var(--ink);padding:10px}
+
+/* Startseite */
+.hero{background:var(--paper);border:1px solid var(--rule);padding:28px 28px 24px;display:grid;gap:16px;box-shadow:0 12px 30px var(--shade);position:relative;overflow:hidden}
+.hero .eyebrow{font-family:var(--font-doc);color:var(--ink-soft);font-size:.9rem}
+.hero h1{font-stretch:72%;font-weight:800;font-size:clamp(2.2rem,6vw,4rem);text-transform:uppercase;letter-spacing:.01em;line-height:.95}
+.hero .lead{font-size:1.1rem;max-width:62ch}
+.telegram{font-family:var(--font-doc);background:var(--paper-2);border:1px solid var(--rule);padding:14px 16px;max-width:640px;text-transform:uppercase;letter-spacing:.04em;line-height:1.55}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.card{border:1.5px solid var(--ink);padding:12px 14px;display:grid;gap:6px;background:var(--paper)}
+.card h4{margin:0;font-stretch:85%;letter-spacing:.05em;text-transform:uppercase}
+.small{font-size:.85rem;color:var(--ink-soft)}
+
+/* Lagebesprechung */
+.lage{display:grid;gap:22px}
+.tl{display:grid;gap:0;border-left:3px solid var(--ink);margin-left:8px}
+.tl .ev{display:grid;grid-template-columns:120px 1fr;gap:12px;padding:8px 0 8px 16px;position:relative}
+.tl .ev::before{content:"";position:absolute;left:-8px;top:15px;width:13px;height:13px;border-radius:50%;background:var(--paper);border:3px solid var(--ink)}
+.tl .ev.now::before{background:var(--stamp);border-color:var(--stamp)}
+.tl .d{font-family:var(--font-doc);font-weight:700}
+@media (max-width:520px){.tl .ev{grid-template-columns:1fr;gap:2px}}
+.vs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:14px}
+.vs .card.now{border-color:var(--stamp)}
+.tablewrap{overflow-x:auto}
+table.cmp{border-collapse:collapse;width:100%;min-width:560px;font-size:.93rem}
+table.cmp th,table.cmp td{border:1px solid var(--rule);padding:8px 10px;text-align:left;vertical-align:top}
+table.cmp th{background:var(--paper-2);font-stretch:88%}
+
+/* Overlays */
+.veil{position:fixed;inset:0;background:var(--veil);display:grid;place-items:center;z-index:20;padding:16px}
+.dialog{background:var(--paper);color:var(--ink);max-width:560px;width:100%;border:2px solid var(--ink);padding:20px;display:grid;gap:12px;max-height:90vh;overflow:auto}
+.dialog h3{font-stretch:85%;text-transform:uppercase;letter-spacing:.05em}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:3px;z-index:30;font-weight:600;max-width:calc(100% - 32px)}
+textarea.inp{width:100%;min-height:96px;resize:vertical;font-family:var(--font-doc)}
+.berichtf{display:grid;gap:14px}
+.berichtf label{font-weight:700;display:grid;gap:6px}
+.berichtf label span{font-weight:400;font-size:.88rem;color:var(--ink-soft)}
+@media (prefers-reduced-motion:no-preference){
+  .stamp-in{animation:stampin .35s cubic-bezier(.2,1.6,.4,1) both}
+  @keyframes stampin{from{transform:rotate(-8deg) scale(1.8);opacity:0}to{transform:rotate(-8deg) scale(1);opacity:.85}}
+}
+</style>
+
+<header class="bar">
+  <div class="brand"><b>Soko Griesbach</b><span>Badische Kriminalpolizei · Staatsanwaltschaft Offenburg · 1921</span></div>
+  <div class="clock">
+    <div><div class="timer" id="timer">70:00</div><div class="pen" id="pen">Fahndungsuhr noch nicht gestartet</div></div>
+    <button class="barbtn" id="btnFunk" type="button">Funkcode eingeben</button>
+    <button class="barbtn" id="btnLehrer" type="button">Lehrkraft</button>
+  </div>
+</header>
+
+<main class="wrap"><div class="layout">
+  <nav class="register" id="register" aria-label="Aktenregister"></nav>
+  <section id="view" aria-live="polite"></section>
+</div></main>
+
+<div id="overlay"></div>
+
+<script>
+(() => {
+"use strict";
+const IMG = {erzberger:"__IMG_erzberger__",helfferich:"__IMG_helfferich__",rathenau:"__IMG_rathenau__",kahr:"__IMG_kahr__"};
+const DURATION = 70; // Minuten Fahndungszeit (Akten 1–5); Einstieg 5' + Lagebesprechung 15' kommen hinzu
+const PENALTY = [1,2,4];
+const PIN = "1921";
+const LS = "sokoGriesbach_v1";
+
+/* ---------- Hilfsfunktionen ---------- */
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const norm = s => String(s).toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/ß/g,"ss").replace(/[^a-z0-9]/g,"");
+const commons = f => "https://commons.wikimedia.org/wiki/File:" + encodeURIComponent(f.replace(/ /g,"_"));
+const kindLabel = {q:"Originalquelle", d:"Darstellung", r:"Rekonstruktion · Spielmaterial"};
+
+function caesar(txt, k){
+  return txt.replace(/[A-Z]/g, ch => String.fromCharCode((ch.charCodeAt(0)-65+k)%26+65));
+}
+const CIPHER_PLAIN = "ZENTRALE MUENCHEN TRAUTENWOLFSTRASSE ACHT TARNUNG BAYERISCHE HOLZVERWERTUNGSGESELLSCHAFT";
+const CIPHER_KEY = 8;
+
+/* ---------- Zustand ---------- */
+let S = load();
+function fresh(){ return {start:null, penalty:0, solved:{}, unlocked:{a1:true}, answers:{}, hints:{}, bonus:{}, bericht:{}, current:"start", team:"", teacher:false, revealed:{}}; }
+function load(){ try{ const x = JSON.parse(localStorage.getItem(LS)); return x ? Object.assign(fresh(), x) : fresh(); }catch(e){ return fresh(); } }
+function save(){ try{ localStorage.setItem(LS, JSON.stringify(S)); }catch(e){} }
+
+/* ---------- Akten-Daten ---------- */
+const AKTEN = [
+{
+ id:"a1", no:"I", title:"Der Tatort", sub:"Kniebisstraße, 26. August 1921", role:"Spurensicherung", min:12, code:"KNIEBIS",
+ az:"Az. St. 1921/26-08 · Bad Griesbach (Renchtal)",
+ auftrag:`Matthias Erzberger, früherer Reichsfinanzminister, ist tot. Rekonstruiert den <strong>Tathergang</strong>: Wo geschah die Tat, wie viele Täter waren beteiligt, und war es eine spontane Tat oder ein <strong>geplanter Anschlag</strong>?`,
+ mats:[
+  {no:"1.1", kind:"r", title:"Fernspruch an die Staatsanwaltschaft", html:`<div class="doc"><p>FERNSPRUCH · 26. AUGUST 1921</p><p>GENDARMERIE GRIESBACH AN STAATSANWALTSCHAFT OFFENBURG. HEUTE AM SPAETEN VORMITTAG AUF DER KNIEBISSTRASSE OBERHALB GRIESBACH REICHSFINANZMINISTER A.D. ERZBERGER ERSCHOSSEN. REICHSTAGSABGEORDNETER DIEZ SCHWER VERLETZT. ZWEI JUNGE MAENNER ZU FUSS FLUECHTIG. SOFORTIGE FAHNDUNG ERBETEN.</p></div>`,
+   src:"Für das Spiel formuliert. Die Fakten (Ort, Opfer, Flucht zu Fuß) folgen Gebhardt 1995, S. 42–48."},
+  {no:"1.2", kind:"r", title:"Aussage des Zeugen Carl Diez (Zentrum, MdR)", html:`<div class="doc"><p>„Wir sind gegen zehn Uhr vom Kurhaus in Griesbach aufgebrochen und auf der Kniebisstraße in Richtung Alexanderschanze spaziert. Zwei junge Männer gingen hinter uns her. Wir haben uns nichts dabei gedacht.</p><p>Auf dem Rückweg sprang einer von ihnen auf Erzberger zu und schoss aus kurzer Entfernung. Ich habe mit meinem Regenschirm nach ihm geschlagen. Da schoss der zweite auf mich. Erzberger rutschte eine Böschung hinunter. Der zweite Mann stieg ihm nach. Danach liefen beide davon. Ich habe mich verletzt nach Griesbach zurückgeschleppt und die Polizei verständigt.“</p></div>`,
+   src:"Nachgestellte Aussage. Der Inhalt folgt der Rekonstruktion des Tathergangs bei Cord Gebhardt: Der Fall des Erzberger-Mörders Heinrich Tillessen, Tübingen 1995, S. 42–48."},
+  {no:"1.3", kind:"d", title:"Befund am Leichnam", html:`<dl class="kv"><dt>Opfer</dt><dd>Matthias Erzberger, geb. 20.9.1875, Zentrumsabgeordneter</dd><dt>Treffer</dt><dd><b>acht</b> Schusstreffer</dd><dt>Todesursache</dt><dd>zwei Kopfschüsse aus nächster Nähe, beide für sich allein tödlich</dd><dt>Fundort</dt><dd>unterhalb der Straße; das Opfer war nach den ersten Schüssen eine Böschung hinabgerutscht</dd><dt>Zweites Opfer</dt><dd>Carl Diez, mehrere Schussverletzungen, überlebt</dd></dl>`,
+   src:"Zusammenfassung nach Gebhardt 1995, S. 42–48, und dem Artikel „Matthias Erzberger“ der deutschsprachigen Wikipedia, Abschnitt Ermordung."},
+  {no:"1.4", kind:"q", title:"Tatortfoto der Polizei, 1921", html:`<div class="warnbox"><b>Achtung: Das Foto zeigt den Toten</b><p>Die Polizei ließ den Tatort 1921 von einem Fotografen aus Oberkirch aufnehmen. Das Foto zeigt Matthias Erzberger tot am Boden. Öffnet es nur, wenn ihr euch das zutraut. Für die Lösung braucht ihr es nicht.</p><a class="ext" href="${commons("Matthias Erzberger Tatortfoto 1921.webp")}" target="_blank" rel="noopener">Tatortfoto öffnen ↗</a></div>`,
+   src:"Fotografen Theodor oder Otto Busam, Oberkirch (Baden), im Auftrag der Polizei, 1921. Gemeinfrei. Abgedruckt in: Haus der Geschichte Baden-Württemberg (Hg.): Matthias Erzberger. Ein Wegbereiter der deutschen Demokratie, Stuttgart 2011."},
+  {no:"1.5", kind:"r", title:"Tatortskizze (nicht maßstäblich)", wide:true, html:`<div class="mapbox" style="max-width:640px"><svg viewBox="0 0 640 250" role="img" aria-label="Skizze: Kurhaus Griesbach links, Kniebisstraße steigt nach rechts zur Alexanderschanze, Tatort an einer Böschung auf dem Rückweg">
+   <rect class="map-bg" x="0" y="0" width="640" height="250"/>
+   <path d="M40 210 C 170 200, 230 150, 330 140 S 520 70, 610 40" stroke="currentColor" stroke-width="10" fill="none" opacity=".25"/>
+   <path d="M40 210 C 170 200, 230 150, 330 140 S 520 70, 610 40" stroke="currentColor" stroke-width="2" fill="none" stroke-dasharray="2 6"/>
+   <rect x="22" y="196" width="44" height="30" fill="none" stroke="currentColor" stroke-width="2"/>
+   <text x="18" y="244" font-size="13" fill="currentColor" font-family="Archivo,sans-serif">Kurhaus Griesbach</text>
+   <text x="520" y="30" font-size="13" fill="currentColor" font-family="Archivo,sans-serif">→ Alexanderschanze</text>
+   <text x="380" y="92" font-size="13" fill="currentColor" font-family="Archivo,sans-serif" transform="rotate(-18 380 92)">Kniebisstraße</text>
+   <path d="M300 152 L 300 200" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+   <text x="245" y="218" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">Böschung</text>
+   <g fill="#ac2a20"><circle cx="318" cy="142" r="6"/><circle cx="300" cy="198" r="7"/></g>
+   <text x="330" y="168" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">erste Schüsse (Rückweg)</text>
+   <text x="312" y="203" font-size="12" fill="currentColor" font-family="Archivo,sans-serif">Fundort Erzberger</text>
+   <text x="460" y="236" font-size="11" fill="currentColor" font-family="Archivo,sans-serif" opacity=".7">Flucht der Täter: zu Fuß</text>
+  </svg></div>`,
+   src:"Schematische Rekonstruktion für das Spiel nach der Tatbeschreibung bei Gebhardt 1995. Heute erinnert ein Gedenkstein in einer Kehre der B 28 zwischen Bad Griesbach und Freudenstadt an die Tat."},
+  {no:"1.6", kind:"r", title:"Meldezettel, Gasthaus „Zum Goldenen Engel“, Ulm", html:`<div class="doc"><p>Wengengasse 21 · Zimmer Nr. 11<br>Aufenthalt: 19. bis 21. August 1921</p><p>1. <b>Ernst Berkner</b>, Kaufmann, aus Jena<br>2. <b>Rudolf Briese</b>, stud. jur., aus Würzburg</p></div>`,
+   src:"Nach den erhaltenen Meldezetteln wiedergegeben, zitiert bei Günter Randecker: Erzberger-Attentäter schmiedeten die Mordpläne auch von Ulm aus, Schwäbische Zeitung, 24.8.2021. Die Gestaltung ist nachgestellt."},
+  {no:"1.7", kind:"d", title:"Ermittlungsnotiz: Anfragen in Beuron", html:`<dl class="kv"><dt>8.–19. Aug.</dt><dd>Familie Erzberger macht Urlaub im Hotel „Waldeck“ in Beuron (Donautal).</dd><dt>19. Aug., 6.23 Uhr</dt><dd>Die Familie reist aus Beuron ab.</dd><dt>19. Aug., 16 Uhr</dt><dd>Zwei Männer fragen auf dem Postamt Beuron nach Erzbergers neuer Adresse. Ohne Erfolg. Das Postamt meldet den Vorgang nach Berlin, aber Erzberger wird nicht gewarnt.</dd><dt>20. Aug.</dt><dd>Telefongespräch aus Ulm mit einem Klosterbruder der Erzabtei Beuron: Erzberger sei „ins Renchtal“ gefahren.</dd></dl>`,
+   src:"Nach Randecker, Schwäbische Zeitung, 24.8.2021, der sich auf Meldezettel und Akten stützt."}
+ ],
+ qs:[
+  {type:"choice", q:"Wo genau wurde Erzberger angegriffen?", opts:["Im Kurpark direkt vor dem Kurhaus Griesbach","Auf der Kniebisstraße oberhalb von Griesbach, auf dem Rückweg eines Spaziergangs Richtung Alexanderschanze","Am Bahnhof Oppenau beim Aussteigen","Im Gasthaus „Zum Goldenen Engel“ in Ulm"], a:1,
+   ok:"Richtig. Die Täter griffen an einer einsamen Stelle im Wald an. Zeugen gab es dort außer Diez nicht."},
+  {type:"numbers", q:"Wie viele Täter waren beteiligt, und wie oft wurde Erzberger getroffen?", fields:[{l:"Täter",a:2},{l:"Treffer",a:8}],
+   ok:"Richtig: zwei Täter, acht Treffer. Merkt euch die Zahl 8, ihr braucht sie später noch."},
+  {type:"choice", q:"Was beweisen der Meldezettel aus Ulm (M 1.6) und die Notiz aus Beuron (M 1.7) zusammen?", opts:["Die Täter waren Studenten, die Erzberger zufällig im Schwarzwald trafen.","Die Täter verfolgten Erzberger über Tage, reisten ihm hinterher und wohnten unter falschen Namen. Es war ein geplanter Anschlag.","Die Post in Beuron hat Erzberger rechtzeitig gewarnt.","Die beiden Männer aus Ulm haben mit der Tat nichts zu tun."], a:1,
+   ok:"Richtig. Falsche Namen, Nachfragen bei Post und Kloster und tagelanges Hinterherreisen zeigen: Die Tat war von langer Hand geplant."}
+ ],
+ hints:[
+  "Lest zuerst die Aussage von Carl Diez (M 1.2). Dort steht, wo die beiden spazieren gingen und wann die Schüsse fielen.",
+  "Die Zahl der Treffer steht im Befund (M 1.3). Wie viele Männer folgten den beiden Politikern? Vergleicht dazu den Meldezettel (M 1.6) mit der Notiz (M 1.7): Hätten Zufallsbekannte bei der Post nach Erzbergers Adresse gefragt?",
+  "Lösungsweg: Frage 1 ist die Kniebisstraße auf dem Rückweg Richtung Alexanderschanze. Frage 2: 2 Täter, 8 Treffer. Frage 3 ist der geplante Anschlag mit falschen Namen und tagelanger Verfolgung."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Die Verfolgung", intro:"Bringt die Stationen der Täter vor der Tat in die richtige Reihenfolge.",
+  q:{type:"order", q:"Älteste Station oben:", items:["Aufenthalt in Stuttgart, Gasthaus „Zum Badischen Hof“ (unter echtem Namen)","Erzbergers Familie reist früh morgens aus Beuron ab","Nachfrage nach Erzbergers Adresse auf dem Postamt Beuron","Telefonat aus Ulm mit der Erzabtei Beuron: „ins Renchtal“","Schüsse auf der Kniebisstraße"],
+   ok:"Richtig: Stuttgart (14.–17.8.), Abreise aus Beuron (19.8., 6.23 Uhr), Postamt (19.8., 16 Uhr), Telefonat (20.8.), Tat (26.8.)."}}
+},
+{
+ id:"a2", no:"II", title:"Opfer und Motiv", sub:"Wer hasste Erzberger, und warum?", role:"Quellenanalyse", min:12, code:"COMPIEGNE",
+ az:"Az. St. 1921/26-08 · Beiakte Opfer",
+ auftrag:`Ein Raubmord ist es nicht: Erzberger trug noch seinen wertvollen Ring. Findet heraus, <strong>warum</strong> gerade Erzberger sterben sollte, und verfolgt, wie aus <strong>Worten Taten</strong> wurden. Dann vergleicht ihr die Hetze von damals mit einem Fall von heute.`,
+ mats:[
+  {no:"2.1", kind:"d", title:"Personalakte Matthias Erzberger", img:"erzberger", html:`<dl class="kv"><dt>Geboren</dt><dd>20.9.1875 in Buttenhausen (Württemberg), Sohn eines Schneiders</dd><dt>Partei</dt><dd>Zentrum (katholisch), seit 1903 im Reichstag</dd><dt>1917</dt><dd>treibt im Reichstag die Friedensresolution voran: Er will einen Frieden ohne Eroberungen.</dd><dt>11.11.1918</dt><dd>leitet die deutsche Waffenstillstandskommission und <b>unterschreibt den Waffenstillstand von Compiègne</b>. Damit endet der Erste Weltkrieg.</dd><dt>1919–1920</dt><dd>Reichsfinanzminister. Seine Finanzreform stärkt die Steuern des Reiches und trifft vor allem Wohlhabende.</dd><dt>März 1920</dt><dd>Rücktritt nach dem Prozess gegen Karl Helfferich</dd></dl><p class="small">Die Rechte nennt ihn einen der „Novemberverbrecher“. Nach der Dolchstoßlegende war das Heer „im Felde unbesiegt“ und wurde von Politikern in der Heimat „verraten“.</p>`,
+   src:"Nach Christopher Dowe: Matthias Erzberger. Ein Leben für die Demokratie, Stuttgart 2011, und LeMO (DHM). Foto: Bain News Service, Library of Congress (ggbain), keine bekannten Rechte."},
+  {no:"2.2", kind:"d", title:"Die Kampagne „Fort mit Erzberger!“", img:"helfferich", html:`<p>Karl Helfferich (DNVP) hasst Erzberger seit 1906. Damals hatte Erzberger Missstände in der Kolonialverwaltung aufgedeckt, für die Helfferich mitverantwortlich war.</p><p>Im Juni 1919 veröffentlicht Helfferich in der „Kreuzzeitung“ eine Artikelserie und danach die Flugschrift <b>„Fort mit Erzberger!“</b>. Er wirft Erzberger vor, einen Meineid geschworen, Politik für den eigenen Geldbeutel gemacht und Steuern hinterzogen zu haben.</p><p>Erzberger verklagt ihn wegen Beleidigung. Im Prozess (19.1.–12.3.1920) erhält Helfferich nur eine Geldstrafe. Erzberger aber ist so beschädigt, dass er zurücktritt.</p>`,
+   src:"Nach den Artikeln „Karl Helfferich“ und „Matthias Erzberger“ der deutschsprachigen Wikipedia sowie Norman Domeier: Der Sensationsprozess Erzberger-Helfferich, 2013. Foto: Bain News Service, Library of Congress."},
+  {no:"2.3", kind:"d", title:"Der erste Anschlag: Berlin-Moabit, 26. Januar 1920", html:`<p>Als Erzberger das Gerichtsgebäude verlässt, schießt der ehemalige Fähnrich <b>Oltwig von Hirschfeld</b> zweimal auf ihn. Erzberger wird an der Schulter verletzt. Die zweite Kugel prallt an seiner Uhrkette ab.</p><p>Nach seinem Motiv gefragt, nennt Hirschfeld vor allem Helfferichs Flugschrift „Fort mit Erzberger!“. Das Gericht bescheinigt ihm, er sei „sonst von idealer Gesinnung“, und verurteilt ihn zu 18 Monaten Gefängnis.</p><p class="quote">„Die Kugel, die mich treffen soll, ist schon gegossen.“<br><span class="small">Erzberger zu seiner Tochter Maria, April 1921</span></p>`,
+   src:"Nach dem Artikel „Matthias Erzberger“ der deutschsprachigen Wikipedia (mit Belegen aus Epstein 1962 und Dowe 2011)."},
+  {no:"2.4", kind:"q", title:"Reichstag, 27. September 1921: Gedenken an Erzberger", wide:true, html:`<div class="doc"><p>„[…] Erschütternder aber selbst als diese herben Verluste wirkte auf uns die Nachricht von dem tückischen Meuchelmord, dem unser Kollege Erzberger, Reichsfinanzminister a. D., am 26. August zum Opfer fiel. Dieser Mord hat unser Land in neue schwere Unruhen gestürzt; denn er war nicht die vereinzelte Tat eines blinden Fanatikers oder eines verstiegenen Idealisten, sondern er war der kaltblütige Überfall ausgeschickter Mordgesellen. Schlimmer fast noch: es hat vor der Tat Stimmen gegeben, die sie offen herbeiwünschten, und es hat nach der Tat Stimmen gegeben, die sie billigten, rechtfertigten, entschuldigten. […] Die aber den Kampf gegen ihn vom politischen Felde auf das persönliche übertrugen, die haben teil an der geistigen Verwirrung, der er zum Opfer gefallen ist.“</p></div><p class="small">Die Rede beginnt mit: „Ich eröffne die erste Sitzung des Reichstags nach der Sommerpause.“ Später dankt der Redner einem Verstorbenen für seine Hilfe beim „Vorsitzenden dieses Hauses“.</p>`,
+   src:"Verhandlungen des Reichstags, I. Wahlperiode 1920, Bd. 351, 134. Sitzung, 27.9.1921, S. 4568 f. Online in: German History in Documents and Images (GHDI), Dokument 4619."},
+  {no:"2.5", kind:"d", title:"Akte von heute: Walter Lübcke (CDU), 2015–2019", wide:true, html:`<dl class="kv"><dt>14.10.2015</dt><dd>Auf einer Bürgerversammlung in Lohfelden bei Kassel verteidigt Regierungspräsident Walter Lübcke eine geplante Flüchtlingsunterkunft gegen Zwischenrufer. Wer die Werte der Verfassung ablehne, sei jederzeit frei, Deutschland zu verlassen.</dd><dt>danach</dt><dd>Seine Antwort wird <b>verkürzt als Video</b> im Internet verbreitet. Es folgen jahrelange Anfeindungen und Morddrohungen.</dd><dt>Chat</dt><dd>Der Rechtsextremist Stephan Ernst nennt Lübcke einen <b>„Volksverräter“</b>. Online postet er unter anderem: „Entweder diese Regierung dankt in kürze ab oder es wird Tote geben“.</dd><dt>1./2.6.2019</dt><dd>Ernst erschießt Lübcke auf der Terrasse seines Wohnhauses in Wolfhagen-Istha.</dd><dt>28.1.2021</dt><dd>Das OLG Frankfurt verurteilt Ernst zu lebenslanger Haft.</dd><dt>Reaktionen</dt><dd>Bundespräsident Steinmeier: „Wo die Sprache verroht, ist die Straftat nicht weit.“ Bundestagspräsident Schäuble: „Wer diesen Nährboden düngt, macht sich mitschuldig.“</dd></dl>`,
+   src:"Nach dem Artikel „Mordfall Walter Lübcke“ der deutschsprachigen Wikipedia, mit Belegen aus Urteil und Presse. Die Zitate sind dort nachgewiesen."}
+ ],
+ qs:[
+  {type:"choice", q:"Warum beschimpfte die extreme Rechte Erzberger als „Novemberverbrecher“?", opts:["Weil er im November 1918 den Kaiser abgesetzt hatte","Weil er am 11. November 1918 den Waffenstillstand von Compiègne unterschrieben hatte. Nach der Dolchstoßlegende war das „Verrat“ am unbesiegten Heer.","Weil er im November 1918 die Republik ausgerufen hatte","Weil er Mitglied der KPD war"], a:1,
+   ok:"Richtig. Erzberger übernahm eine Verantwortung, vor der sich die Oberste Heeresleitung drückte. Die Dolchstoßlegende machte ihn zum Sündenbock."},
+  {type:"order", q:"Die Eskalation: Bringt die Ereignisse in die richtige Reihenfolge (älteste oben).", items:["Helfferichs Artikelserie und Flugschrift „Fort mit Erzberger!“","Hirschfeld schießt in Berlin-Moabit auf Erzberger","Erzberger tritt als Reichsfinanzminister zurück","Mord auf der Kniebisstraße","Teile der Rechtspresse entschuldigen den Mord"],
+   ok:"Richtig: 1919 Rufmord, Januar 1920 erster Anschlag, März 1920 Rücktritt, August 1921 Mord, danach Billigung. Aus Worten wurden Schüsse."},
+  {type:"match", q:"Hetze 1921 und heute: Ordnet jede Aussage dem passenden Muster zu.", rows:[
+    {t:"„Novemberverbrecher“ (rechte Propaganda gegen Erzberger)", a:0},
+    {t:"„Volksverräter“ (Chat von Stephan Ernst über Lübcke)", a:0},
+    {t:"Helfferich wirft Erzberger Meineid und Steuerhinterziehung vor", a:1},
+    {t:"Lübckes Satz wird verkürzt als Video verbreitet", a:1},
+    {t:"„Entweder diese Regierung dankt in kürze ab oder es wird Tote geben“", a:2},
+    {t:"„…die haben teil an der geistigen Verwirrung“ (1921) und „Wer diesen Nährboden düngt, macht sich mitschuldig“ (2019)", a:3}
+   ], cats:["Feindbild: Menschen werden zu „Verrätern“ erklärt","Rufmord: Lügen oder verkürzte Aussagen","Gewaltdrohung","Urteil: Hetzer tragen Mitverantwortung"],
+   ok:"Richtig. Die Muster gleichen sich über 100 Jahre: Erst kommt das Feindbild, dann der Rufmord, dann die Drohung, am Ende die Tat."}
+ ],
+ hints:[
+  "Für Frage 1 steht das Datum des 11. November 1918 in der Personalakte (M 2.1). Für die Reihenfolge braucht ihr die Jahreszahlen in M 2.2 und M 2.3.",
+  "Achtung bei der Reihenfolge: Der Prozess lief von Januar bis März 1920. Die Schüsse von Hirschfeld fielen mitten im Prozess, der Rücktritt kam erst danach. Bei der Zuordnung gilt: Eine Beschimpfung als „Verräter“ ist ein Feindbild, eine erfundene oder verkürzte Behauptung ist Rufmord.",
+  "Lösungsweg: Frage 1 ist der Waffenstillstand von Compiègne. Reihenfolge: Flugschrift, Hirschfeld, Rücktritt, Mord, Rechtspresse. Zuordnung: Novemberverbrecher und Volksverräter sind Feindbild, Helfferich und das Video sind Rufmord, „es wird Tote geben“ ist eine Gewaltdrohung, Löbe und Schäuble sprechen über die Mitverantwortung der Hetzer."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Quellenkritik", intro:`Die Online-Sammlung, aus der M 2.4 stammt, nennt als Redner „Reichspräsident Friedrich Ebert“. Prüft das am Text selbst: Wer sprach am 27. September 1921 wirklich?`,
+  q:{type:"choice", q:"Wer hielt die Rede?", opts:["Reichspräsident Friedrich Ebert (SPD)","Reichstagspräsident Paul Löbe (SPD), der die Sitzung leitete","Reichskanzler Joseph Wirth (Zentrum)"], a:1,
+   ok:"Stark ermittelt! Der Redner eröffnet die Sitzung und spricht vom „Vorsitzenden dieses Hauses“. Das kann nur der Reichstagspräsident sein, also Paul Löbe (im Amt 1920–1924). Der Reichspräsident leitete keine Reichstagssitzungen. Auch seriöse Online-Sammlungen können sich irren. Prüft deshalb immer die Quelle selbst."}}
+},
+{
+ id:"a3", no:"III", title:"Fahndung", sub:"Wer sind „Berkner“ und „Briese“?", role:"Fahndung", min:13, code:"EHRHARDT",
+ az:"Az. St. 1921/26-08 · Fahndungsakte",
+ auftrag:`Die Täter haben kaum versucht, ihre Spuren zu verwischen. Die badische Polizei kennt bald ihre echten Namen: <strong>Heinrich Tillessen</strong> und <strong>Heinrich Schulz</strong>. Findet heraus, was die beiden verbindet, und verfolgt ihren <strong>Fluchtweg</strong> auf der Karte.`,
+ mats:[
+  {no:"3.1", kind:"d", title:"Fahndungsblatt: Heinrich Tillessen", html:`<dl class="kv"><dt>Geboren</dt><dd>27.11.1894 in Köln, Sohn eines Generalleutnants, streng katholische Familie</dd><dt>Laufbahn</dt><dd>1912 Seekadett der Kaiserlichen Marine. Ab 1917 Wachoffizier unter Kapitän <b>Hermann Ehrhardt</b> auf einem Torpedoboot. Nach der Selbstversenkung der Flotte in Scapa Flow britische Kriegsgefangenschaft bis 1920.</dd><dt>1920</dt><dd>schließt sich beim Kapp-Putsch der <b>Marine-Brigade Ehrhardt</b> an. Dort lernt er Schulz kennen.</dd><dt>1920/21</dt><dd>Leibwächter des BVP-Politikers Georg Heim in <b>Regensburg</b>, zusammen mit Schulz. Radikalisierung im „Deutschvölkischen Schutz- und Trutzbund“</dd><dt>Familie</dt><dd>Sein Bruder Karl Tillessen ist stellvertretender Leiter einer geheimen Organisation in München.</dd></dl><a class="ext" href="${commons("Moordenaar van de Duitse politicus Matthias Erzberger in augustus 1921 de student Heinrich, SFA005001637.jpg")}" target="_blank" rel="noopener">Pressefoto Tillessen, 1921 ↗</a>`,
+   src:"Nach dem Artikel „Heinrich Tillessen“ der deutschsprachigen Wikipedia (Belege: Gebhardt 1995). Pressefoto: Spaarnestad Photo, gemeinfrei."},
+  {no:"3.2", kind:"d", title:"Fahndungsblatt: Heinrich Schulz", html:`<dl class="kv"><dt>Geboren</dt><dd>20.7.1893 in Saalfeld (Thüringen)</dd><dt>Laufbahn</dt><dd>Kriegsfreiwilliger 1914, dreimal verwundet, Leutnant. Ein Ohr ist durch eine Kriegsverletzung verstümmelt.</dd><dt>1919</dt><dd>ab April <b>Marine-Brigade Ehrhardt</b>, eingesetzt in München, Hof und Berlin</dd><dt>März 1920</dt><dd>beteiligt sich am <b>Kapp-Putsch</b> und besetzt das Berliner Regierungsviertel.</dd><dt>1920/21</dt><dd>Leibwächter von Georg Heim in Regensburg, zusammen mit Tillessen</dd></dl>`,
+   src:"Nach dem Artikel „Heinrich Schulz (Attentäter)“ der deutschsprachigen Wikipedia (Belege: Gebhardt 1995, Haehling von Lanzenauer 2008)."},
+  {no:"3.3", kind:"q", title:"Foto: Marine-Brigade Ehrhardt in Berlin, März 1920", html:`<p>Beim Kapp-Putsch marschiert die Brigade in Berlin ein. Auf den Stahlhelmen tragen die Soldaten ein Hakenkreuz, schon 1920 ein Zeichen der völkischen Rechten.</p><a class="ext" href="${commons("Bundesarchiv Bild 119-1983-0012, Kapp-Putsch, Marienbrigade Erhardt in Berlin.jpg")}" target="_blank" rel="noopener">Foto im Bundesarchiv-Bestand öffnen ↗</a>`,
+   src:"Bundesarchiv, Bild 119-1983-0012, Fotograf unbekannt, März 1920, CC BY-SA 3.0 DE."},
+  {no:"3.4", kind:"d", title:"Ermittlungsnotizen nach der Tat (ungeordnet)", html:`<ul class="doc" style="margin:0;padding-left:1.2em;display:grid;gap:6px"><li>Nov./Dez. 1921: Beide leben unter falschem Namen in Budapest und schließen sich einem ungarischen Freikorps an. Dieses hatte ihnen schon bei der Planung Schutz zugesagt.</li><li>Unmittelbar nach der Tat: Die Täter fahren zurück in die Stadt, in der sie seit April 1921 in einer Zentrale arbeiten.</li><li>Tillessen versteckt sich zunächst in den Alpen und wechselt dann über Salzburg ins Burgenland an der österreichisch-ungarischen Grenze.</li><li>31. August 1921: Die Täter verlassen München.</li><li>Später: Ungarn lehnt die Auslieferung ab, weil es kein Abkommen gibt.</li></ul>`,
+   src:"Nach den Artikeln „Heinrich Tillessen“ und „Heinrich Schulz (Attentäter)“ der deutschsprachigen Wikipedia."}
+ ],
+ qs:[
+  {type:"choice", q:"Was verbindet Tillessen und Schulz vor allem?", opts:["Sie studierten zusammen in Würzburg.","Beide sind ehemalige Offiziere und dienten in der Marine-Brigade Ehrhardt, einem Freikorps, das 1920 am Kapp-Putsch beteiligt war.","Beide waren Mitglieder der SPD.","Beide arbeiteten als Kaufleute in Jena."], a:1,
+   ok:"Richtig. Die Brigade Ehrhardt war ein Freikorps aus ehemaligen Soldaten, das die Republik 1920 stürzen wollte. Sie wurde aufgelöst, aber ihre Männer blieben zusammen."},
+  {type:"text", q:"In welcher bayerischen Stadt arbeiteten beide 1920/21 als Leibwächter eines Politikers?", accept:["regensburg"],
+   ok:"Richtig, in Regensburg. Die erste Spur führt nach Bayern."},
+  {type:"route", q:"Fluchtweg: Klickt die Stationen der Täter nach der Tat in der richtigen Reihenfolge an. Beginnt am Tatort.", a:["griesbach","muenchen","salzburg","budapest"],
+   ok:"Richtig: Griesbach, München, Salzburg, Budapest. Alle Wege führen über München."}
+ ],
+ hints:[
+  "Vergleicht die beiden Fahndungsblätter (M 3.1 und M 3.2) Zeile für Zeile. Welche Einheit und welches Ereignis kommen in beiden vor?",
+  "Die Stadt der Leibwächter-Stelle steht in beiden Fahndungsblättern unter „1920/21“. Für den Fluchtweg bringt ihr die Notizen in M 3.4 in eine Reihenfolge: Wohin fuhren die Täter direkt nach der Tat, und wann verließen sie diese Stadt?",
+  "Lösungsweg: Frage 1 ist die Marine-Brigade Ehrhardt. Frage 2 ist Regensburg. Die Route verläuft Griesbach, München, Salzburg, Budapest."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Ehrhardts Männer", intro:"Der Kapitän, unter dem Tillessen im Krieg diente, führte auch die Marine-Brigade. Nach ihrer Auflösung 1920 floh er vor der Verhaftung. Er tauchte in einem Land unter, das ihn nicht auslieferte, weil dort Polizei und Regierung sympathisierten.",
+  q:{type:"text", q:"In welches Land des Deutschen Reiches floh Hermann Ehrhardt 1920? (Tipp: Es ist nicht Baden.)", accept:["bayern","freistaatbayern"],
+   ok:"Richtig, nach Bayern. Ehrhardt entzog sich 1920 der Verhaftung, indem er in die „Ordnungszelle“ Bayern floh (Historisches Lexikon Bayerns). Das ist die Spur zu Akte IV."}}
+},
+{
+ id:"a4a", no:"IV a", title:"Das Netzwerk in München", sub:"Wer gab den Befehl?", role:"alle Rollen", min:12, code:"CONSUL",
+ az:"Az. St. 1921/26-08 · Sonderakte München",
+ auftrag:`Bei den Ermittlungen findet die Polizei <strong>verschlüsselte Anweisungen</strong>. Entschlüsselt die abgefangene Nachricht, findet die <strong>Zentrale</strong> und rekonstruiert, <strong>wer den Mordbefehl gab</strong>.`,
+ mats:[
+  {no:"4.1", kind:"r", title:"Abgefangene Nachricht", wide:true, html:`<div class="cipher"><p>Ein Kurier trug eine Nachricht bei sich. Der Schlüssel ist eine Zahl, die ihr am Tatort gefunden habt. Jeder Buchstabe wurde um diese Zahl im Alphabet <b>nach hinten</b> verschoben.</p><div class="cryp" id="cryp"></div><label class="row" for="shift"><b>Chiffrierscheibe:</b> Verschiebung <input id="shift" type="range" min="0" max="25" value="0" style="width:min(260px,60vw)"> <span id="shiftv" class="doc">0</span></label><div class="alpha" id="alpha"></div><div class="small">Obere Zeile: Geheimtext. Untere Zeile: Klartext.</div></div>`,
+   src:"Spielmaterial. Die Verschlüsselung ist erfunden. Belegt ist aber, dass die Ermittler „chiffrierte Anweisungen“ und Kuriere der Organisation fanden (Martin Sabrow, Historisches Lexikon Bayerns: Organisation Consul)."},
+  {no:"4.2", kind:"d", title:"Ermittlungsergebnis: Die „Organisation Consul“ (O.C.)", html:`<dl class="kv"><dt>Herkunft</dt><dd>1920 nach dem Kapp-Putsch aus der aufgelösten Marine-Brigade Ehrhardt gebildet</dd><dt>Leitung</dt><dd>Kapitän Hermann Ehrhardt, Deckname „Consul Eichmann“</dd><dt>Zentrale</dt><dd>München-Schwabing, etwa 30 hauptamtliche Mitarbeiter, getarnt als Firma</dd><dt>Größe</dt><dd>geschätzt etwa 5.000 Mann, meist ehemalige Offiziere zwischen 20 und 30 Jahren, mit Bezirken im ganzen Reich</dd><dt>Ziel</dt><dd>die Republik zerschlagen, eine Militärdiktatur errichten und den Versailler Vertrag rückgängig machen</dd><dt>Strategie</dt><dd>Morde sollen die Linke zu einem Aufstand provozieren. Den will man mit der Reichswehr niederschlagen und dann selbst die Macht übernehmen.</dd></dl>`,
+   src:"Nach Martin Sabrow, Historisches Lexikon Bayerns: „Organisation Consul (O.C.), 1920–1922“, und dem Artikel „Organisation Consul“ der deutschsprachigen Wikipedia. Zur Strategie: Christopher Dowe 2011, S. 149."},
+  {no:"4.3", kind:"q", title:"Aus der Satzung der O.C.", html:`<div class="doc"><p>Ziel: „Bekämpfung alles Anti- und Internationalen, des Judentums, der Sozialdemokratie und der linksradikalen Parteien“.</p><p>Jedes Mitglied muss versichern, „deutscher Abstammung“ zu sein.</p></div><div class="doc"><p>Aus dem Geheimstatut: „Verräter verfallen der Feme.“</p></div><p class="small">Feme bedeutet hier, dass ein angeblicher „Verräter“ ohne Gericht hingerichtet wird (Fememord).</p>`,
+   src:"Satzungszitate nach dem Artikel „Organisation Consul“ der deutschsprachigen Wikipedia. Geheimstatut zitiert nach Randecker, Schwäbische Zeitung, 24.8.2021."},
+  {no:"4.4", kind:"d", title:"Personen in der Zentrale", html:`<dl class="kv"><dt>Hermann Ehrhardt</dt><dd>„Consul“, Leiter der Organisation</dd><dt>Alfred Hoffmann</dt><dd>Stabschef, leitet faktisch die Zentrale</dd><dt>Karl Tillessen</dt><dd>stellvertretender Leiter, Bruder des Täters Heinrich Tillessen</dd><dt>Manfred von Killinger</dt><dd>ehemaliger Torpedoboot-Kommandant, Leiter der militärischen Abteilung, Mitglied im „Germanenorden“. Er gibt Ende Juli oder Anfang August 1921 zwei Männern seiner Abteilung einen Auftrag und hilft ihnen danach bei der Flucht über Österreich nach Ungarn.</dd><dt>Heinrich Tillessen, Heinrich Schulz</dt><dd>seit dem 30. April 1921 in der Zentrale. Tillessen verschickt dort die Zeitschrift „Der Wiking“.</dd></dl><a class="ext" href="${commons("Ehrhardt1920.jpg")}" target="_blank" rel="noopener">Foto: Ehrhardt beim Kapp-Putsch 1920 ↗</a>`,
+   src:"Nach Sabrow (HLB), den Artikeln „Manfred von Killinger“ und „Heinrich Tillessen“ der deutschsprachigen Wikipedia sowie Martin Sabrow: Der Rathenaumord, München 1994, S. 23–27. Foto: Nationaal Archief NL, gemeinfrei."}
+ ],
+ qs:[
+  {type:"cipher", q:"Entschlüsselt die Nachricht (M 4.1). Wie lautet die Adresse der Zentrale?", accept:["trautenwolf"], hintAccept:"Schreibt die Straße und die Hausnummer.",
+   ok:"Richtig: Trautenwolfstraße 8 in München-Schwabing. Hier saß die Zentrale, getarnt als „Bayerische Holzverwertungsgesellschaft“."},
+  {type:"match", q:"Organigramm: Wer hatte welche Funktion?", rows:[
+    {t:"„Consul“, oberster Leiter", a:0},{t:"Stabschef, leitet faktisch die Zentrale", a:1},{t:"Leiter der militärischen Abteilung, gibt den Mordauftrag", a:2},{t:"Stellvertretender Leiter, Bruder eines Täters", a:3}
+   ], cats:["Hermann Ehrhardt","Alfred Hoffmann","Manfred von Killinger","Karl Tillessen"],
+   ok:"Richtig. Der Befehl kam aus der Münchner Zentrale: von Killinger an Tillessen und Schulz, nach Sabrow mit Billigung Ehrhardts."},
+  {type:"choice", q:"Welches Ziel verfolgte die O.C. mit dem Mord laut Forschung?", opts:["Sie wollte Rache für einen persönlichen Streit.","Sie wollte Unruhen und einen Aufstand der Linken provozieren, um einen Vorwand für einen Staatsstreich und eine Diktatur zu bekommen.","Sie wollte Erzbergers Geld erbeuten.","Sie wollte Bayern vom Reich abspalten."], a:1,
+   ok:"Richtig. Der Mord war Teil eines politischen Plans gegen die Demokratie (Dowe 2011). Er war kein Einzelfall, sondern Terror."}
+ ],
+ hints:[
+  "Die Zahl der Treffer aus Akte I ist der Schlüssel. Bewegt die Chiffrierscheibe, bis in der unteren Zeile lesbare Wörter stehen.",
+  "Die Verschiebung ist 8. Lest dann jeden Buchstaben des Geheimtexts in der oberen Zeile und den darunterstehenden Klartext. Für das Organigramm steht alles in M 4.4.",
+  "Lösungsweg: Die Adresse ist Trautenwolfstraße 8 (ACHT). Organigramm: Ehrhardt ist Consul, Hoffmann Stabschef, Killinger Leiter der militärischen Abteilung, Karl Tillessen Stellvertreter. Das Ziel war, Unruhen zu provozieren und einen Vorwand für eine Diktatur zu bekommen."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Ist der Fall wirklich geklärt?", intro:"Nach 1945 sagten die Täter aus, der „Germanenorden“ habe sie ausgewählt. Der Historiker Martin Sabrow hält das für glaubhaft. Der Rechtshistoriker Cord Gebhardt meint dagegen, die Rolle des Germanenordens sei ungeklärt.",
+  q:{type:"choice", q:"Was folgt daraus für euren Bericht?", opts:["Der Auftraggeber ist eindeutig bewiesen.","Sicher ist: Der Auftrag kam aus der Münchner O.C.-Zentrale über Killinger. Wer genau ihn ausgelöst hat, ist in der Forschung umstritten. Das muss der Bericht so sagen.","Die Täter haben allein gehandelt."], a:1,
+   ok:"Genau. Gute Historiker und gute Ermittler trennen das, was belegt ist, von dem, was umstritten ist."}}
+},
+{
+ id:"a4b", no:"IV b", title:"Die schützende Hand", sub:"Warum entkamen die Täter?", role:"alle Rollen", min:11, code:"ORDNUNGSZELLE",
+ az:"Az. St. 1921/26-08 · Sonderakte Bayern",
+ auftrag:`Die Täter sind bekannt und die Zentrale ist gefunden. Trotzdem entkommen Tillessen und Schulz. Findet heraus, <strong>wer sie in Bayern schützte</strong>, und beurteilt, <strong>warum die Ermittlungen scheiterten</strong>.`,
+ mats:[
+  {no:"4.5", kind:"d", title:"Personalakte Ernst Pöhner, Polizeipräsident von München", html:`<dl class="kv"><dt>Amt</dt><dd>Polizeipräsident von München vom 3.5.1919 bis 28.9.1921</dd><dt>Netzwerk</dt><dd>Mitglied im Alldeutschen Verband und in der völkischen Thule-Gesellschaft. Er duldet und deckt die O.C. Für die politische Abteilung seiner Polizei setzt er <b>Wilhelm Frick</b> ein.</dd><dt>1920</dt><dd>zwingt mit anderen die SPD-Regierung Hoffmann zum Rücktritt. Gustav von Kahr wird Ministerpräsident.</dd><dt>1923</dt><dd>beteiligt am Hitler-Putsch. Vor Gericht sagt er 1924, er betreibe das, was man ihm als Hochverrat vorwerfe, „bereits seit fünf Jahren“.</dd></dl><a class="ext" href="${commons("Ernst Pohner.jpg")}" target="_blank" rel="noopener">Foto Pöhner ↗</a>`,
+   src:"Nach dem Artikel „Ernst Pöhner“ der deutschsprachigen Wikipedia und Hans Günter Hockerts, NDB 20 (2001). Foto: gemeinfrei, Bayerische Staatsbibliothek, Bildarchiv."},
+  {no:"4.6", kind:"d", title:"Vermerk: Hilfe für die Flüchtigen", html:`<ul style="margin:0;padding-left:1.2em;display:grid;gap:6px"><li>Die Münchner Polizei warnte die Gesuchten vor der Verhaftung und stellte ihnen die <b>Pässe</b> für die Flucht aus.</li><li>Nach einer Darstellung versorgte Polizeipräsident Pöhner die Täter selbst mit Pässen. Ein Salzburger Polizeipräsident soll sie persönlich nach Ungarn begleitet haben.</li><li>Ehrhardt entkommt nach einer Warnung. Spuren führen über den Wehrverbandsführer Otto Pittinger bis in das Umfeld der bayerischen Regierung unter Kahr.</li><li>Ungarn liefert die Täter nicht aus.</li></ul>`,
+   src:"Nach Sabrow: Der Rathenaumord, 1994, S. 23–25 und 50 (zitiert im Artikel „Matthias Erzberger“ der deutschsprachigen Wikipedia), sowie dem Lexikon der Politischen Strafprozesse: „Erzberger-Attentat“."},
+  {no:"4.7", kind:"d", title:"Die „Ordnungszelle Bayern“", img:"kahr", html:`<p>Nach der Räterepublik von 1919 sehen konservative und völkische Kreise Bayern als <b>„Ordnungszelle“</b>. Gemeint ist ein Bollwerk gegen das „rote“ Berlin. Ministerpräsident <b>Gustav von Kahr</b> (seit März 1920) stützt sich dabei auch auf Rechtsextreme.</p><p>Nach dem Erzberger-Mord erlässt Reichspräsident Ebert am 29.8.1921 eine <b>Verordnung zum Schutz der Republik</b>. Kahr weigert sich, sie in Bayern umzusetzen. Darauf entzieht ihm seine Partei, die BVP, die Unterstützung, und Kahr muss im September 1921 zurücktreten.</p><p>Zitat aus Hitlers „Mein Kampf“ über Pöhner und Frick: Sie seien „die einzigen höheren Staatsbeamten, die schon damals den Mut besaßen, erst Deutsche und dann Beamte zu sein.“</p>`,
+   src:"Nach dem Artikel „Ordnungszelle“ der deutschsprachigen Wikipedia, LeMO (DHM): „Ordnungszelle Bayern“, und dem Artikel „Ernst Pöhner“ (Zitat). Foto Kahr: Artur Braun, 1920, gemeinfrei."},
+  {no:"4.8", kind:"d", title:"Gerichtsakte: Prozess gegen Killinger", html:`<dl class="kv"><dt>Sept. 1921</dt><dd>Killinger wird verhaftet. Auch 34 O.C.-Mitglieder werden reichsweit festgenommen, die meisten aber bald wieder freigelassen.</dd><dt>7.–13.6.1922</dt><dd>Schwurgericht Offenburg. Anklage gegen Killinger wegen Beihilfe zum Mord.</dd><dt>Urteil</dt><dd><b>Freispruch</b> durch die Geschworenen, „trotz belastender Beweismittel“. Die Täter sind ja flüchtig.</dd><dt>28.2.1923</dt><dd>Das Reichsgericht bestätigt den Freispruch.</dd></dl>`,
+   src:"Nach den Artikeln „Manfred von Killinger“ und „Organisation Consul“ der deutschsprachigen Wikipedia sowie dem Lexikon der Politischen Strafprozesse."}
+ ],
+ qs:[
+  {type:"choice", q:"Wer verschaffte den Tätern die Pässe für die Flucht?", opts:["Die badische Polizei in Offenburg","Die Münchner Polizei unter Polizeipräsident Ernst Pöhner","Die Reichsregierung in Berlin","Das Postamt Beuron"], a:1,
+   ok:"Richtig. Die Polizei, die die Täter hätte festnehmen müssen, half ihnen bei der Flucht."},
+  {type:"choice", q:"Warum musste Ministerpräsident Kahr im September 1921 zurücktreten?", opts:["Er wurde selbst wegen des Mordes angeklagt.","Er weigerte sich, die Verordnung zum Schutz der Republik umzusetzen, und verlor die Unterstützung der BVP.","Er hatte die Wahl gegen die SPD verloren.","Er wurde von der O.C. bedroht."], a:1,
+   ok:"Richtig. Bayern stellte sich gegen den Schutz der Republik. 1922 wiederholte sich das beim Republikschutzgesetz."},
+  {type:"multi", q:"Urteil: Warum scheiterten die Ermittlungen 1921/22? Wählt alle zutreffenden Gründe.", opts:[
+    {t:"Teile der bayerischen Polizei warnten und deckten die Täter und gaben ihnen Pässe.", c:true},
+    {t:"Die Täter blieben unbekannt, weil sie keine Spuren hinterließen.", c:false},
+    {t:"Ungarn lieferte die Täter nicht aus.", c:true},
+    {t:"Geschworene sprachen den Auftraggeber Killinger trotz belastender Beweise frei.", c:true},
+    {t:"Die bayerische Regierung verweigerte sich dem Schutz der Republik („Ordnungszelle“).", c:true},
+    {t:"Die badische Polizei ermittelte nicht.", c:false}],
+   ok:"Richtig. Die Täter waren schnell bekannt. Sie entkamen, weil Teile von Staat und Justiz in Bayern auf ihrer Seite standen. Das ist der Kern des Falls."}
+ ],
+ hints:[
+  "Lest den Vermerk M 4.6. Dort steht, wer die Pässe ausstellte. Zu Kahr findet ihr die Antwort in M 4.7.",
+  "Bei der letzten Frage: Prüft jede Aussage an den Akten. Waren die Täter wirklich unbekannt (Akte III)? Hat die badische Polizei nicht ermittelt (M 4.6)? Was geschah im Killinger-Prozess (M 4.8)?",
+  "Lösungsweg: Frage 1 ist die Münchner Polizei unter Pöhner. Frage 2 ist die Weigerung, die Verordnung zum Schutz der Republik umzusetzen. Frage 3: Richtig sind Polizei und Pässe, Ungarn, Killinger-Freispruch und Ordnungszelle. Falsch sind „Täter unbekannt“ und „Baden ermittelte nicht“."
+ ],
+ bonus:{title:"Kriminalrat-Akte: „Erst Deutsche und dann Beamte“", intro:"Hitler lobte Pöhner und Frick mit diesem Satz (M 4.7).",
+  q:{type:"choice", q:"Was verrät der Satz über das Problem der Weimarer Republik?", opts:["Beamte sollten zuerst dem Gesetz und der Verfassung dienen. Pöhner und Frick stellten ihre eigene Vorstellung von „Nation“ über Recht und Verfassung.","Beamte sollten keine Deutschen sein.","Der Satz lobt die Treue der Beamten zur Republik."], a:0,
+   ok:"Genau. Beamte, die die Republik verachteten, schützten ihre Feinde. Man spricht von einer „Republik ohne Republikaner“ in Teilen von Justiz und Verwaltung."}}
+},
+{
+ id:"a5", no:"V", title:"Abschluss und neue Spur", sub:"Bericht an den Staatsanwalt", role:"Aktenführung", min:10, code:"SAALECK",
+ az:"Az. St. 1922 · Eingang Juni 1922",
+ auftrag:`Schreibt euren <strong>Ermittlungsbericht</strong> (Reiter „Ermittlungsbericht“) und legt ihn dem Staatsanwalt vor. Danach geht ein neuer Hinweis ein: Die O.C. ist <strong>nicht</strong> zerschlagen. Wer ist das nächste Ziel?`,
+ mats:[
+  {no:"5.1", kind:"d", title:"Lagebericht Juni 1922", html:`<ul style="margin:0;padding-left:1.2em;display:grid;gap:6px"><li>4. Juni 1922: Anschlag mit Blausäure auf Philipp Scheidemann (SPD), der 1918 die Republik ausgerufen hatte. Er überlebt, weil der Wind das Gift verweht.</li><li>Juni 1922: O.C.-Sprengstoffanschläge in Hamburg</li><li>Seit Februar 1922 ist ein Mann Reichsaußenminister, der mit den Siegermächten verhandelt und die Reparationen erfüllen will („Erfüllungspolitik“). Er ist Jude und wird deshalb zusätzlich antisemitisch angefeindet.</li></ul>`,
+   src:"Nach Sabrow (HLB), „Organisation Consul“, und dem Artikel „Walther Rathenau“ der deutschsprachigen Wikipedia."},
+  {no:"5.2", kind:"q", title:"Hetzvers, verbreitet 1922", html:`<div class="warnbox"><b>Antisemitische Quelle</b><p>Der Vers wird hier gezeigt, weil er belegt, wie offen zum Mord aufgerufen wurde. Er ist menschenverachtend.</p></div><div class="doc"><p>„Knallt ab den Walther Rathenau, die gottverfluchte Judensau.“</p></div>`,
+   src:"In völkischen Kreisen 1922 verbreitet. Zitiert u. a. bei Sabrow: Die verdrängte Verschwörung, Frankfurt a. M. 1999."},
+  {no:"5.3", kind:"d", title:"Personalakte: der Reichsaußenminister", img:"rathenau", html:`<dl class="kv"><dt>Name</dt><dd>Walther Rathenau (DDP), geb. 1867 in Berlin</dd><dt>Beruf</dt><dd>Industrieller (AEG), Schriftsteller. Organisierte im Ersten Weltkrieg die Rohstoffversorgung.</dd><dt>Amt</dt><dd>Reichsaußenminister seit Februar 1922</dd><dt>Wohnung</dt><dd>Villa Koenigsallee 65, Berlin-Grunewald. Er fährt im offenen Wagen ohne Polizeischutz ins Auswärtige Amt.</dd></dl>`,
+   src:"Nach dem Artikel „Walther Rathenau“ der deutschsprachigen Wikipedia (Belege: Sabrow 1994). Foto: Bain News Service, Library of Congress."}
+ ],
+ qs:[
+  {type:"check", q:"Euer Ermittlungsbericht ist ausgefüllt (Reiter „Ermittlungsbericht“) und dem Staatsanwalt (der Lehrkraft) vorgelegt.", label:"Ja, der Bericht ist fertig und vorgelegt.",
+   ok:"Bericht eingegangen."},
+  {type:"choice", q:"Wer ist nach den Akten das nächste Ziel der O.C.?", opts:["Philipp Scheidemann, er wurde aber schon angegriffen","Reichsaußenminister Walther Rathenau","Ministerpräsident Gustav von Kahr","Kapitän Hermann Ehrhardt"], a:1,
+   ok:"Eure Prognose stimmt, aber die Warnung kommt zu spät."},
+  {type:"multi", q:"Nach dem Telegramm: Was verbindet die Opfer Erzberger und Rathenau? Wählt alle zutreffenden Punkte.", opts:[
+    {t:"Beide waren Demokraten und übernahmen Verantwortung für die junge Republik.", c:true},
+    {t:"Beide galten der Rechten als „Erfüllungspolitiker“ bzw. „Novemberverbrecher“.", c:true},
+    {t:"Beide waren Ziel jahrelanger Hetzkampagnen.", c:true},
+    {t:"Beide wurden von Tätern aus der O.C. ermordet.", c:true},
+    {t:"Beide waren Mitglieder der O.C.", c:false},
+    {t:"Bei Rathenau kam offener Antisemitismus hinzu.", c:true}],
+   ok:"Richtig. Mit diesen Erkenntnissen geht es in die Lagebesprechung."}
+ ],
+ reveal:{after:1, html:`<div class="telegram">Telegramm · Berlin · 24. Juni 1922 · <br>Reichsaussenminister Dr. Rathenau heute vormittag gegen 10.50 Uhr auf der Fahrt ins Auswaertige Amt in der Koenigsallee, Grunewald, aus überholendem Kraftwagen erschossen. Maschinenpistole und Handgranate. Täter flüchtig.</div><p class="small">Spielmaterial nach den Fakten: Abfahrt 10.45 Uhr. Fahrer Ernst Werner Techow (20), Schütze Erwin Kern (23) mit einer MP 18, Hermann Fischer (26) wirft eine Handgranate. Rathenau wird von fünf Schüssen getroffen und stirbt binnen Minuten. Alle drei gehören zur O.C. Kern und Fischer sterben am 17.7.1922 auf Burg Saaleck. Am 21.7.1922 folgt das Republikschutzgesetz. Bayern stellt sich erneut quer und erlässt eine eigene Verordnung, bis am 11.8.1922 ein Kompromiss gefunden wird.</p>`},
+ hints:[
+  "Lest den Lagebericht M 5.1 genau. Scheidemann wurde schon angegriffen. Wer wird zusätzlich antisemitisch angefeindet?",
+  "Der Hetzvers M 5.2 nennt den Namen ausdrücklich.",
+  "Lösungsweg: Das Ziel ist Walther Rathenau. Gemeinsamkeiten: Demokraten, „Erfüllungspolitiker“, Hetzkampagnen, Täter aus der O.C., bei Rathenau zusätzlich Antisemitismus. Nicht richtig ist „beide Mitglieder der O.C.“."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Was geschah mit Erzbergers Mördern?", intro:"Bringt das Schicksal der Täter in die richtige Reihenfolge.",
+  q:{type:"order", q:"Älteste Station oben:", items:["Flucht nach Ungarn, später Spanien bzw. Spanisch-Guinea","Rückkehr nach Deutschland und Straffreiheit durch die NS-Amnestie vom 21.3.1933","Eintritt in NSDAP und SA bzw. SS","Tillessen wird in Konstanz zu 15 Jahren Zuchthaus verurteilt (28.2.1947)","Schulz wird in Offenburg zu 12 Jahren verurteilt (Juli 1950)","Beide kommen 1952 frei"],
+   ok:"Richtig. Erst die Bundesrepublik bzw. die Justiz der Besatzungszeit verurteilte die Täter, mehr als 25 Jahre nach der Tat."}}
+}
+];
+
+/* ---------- Ansichten ---------- */
+const view = document.getElementById("view");
+const reg = document.getElementById("register");
+const overlay = document.getElementById("overlay");
+
+function isUnlocked(id){ return S.teacher || !!S.unlocked[id]; }
+function nextOf(id){ const i = AKTEN.findIndex(a=>a.id===id); return AKTEN[i+1]; }
+
+function renderRegister(){
+  const items = [`<button class="tab side" data-go="start" ${S.current==="start"?'aria-current="true"':""}><span class="no">§</span><span class="t">Einweisung</span><span class="st"></span><span class="sub">Rollen, Ablauf, Warnhinweis</span></button>`];
+  for (const a of AKTEN){
+    const un = isUnlocked(a.id), done = !!S.solved[a.id];
+    items.push(`<button class="tab ${un?"":"locked"} ${done?"done":""}" data-go="${a.id}" ${S.current===a.id?'aria-current="true"':""} ${un?"":'aria-disabled="true"'}>
+      <span class="no">${a.no}</span><span class="t">${esc(a.title)}</span><span class="st">${done?"erledigt":un?a.min+"′":"gesperrt"}</span><span class="sub">${esc(a.role)}</span></button>`);
+  }
+  items.push(`<button class="tab side" data-go="bericht" ${S.current==="bericht"?'aria-current="true"':""}><span class="no">✎</span><span class="t">Ermittlungsbericht</span><span class="st"></span><span class="sub">laufend ausfüllen</span></button>`);
+  const lageOpen = S.teacher || S.solved.a5;
+  items.push(`<button class="tab side ${lageOpen?"":"locked"}" data-go="lage" ${S.current==="lage"?'aria-current="true"':""}><span class="no">⌖</span><span class="t">Lagebesprechung</span><span class="st">${lageOpen?"":"gesperrt"}</span><span class="sub">Plenum · 1921 und heute</span></button>`);
+  reg.innerHTML = items.join("");
+}
+
+reg.addEventListener("click", e => {
+  const b = e.target.closest("[data-go]"); if(!b) return;
+  const id = b.dataset.go;
+  if (AKTEN.some(a=>a.id===id) && !isUnlocked(id)) { toast("Diese Akte ist noch gesperrt. Löst die vorige Akte oder gebt den Funkcode ein."); return; }
+  if (id==="lage" && !(S.teacher || S.solved.a5)) { toast("Die Lagebesprechung öffnet nach Akte V oder durch die Lehrkraft."); return; }
+  go(id);
+});
+
+function go(id){ S.current = id; save(); render(); window.scrollTo({top:0,behavior:"smooth"}); }
+
+function render(){
+  renderRegister();
+  if (S.current==="start") return renderStart();
+  if (S.current==="bericht") return renderBericht();
+  if (S.current==="lage") return renderLage();
+  const a = AKTEN.find(x=>x.id===S.current);
+  if (!a || !isUnlocked(a.id)) { S.current="start"; return renderStart(); }
+  renderAkte(a);
+}
+
+/* ---------- Start ---------- */
+function renderStart(){
+  const started = !!S.start;
+  view.innerHTML = `
+  <div class="hero">
+    <div class="eyebrow">Badische Kriminalpolizei · Sonderkommission · Eingang 26. August 1921</div>
+    <h1>Mord auf der<br>Kniebisstraße</h1>
+    <div class="telegram">Reichsfinanzminister a.D. Matthias Erzberger bei Bad Griesbach im Schwarzwald erschossen. Begleiter Abg. Diez schwer verletzt. Zwei Täter flüchtig. Soko Griesbach wird gebildet.</div>
+    <p class="lead">Ihr seid die Ermittlerinnen und Ermittler der Sonderkommission. In fünf Akten rekonstruiert ihr Tat, Motiv und Täter und folgt einer Spur, die immer wieder nach <b>Bayern</b> führt. Am Ende schreibt ihr einen Bericht an den Staatsanwalt. Die Behörden sind 1921 an diesem Fall gescheitert. Findet heraus, warum.</p>
+    <div class="row">
+      <label for="team" class="row"><b>Name des Ermittlungsteams:</b> <input class="inp w" id="team" value="${esc(S.team)}" placeholder="z. B. Team Diez"></label>
+    </div>
+    <div class="row">
+      <button class="btn red" id="btnStart" type="button" ${started?"disabled":""}>${started?"Fahndungsuhr läuft":"Fahndungsuhr starten (70 Minuten)"}</button>
+      <button class="btn ghost" type="button" data-open="a1">Zu Akte I: Der Tatort</button>
+    </div>
+  </div>
+  <div style="height:22px"></div>
+  <div class="akte">
+    <div class="sec"><h3>Eure Rollen im Team</h3>
+      <div class="grid2">
+        <div class="card"><h4>Spurensicherung</h4><p>wertet Tatort, Befund und Fotos aus. Leitet Akte I.</p></div>
+        <div class="card"><h4>Quellenanalyse</h4><p>liest Reden, Zeitungen und Flugschriften und prüft, wer spricht. Leitet Akte II.</p></div>
+        <div class="card"><h4>Fahndung</h4><p>arbeitet mit Karte, Fahndungsblättern und Fluchtwegen. Leitet Akte III.</p></div>
+        <div class="card"><h4>Aktenführung</h4><p>schreibt den Ermittlungsbericht mit, achtet auf die Zeit und leitet Akte V.</p></div>
+      </div>
+      <p class="small">Die Akten IV a und IV b (die Spur nach Bayern) bearbeitet ihr gemeinsam. Bei fünf Personen gibt es zwei Personen in der Quellenanalyse.</p>
+    </div>
+    <div class="sec"><h3>So ermittelt ihr</h3>
+      <div class="grid2">
+        <div class="card"><h4>Beweismittel</h4><p>Jede Akte enthält Materialien. Die Kennzeichnung zeigt, was ihr vor euch habt:</p><p><span class="kind q">Originalquelle</span> <span class="kind d">Darstellung</span> <span class="kind r">Rekonstruktion · Spielmaterial</span></p></div>
+        <div class="card"><h4>Anruf beim Präsidium</h4><p>Kommt ihr nicht weiter, holt euch Hinweise in drei Stufen. Jeder Hinweis kostet Fahndungszeit: 1, 2 bzw. 4 Minuten.</p></div>
+        <div class="card"><h4>Funkcode</h4><p>Ist eine Akte gelöst, erscheint ein Funkcode. Damit schalten die anderen Geräte eures Teams die nächste Akte frei (Knopf oben rechts).</p></div>
+        <div class="card"><h4>Kriminalrat-Akten</h4><p>Wer schnell ist, löst die Zusatzakte am Ende jeder Akte. Sie ist anspruchsvoller und freiwillig.</p></div>
+      </div>
+    </div>
+    <div class="sec"><div class="warnbox"><b>Hinweis zu den Materialien</b><p>Dieser Fall ist echt. Er handelt von Mord, Hass und Antisemitismus. Einige Quellen sind verletzend, ein Foto zeigt den Toten. Solche Materialien sind gekennzeichnet und müssen nicht geöffnet werden. Wenn euch etwas belastet, sprecht eure Lehrkraft an.</p></div></div>
+  </div>`;
+  view.querySelector("#team").addEventListener("input", e => { S.team = e.target.value; save(); });
+  const bs = view.querySelector("#btnStart");
+  bs.addEventListener("click", () => { if(!S.start){ S.start = Date.now(); save(); tick(); toast("Die Fahndungsuhr läuft. Viel Erfolg, Soko Griesbach!"); renderStart(); } });
+  view.querySelector("[data-open]").addEventListener("click", () => go("a1"));
+}
+
+/* ---------- Akte ---------- */
+function matHTML(m){
+  const img = m.img && IMG[m.img] && !IMG[m.img].startsWith("__") ? `<img src="${IMG[m.img]}" alt="Porträtfoto">` : "";
+  const body = img ? `<div class="photo">${img}<div>${m.html}</div></div>` : m.html;
+  return `<article class="mat ${m.wide?"wide":""}"><header><div><span class="mno">M ${m.no}</span> <h4 style="display:inline">${esc(m.title)}</h4></div><span class="kind ${m.kind}">${kindLabel[m.kind]}</span></header>${body}<div class="src">${esc(m.src)}</div></article>`;
+}
+
+function qKey(a,i){ return a.id+"_"+i; }
+
+function qHTML(a, q, i, prefix){
+  const key = prefix||qKey(a,i);
+  const done = !!S.answers[key];
+  let inner = "";
+  if (q.type==="choice"){
+    inner = `<div class="opts">${q.opts.map((o,j)=>`<label class="opt"><input type="radio" name="${key}" value="${j}" ${done&&j===q.a?"checked":""}><span>${esc(o)}</span></label>`).join("")}</div>`;
+  } else if (q.type==="multi"){
+    inner = `<div class="opts">${q.opts.map((o,j)=>`<label class="opt"><input type="checkbox" name="${key}" value="${j}" ${done&&o.c?"checked":""}><span>${esc(o.t)}</span></label>`).join("")}</div>`;
+  } else if (q.type==="numbers"){
+    inner = `<div class="row">${q.fields.map((f,j)=>`<label class="row" for="${key}_${j}">${esc(f.l)}: <input class="inp n" id="${key}_${j}" inputmode="numeric" value="${done?f.a:""}"></label>`).join("")}</div>`;
+  } else if (q.type==="text" || q.type==="cipher"){
+    inner = `<input class="inp w" id="${key}_t" autocomplete="off" placeholder="${esc(q.hintAccept||"Antwort eingeben")}">`;
+  } else if (q.type==="order"){
+    const st = S.answers[key+"_ord"] || shuffleIdx(q.items.length, key);
+    if (!S.answers[key+"_ord"]) { S.answers[key+"_ord"] = st; save(); }
+    inner = `<ol class="order" id="${key}_ol">${st.map((ix,p)=>`<li data-ix="${ix}"><span class="pos">${p+1}.</span><span>${esc(q.items[ix])}</span><span class="mv"><button type="button" aria-label="nach oben" data-mv="-1">▲</button><button type="button" aria-label="nach unten" data-mv="1">▼</button></span></li>`).join("")}</ol>`;
+  } else if (q.type==="match"){
+    inner = `<div class="match">${q.rows.map((r,j)=>`<div class="mrow"><span>${esc(r.t)}</span><select class="inp" id="${key}_${j}" aria-label="Zuordnung"><option value="">– wählen –</option>${q.cats.map((c,k)=>`<option value="${k}" ${done&&k===r.a?"selected":""}>${esc(c)}</option>`).join("")}</select></div>`).join("")}</div>`;
+  } else if (q.type==="route"){
+    inner = mapSVG(key) + `<div class="row"><span class="small" id="${key}_seq">Gewählt: –</span><button class="btn ghost" type="button" data-reset="${key}">Auswahl zurücksetzen</button></div>`;
+  } else if (q.type==="check"){
+    inner = `<label class="opt"><input type="checkbox" id="${key}_c" ${done?"checked":""}><span>${esc(q.label)}</span></label>`;
+  }
+  return `<div class="q ${done?"ok":""}" data-key="${key}">
+    <div class="qn">Ermittlungsfrage ${prefix?"K":i+1}</div><div class="qt">${esc(q.q)}</div>${inner}
+    <div class="row"><button class="btn" type="button" data-check="${key}" ${done?"disabled":""}>${done?"Gelöst":"Prüfen"}</button></div>
+    <div class="fbslot">${done?`<div class="fb ok">${esc(q.ok)}</div>`:""}</div></div>`;
+}
+
+function shuffleIdx(n, seedStr){
+  let s = 0; for (const ch of seedStr) s = (s*31 + ch.charCodeAt(0)) >>> 0;
+  const arr = [...Array(n).keys()];
+  for (let k=0;k<6;k++){
+    for (let i=n-1;i>0;i--){ s = (s*1103515245+12345) >>> 0; const j = s % (i+1); [arr[i],arr[j]]=[arr[j],arr[i]]; }
+    if (arr.some((v,i)=>v!==i)) break;
+  }
+  return arr;
+}
+
+function renderAkte(a){
+  const done = !!S.solved[a.id];
+  const used = S.hints[a.id]||0;
+  const allQ = a.qs.every((q,i)=>S.answers[qKey(a,i)]);
+  const revealShown = a.reveal && S.answers[qKey(a,a.reveal.after)];
+  const nx = nextOf(a.id);
+  view.innerHTML = `<article class="akte">
+    <div class="akte-head">
+      <div class="aktenz"><span>${esc(a.az)}</span><span>Akte ${a.no}</span><span>Richtzeit ${a.min} Min.</span></div>
+      <h2>${esc(a.title)}</h2>
+      <div class="rolle"><span class="chip">Leitung: ${esc(a.role)}</span><span class="chip red">${esc(a.sub)}</span></div>
+      ${done?`<div class="stamp stamp-in">Erledigt</div>`:""}
+    </div>
+    <div class="sec"><h3>Auftrag</h3><p class="auftrag">${a.auftrag}</p></div>
+    <div class="sec"><h3>Beweismittel</h3><div class="mats">${a.mats.map(matHTML).join("")}</div></div>
+    <div class="sec"><h3>Ermittlungsfragen</h3><div class="qs">${a.qs.map((q,i)=>qHTML(a,q,i) + (a.reveal && a.reveal.after===i && revealShown ? `<div class="mat wide">${a.reveal.html}</div>`:"")).join("")}</div></div>
+    <div class="sec"><h3>Anruf beim Präsidium</h3>
+      <div class="hints">${[0,1,2].map(k=>k<used?`<div class="hint"><b>Hinweis ${k+1}:</b> ${esc(a.hints[k])}</div>`:"").join("")}
+      ${used<3?`<div class="hintrow"><button class="btn ghost" type="button" id="btnHint">Hinweis ${used+1} anfordern (kostet ${PENALTY[used]} Min.)</button></div>`:`<p class="small">Alle Hinweise abgerufen.</p>`}</div>
+    </div>
+    ${done?`<div class="sec"><div class="solved"><div>Akte ${a.no} gelöst. Funkcode für die anderen Geräte eures Teams:</div><div class="code">${a.code}</div>${nx?`<div><button class="btn" style="background:var(--paper);color:var(--ink)" type="button" id="btnNext">Weiter zu Akte ${nx.no}: ${esc(nx.title)}</button></div>`:`<div><button class="btn" style="background:var(--paper);color:var(--ink)" type="button" id="btnLage">Zur Lagebesprechung</button></div>`}</div></div>`:""}
+    <div class="sec"><div class="bonus"><h4>${esc(a.bonus.title)}</h4><p>${a.bonus.intro}</p>${qHTML(a,a.bonus.q,0,a.id+"_bonus")}</div></div>
+  </article>`;
+  wireAkte(a);
+  if (allQ && !done){ solve(a); }
+}
+
+function wireAkte(a){
+  view.querySelectorAll("[data-check]").forEach(b => b.addEventListener("click", () => check(a, b.dataset.check)));
+  view.querySelectorAll(".order").forEach(ol => ol.addEventListener("click", e => {
+    const b = e.target.closest("[data-mv]"); if(!b) return;
+    const key = ol.id.replace(/_ol$/,""); if (S.answers[key]) return;
+    const arr = S.answers[key+"_ord"]; const li = b.closest("li");
+    const pos = [...ol.children].indexOf(li), np = pos + Number(b.dataset.mv);
+    if (np<0 || np>=arr.length) return;
+    [arr[pos],arr[np]] = [arr[np],arr[pos]]; save(); render();
+    const again = document.getElementById(key+"_ol"); if (again) again.children[np].querySelector(`[data-mv="${b.dataset.mv}"]`)?.focus();
+  }));
+  const hb = view.querySelector("#btnHint");
+  if (hb) hb.addEventListener("click", () => askHint(a));
+  const nb = view.querySelector("#btnNext"); if (nb) nb.addEventListener("click", () => go(nextOf(a.id).id));
+  const lb = view.querySelector("#btnLage"); if (lb) lb.addEventListener("click", () => go("lage"));
+  // Karte
+  view.querySelectorAll("svg[data-route]").forEach(svg => {
+    const key = svg.dataset.route;
+    const sel = () => S.answers[key+"_route"] || [];
+    const paint = () => {
+      const seq = sel();
+      svg.querySelectorAll(".city").forEach(g => g.classList.toggle("sel", seq.includes(g.dataset.c)));
+      const pts = seq.map(c => CITIES.find(x=>x.id===c)).map(c => `${c.x},${c.y}`).join(" ");
+      svg.querySelector(".route").setAttribute("points", pts);
+      const lab = document.getElementById(key+"_seq");
+      if (lab) lab.textContent = "Gewählt: " + (seq.length ? seq.map(c=>CITIES.find(x=>x.id===c).n).join(" → ") : "–");
+    };
+    svg.addEventListener("click", e => {
+      const g = e.target.closest(".city"); if (!g || S.answers[key]) return;
+      const seq = sel(); if (seq[seq.length-1]===g.dataset.c) return;
+      seq.push(g.dataset.c); S.answers[key+"_route"] = seq; save(); paint();
+    });
+    svg.addEventListener("keydown", e => { if ((e.key==="Enter"||e.key===" ") && e.target.closest(".city")) { e.preventDefault(); e.target.closest(".city").dispatchEvent(new MouseEvent("click",{bubbles:true})); } });
+    paint();
+  });
+  view.querySelectorAll("[data-reset]").forEach(b => b.addEventListener("click", () => { const k=b.dataset.reset; if (S.answers[k]) return; S.answers[k+"_route"]=[]; save(); render(); }));
+  // Chiffre
+  const cr = view.querySelector("#cryp");
+  if (cr){
+    const enc = caesar(CIPHER_PLAIN, CIPHER_KEY);
+    cr.textContent = enc;
+    const sh = view.querySelector("#shift"), sv = view.querySelector("#shiftv"), al = view.querySelector("#alpha");
+    const A = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    const draw = () => { const k = Number(sh.value); sv.textContent = k;
+      al.innerHTML = `<div>${A.split("").join(" ")}</div><div class="dim">${A.split("").map(ch=>String.fromCharCode((ch.charCodeAt(0)-65-k+26)%26+65)).join(" ")}</div>`; };
+    sh.addEventListener("input", draw); draw();
+  }
+}
+
+const CITIES = [
+  {id:"offenburg", n:"Offenburg", lon:7.94, lat:48.47},
+  {id:"griesbach", n:"Bad Griesbach", lon:8.30, lat:48.44},
+  {id:"freiburg", n:"Freiburg", lon:7.85, lat:47.99},
+  {id:"stuttgart", n:"Stuttgart", lon:9.18, lat:48.78},
+  {id:"beuron", n:"Beuron", lon:8.97, lat:48.05},
+  {id:"ulm", n:"Ulm", lon:9.99, lat:48.40},
+  {id:"biberach", n:"Biberach", lon:9.79, lat:48.10},
+  {id:"regensburg", n:"Regensburg", lon:12.10, lat:49.01},
+  {id:"muenchen", n:"München", lon:11.58, lat:48.14},
+  {id:"salzburg", n:"Salzburg", lon:13.04, lat:47.80},
+  {id:"budapest", n:"Budapest →", lon:14.35, lat:47.62}
+].map(c => ({...c, x: Math.round(40 + (c.lon-7.6)*92), y: Math.round(30 + (49.25-c.lat)*165)}));
+
+function mapSVG(key){
+  const W = 40 + (14.6-7.6)*92, H = 30 + (49.25-47.4)*165;
+  return `<div class="mapbox"><svg data-route="${key}" viewBox="0 0 ${W} ${H}" role="group" aria-label="Karte Süddeutschland: Städte zum Anklicken">
+    <rect class="map-bg" x="0" y="0" width="${W}" height="${H}"/>
+    ${[8,9,10,11,12,13,14].map(l=>`<line class="map-grid" x1="${40+(l-7.6)*92}" y1="0" x2="${40+(l-7.6)*92}" y2="${H}"/>`).join("")}
+    ${[48,49].map(l=>`<line class="map-grid" x1="0" y1="${30+(49.25-l)*165}" x2="${W}" y2="${30+(49.25-l)*165}"/>`).join("")}
+    <text class="region" x="40" y="${H-18}">BADEN</text>
+    <text class="region" x="${40+(9.0-7.6)*92}" y="${30+(49.15-49)*165+12}">WÜRTTEMBERG</text>
+    <text class="region" x="${40+(10.9-7.6)*92}" y="${30+(49.25-48.75)*165}">BAYERN</text>
+    <text class="region" x="${40+(12.2-7.6)*92}" y="${H-12}">ÖSTERREICH</text>
+    <polyline class="route" points=""/>
+    ${CITIES.map(c=>`<g class="city" data-c="${c.id}" tabindex="0" role="button" aria-label="${c.n.replace(" →","")}"><rect class="hit" x="${c.x-14}" y="${c.y-14}" width="${c.n.length*8+34}" height="28"/><circle cx="${c.x}" cy="${c.y}" r="9"/><text x="${c.x+13}" y="${c.y+5}">${c.n}</text></g>`).join("")}
+  </svg></div><p class="small">Budapest liegt etwa 450 km weiter östlich (Pfeil am rechten Rand).</p>`;
+}
+
+function check(a, key){
+  const isBonus = key.endsWith("_bonus");
+  const q = isBonus ? a.bonus.q : a.qs[Number(key.split("_").pop())];
+  const box = view.querySelector(`.q[data-key="${key}"]`);
+  let ok = false;
+  if (q.type==="choice"){ const r = box.querySelector("input:checked"); ok = r && Number(r.value)===q.a; }
+  else if (q.type==="multi"){ const vals = [...box.querySelectorAll("input")].map(x=>x.checked); ok = vals.every((v,j)=>v===q.opts[j].c); }
+  else if (q.type==="numbers"){ ok = q.fields.every((f,j)=>Number(box.querySelector(`#${key}_${j}`).value.trim())===f.a); }
+  else if (q.type==="text"||q.type==="cipher"){ const v = norm(box.querySelector(`#${key}_t`).value); ok = q.accept.some(x=>v.includes(x)); }
+  else if (q.type==="order"){ ok = S.answers[key+"_ord"].every((v,j)=>v===j); }
+  else if (q.type==="match"){ ok = q.rows.every((r,j)=>box.querySelector(`#${key}_${j}`).value===String(r.a)); }
+  else if (q.type==="route"){ const s = S.answers[key+"_route"]||[]; ok = s.length===q.a.length && s.every((v,j)=>v===q.a[j]); }
+  else if (q.type==="check"){ ok = box.querySelector(`#${key}_c`).checked; }
+  const slot = box.querySelector(".fbslot");
+  if (ok){
+    S.answers[key] = true; if (isBonus) S.bonus[a.id] = true; save();
+    render();
+    const nb = view.querySelector(`.q[data-key="${key}"]`); if (nb) nb.scrollIntoView({block:"nearest"});
+  } else {
+    slot.innerHTML = `<div class="fb no">${wrongMsg(q)}</div>`;
+  }
+}
+function wrongMsg(q){
+  if (q.type==="multi") return "Noch nicht ganz. Prüft jede Aussage einzeln an den Beweismitteln. Es kann mehrere richtige geben.";
+  if (q.type==="order") return "Die Reihenfolge stimmt noch nicht. Sucht in den Materialien nach Daten und Jahreszahlen.";
+  if (q.type==="match") return "Mindestens eine Zuordnung stimmt noch nicht.";
+  if (q.type==="route") return "Der Fluchtweg stimmt noch nicht. Setzt die Auswahl zurück und beginnt am Tatort.";
+  if (q.type==="numbers") return "Mindestens eine Zahl stimmt nicht. Schaut in den Befund und in die Zeugenaussage.";
+  if (q.type==="check") return "Setzt den Haken erst, wenn der Bericht wirklich fertig ist.";
+  return "Das trifft es noch nicht. Lest die Beweismittel noch einmal genau.";
+}
+
+function solve(a){
+  S.solved[a.id] = true;
+  const nx = nextOf(a.id); if (nx) S.unlocked[nx.id] = true;
+  save(); render();
+  toast(`Akte ${a.no} gelöst! Funkcode: ${a.code}`);
+}
+
+function askHint(a){
+  const used = S.hints[a.id]||0; if (used>=3) return;
+  modal(`<h3>Anruf beim Präsidium</h3><p>Hinweis ${used+1} kostet <b>${PENALTY[used]} Minute${PENALTY[used]>1?"n":""}</b> Fahndungszeit. ${used===2?"Achtung: Stufe 3 verrät den Lösungsweg.":""}</p>
+    <div class="row"><button class="btn" id="mOk" type="button">Ja, Hinweis anfordern</button><button class="btn ghost" id="mNo" type="button">Abbrechen</button></div>`,
+    m => { m.querySelector("#mOk").onclick = () => { S.hints[a.id] = used+1; S.penalty += PENALTY[used]; save(); close(); render(); tick(); };
+           m.querySelector("#mNo").onclick = close; });
+}
+
+/* ---------- Bericht ---------- */
+const BERICHT = [
+  {k:"tat", l:"1. Tathergang", h:"Wann, wo und wie geschah die Tat? Wer wurde verletzt?"},
+  {k:"taeter", l:"2. Täter und Auftraggeber", h:"Namen, Herkunft, Organisation. Wer gab den Befehl? Was ist belegt, was umstritten?"},
+  {k:"motiv", l:"3. Motiv", h:"Warum gerade Erzberger? Welche Rolle spielte die Hetze?"},
+  {k:"bayern", l:"4. Die Spur nach Bayern", h:"Zentrale, Helfer, Pässe, Ordnungszelle: Wer schützte die Täter?"},
+  {k:"urteil", l:"5. Unser Urteil", h:"Warum scheiterten die Ermittlungen? Was bedeutete das für die Republik?"},
+  {k:"prognose", l:"6. Prognose", h:"Ist die Gefahr gebannt? Wer könnte das nächste Ziel sein?"}
+];
+function renderBericht(){
+  const b = S.bericht;
+  view.innerHTML = `<article class="akte"><div class="akte-head"><div class="aktenz"><span>An den Herrn Ersten Staatsanwalt, Offenburg</span><span>Az. St. 1921/26-08</span></div><h2>Ermittlungsbericht</h2><div class="rolle"><span class="chip">Verantwortlich: Aktenführung</span><span class="chip red">Team: ${esc(S.team||"ohne Namen")}</span></div></div>
+  <div class="sec"><p class="auftrag">Füllt den Bericht <strong>während</strong> der Ermittlung aus, nach jeder Akte ein Stück. Schreibt in ganzen Sätzen und nennt eure Beweismittel (z. B. „vgl. M 4.6“). Der Text wird nur auf diesem Gerät gespeichert. Übertragt ihn am Ende in die gedruckte Vorlage oder kopiert ihn.</p></div>
+  <div class="sec"><form class="berichtf" id="bf">${BERICHT.map(f=>`<label for="b_${f.k}">${f.l}<span>${f.h}</span><textarea class="inp" id="b_${f.k}">${esc(b[f.k]||"")}</textarea></label>`).join("")}
+  <div class="row"><button class="btn" type="button" id="copyB">Bericht in die Zwischenablage kopieren</button><span class="small">Gespeichert wird automatisch.</span></div></form></div></article>`;
+  view.querySelectorAll("textarea").forEach(t => t.addEventListener("input", () => { S.bericht[t.id.slice(2)] = t.value; save(); }));
+  view.querySelector("#bf").addEventListener("submit", e => e.preventDefault());
+  view.querySelector("#copyB").addEventListener("click", () => {
+    const txt = `ERMITTLUNGSBERICHT · Soko Griesbach · Team ${S.team}\n\n` + BERICHT.map(f=>`${f.l}\n${S.bericht[f.k]||""}`).join("\n\n");
+    navigator.clipboard.writeText(txt).then(()=>toast("Bericht kopiert."), ()=>{ const t=view.querySelector("textarea"); t.focus(); t.select(); toast("Kopieren nicht möglich. Bitte Text manuell markieren."); });
+  });
+}
+
+/* ---------- Lagebesprechung ---------- */
+function renderLage(){
+  view.innerHTML = `<article class="akte lage">
+  <div class="akte-head"><div class="aktenz"><span>Plenum · Beamer</span><span>ca. 15 Minuten</span></div><h2>Lagebesprechung</h2><div class="rolle"><span class="chip">Alle Teams</span><span class="chip red">1921 und heute</span></div></div>
+
+  <div class="sec"><h3>1 · Die Auflösung: Was aus den Tätern wurde</h3>
+   <div class="tl">
+    <div class="ev"><span class="d">26.8.1921</span><span>Mord bei Bad Griesbach. Die Täter fliehen über München nach Ungarn.</span></div>
+    <div class="ev"><span class="d">13.6.1922</span><span>Killinger wird in Offenburg freigesprochen.</span></div>
+    <div class="ev"><span class="d">24.6.1922</span><span>Mord an Walther Rathenau durch die O.C. Am 21.7.1922 folgt das Republikschutzgesetz, die O.C. wird verboten.</span></div>
+    <div class="ev"><span class="d">21.3.1933</span><span>Die NS-Straffreiheitsverordnung schließt ausdrücklich auch den Erzberger-Mord ein. Tillessen geht in NSDAP und SA, Schulz in die SS.</span></div>
+    <div class="ev"><span class="d">29.11.1946</span><span>Das Landgericht Offenburg spricht Tillessen unter Berufung auf die NS-Amnestie frei. Die Presse nennt es ein „Schandurteil“. Die französische Militärregierung greift ein.</span></div>
+    <div class="ev"><span class="d">28.2.1947</span><span>Das Landgericht Konstanz verurteilt Tillessen zu 15 Jahren Zuchthaus wegen Mordes und eines Verbrechens gegen die Menschlichkeit.</span></div>
+    <div class="ev"><span class="d">Juli 1950</span><span>Das Landgericht Offenburg verurteilt Schulz zu 12 Jahren.</span></div>
+    <div class="ev"><span class="d">1952 / 1958</span><span>Beide kommen 1952 frei. 1958 wird Tillessens Reststrafe auf dem Gnadenweg erlassen, nach Fürsprache von Erzbergers Witwe.</span></div>
+   </div></div>
+
+  <div class="sec"><h3>2 · Die Spur nach Bayern: Ergebnis</h3>
+   <div class="grid2">
+    <div class="card"><h4>Zentrale</h4><p>Die O.C. sitzt in der Trautenwolfstraße 8 in München, getarnt als „Bayerische Holzverwertungsgesellschaft“.</p></div>
+    <div class="card"><h4>Befehl</h4><p>Killinger gibt den Auftrag aus der Münchner Zentrale. Wer ihn genau ausgelöst hat (Germanenorden?), ist umstritten.</p></div>
+    <div class="card"><h4>Schutz</h4><p>Die Münchner Polizei unter Pöhner (politische Abteilung: Frick) warnt die Täter und stellt ihnen Pässe aus.</p></div>
+    <div class="card"><h4>Politik</h4><p>Die „Ordnungszelle“ Bayern verweigert sich 1921 und 1922 dem Schutz der Republik. Pöhner und Frick sind 1923 beim Hitler-Putsch dabei.</p></div>
+   </div></div>
+
+  <div class="sec"><h3>3 · Zeitsprung: politische Gewalt von rechts in der Bundesrepublik</h3>
+   <div class="vs">
+    <div class="card now"><h4>Walter Lübcke · 2019</h4><p>Der CDU-Regierungspräsident in Kassel wird nach jahrelanger Hetze im Netz von einem Rechtsextremisten auf seiner Terrasse erschossen. Er stand auch auf einer „Feindesliste“ des NSU.</p></div>
+    <div class="card now"><h4>Henriette Reker · 2015</h4><p>Einen Tag vor ihrer Wahl zur Kölner Oberbürgermeisterin wird sie an einem Wahlkampfstand mit einem Messer schwer verletzt. Der Täter nennt ihre Flüchtlingspolitik als Grund.</p></div>
+    <div class="card now"><h4>Andreas Hollstein · 2017</h4><p>Der Bürgermeister von Altena wird in einem Imbiss mit einem Messer angegriffen, ebenfalls wegen seiner Flüchtlingspolitik.</p></div>
+    <div class="card now"><h4>NSU · 2000–2011</h4><p>Eine rechtsterroristische Gruppe ermordet zehn Menschen, fünf davon in Bayern (Nürnberg und München). Der Prozess fand 2013–2018 vor dem OLG München statt. Die Ermittler suchten die Täter jahrelang im Umfeld der Opfer.</p></div>
+    <div class="card now"><h4>Hass im Netz</h4><p>2024 registriert das BKA 84.172 politisch motivierte Straftaten, den höchsten Stand seit Beginn der Statistik 2001. Auch Kommunalpolitikerinnen und Kommunalpolitiker werden zunehmend bedroht.</p></div>
+   </div>
+   <p class="small">Quellen: Artikel „Mordfall Walter Lübcke“, „Henriette Reker“ und „Nationalsozialistischer Untergrund“ der deutschsprachigen Wikipedia. BKA-Fallzahlen PMK 2024 nach ZDFheute. Aktuelle Zahlen bitte vor dem Einsatz prüfen.</p></div>
+
+  <div class="sec"><h3>4 · Muster erkennen: 1921 und heute</h3>
+   <div class="tablewrap"><table class="cmp"><thead><tr><th>Muster</th><th>1919–1922</th><th>2015–2019</th></tr></thead><tbody>
+    <tr><td>Feindbild</td><td>„Novemberverbrecher“, „Erfüllungspolitiker“</td><td>„Volksverräter“</td></tr>
+    <tr><td>Rufmord</td><td>Helfferich: „Fort mit Erzberger!“</td><td>Lübckes Satz wird verkürzt als Video verbreitet</td></tr>
+    <tr><td>Gewaltaufruf</td><td>„Knallt ab den Walther Rathenau …“</td><td>„… oder es wird Tote geben“</td></tr>
+    <tr><td>Netzwerk</td><td>O.C., Freikorps, völkische Bünde</td><td>Neonazi-Szene, Waffenlager, Feindeslisten</td></tr>
+    <tr><td>Reaktion des Staates</td><td>Teile von Polizei und Justiz decken die Täter</td><td>Täter verurteilt. Debatte über Fehler der Behörden (NSU, Verfassungsschutz)</td></tr>
+    <tr><td>Mahnung</td><td>Löbe 1921: Die Hetzer „haben teil an der geistigen Verwirrung“.</td><td>Schäuble 2019: „Wer diesen Nährboden düngt, macht sich mitschuldig.“</td></tr>
+   </tbody></table></div></div>
+
+  <div class="sec"><h3>5 · Urteilsfragen für das Plenum</h3>
+   <ol style="margin:0;padding-left:1.3em;display:grid;gap:8px;max-width:75ch">
+    <li>„Die Weimarer Republik scheiterte nicht an zu vielen Feinden, sondern an zu wenigen Verteidigern.“ Nehmt Stellung mithilfe eures Falls.</li>
+    <li>Was unterscheidet den Umgang des Staates mit politischen Morden 1921 und heute? Wo seht ihr Parallelen?</li>
+    <li>Steinmeier sagt: „Wo die Sprache verroht, ist die Straftat nicht weit.“ Wo beginnt für euch in sozialen Netzwerken die Verantwortung jedes Einzelnen?</li>
+   </ol></div>
+  </article>`;
+}
+
+/* ---------- Funkcode, Lehrkraft, Overlays ---------- */
+function modal(html, wire){
+  overlay.innerHTML = `<div class="veil" role="dialog" aria-modal="true"><div class="dialog">${html}</div></div>`;
+  const m = overlay.querySelector(".dialog"); wire && wire(m);
+  overlay.querySelector(".veil").addEventListener("click", e => { if (e.target.classList.contains("veil")) close(); });
+  const f = m.querySelector("input,button"); f && f.focus();
+}
+function close(){ overlay.innerHTML = ""; }
+document.addEventListener("keydown", e => { if (e.key==="Escape") close(); });
+
+document.getElementById("btnFunk").addEventListener("click", () => {
+  modal(`<h3>Funkcode eingeben</h3><p>Ein anderes Gerät eures Teams hat eine Akte gelöst? Gebt hier den Funkcode ein, um die nächste Akte freizuschalten.</p>
+   <input class="inp w" id="fc" autocomplete="off" placeholder="z. B. KNIEBIS"><div class="row"><button class="btn" id="fcOk" type="button">Freischalten</button><button class="btn ghost" id="fcNo" type="button">Abbrechen</button></div><div id="fcMsg"></div>`, m => {
+    const run = () => { const v = norm(m.querySelector("#fc").value); const a = AKTEN.find(x=>norm(x.code)===v);
+      if (!a){ m.querySelector("#fcMsg").innerHTML = `<div class="fb no">Unbekannter Code. Prüft die Schreibweise.</div>`; return; }
+      S.solved[a.id] = true; const nx = nextOf(a.id); if (nx) S.unlocked[nx.id] = true;
+      AKTEN.slice(0, AKTEN.indexOf(a)+1).forEach(x => S.unlocked[x.id] = true);
+      save(); close(); go(nx ? nx.id : "lage"); toast(nx ? `Akte ${nx.no} freigeschaltet.` : "Lagebesprechung freigeschaltet."); };
+    m.querySelector("#fcOk").onclick = run; m.querySelector("#fc").addEventListener("keydown", e => { if (e.key==="Enter") run(); });
+    m.querySelector("#fcNo").onclick = close; });
+});
+
+document.getElementById("btnLehrer").addEventListener("click", () => {
+  if (!S.teacher){
+    modal(`<h3>Lehrkraft</h3><p>Bitte PIN eingeben (siehe Lehrerheft).</p><input class="inp w" id="pin" inputmode="numeric" type="password" autocomplete="off"><div class="row"><button class="btn" id="pOk" type="button">Öffnen</button><button class="btn ghost" id="pNo" type="button">Abbrechen</button></div><div id="pMsg"></div>`, m => {
+      const run = () => { if (m.querySelector("#pin").value.trim()===PIN){ S.teacher = true; save(); close(); teacherPanel(); render(); } else m.querySelector("#pMsg").innerHTML = `<div class="fb no">Falsche PIN.</div>`; };
+      m.querySelector("#pOk").onclick = run; m.querySelector("#pin").addEventListener("keydown", e => { if (e.key==="Enter") run(); }); m.querySelector("#pNo").onclick = close; });
+  } else teacherPanel();
+});
+
+function solText(q){
+  if (q.type==="choice") return q.opts[q.a];
+  if (q.type==="multi") return q.opts.filter(o=>o.c).map(o=>o.t).join(" | ");
+  if (q.type==="numbers") return q.fields.map(f=>`${f.l}: ${f.a}`).join(", ");
+  if (q.type==="text"||q.type==="cipher") return q.accept.join(" / ") + (q.type==="cipher" ? ` (Schlüssel ${CIPHER_KEY}: ${CIPHER_PLAIN})` : "");
+  if (q.type==="order") return q.items.join(" → ");
+  if (q.type==="match") return q.rows.map(r=>`${r.t} = ${q.cats[r.a]}`).join(" | ");
+  if (q.type==="route") return q.a.map(id=>CITIES.find(c=>c.id===id).n).join(" → ");
+  if (q.type==="check") return "Haken setzen, wenn der Bericht vorliegt";
+  return "";
+}
+function teacherPanel(){
+  const rows = AKTEN.map(a => `<details><summary><b>Akte ${a.no}: ${esc(a.title)}</b>, Funkcode <code>${a.code}</code></summary><ol class="small">${a.qs.map(q=>`<li>${esc(solText(q))}</li>`).join("")}<li>Bonus: ${esc(solText(a.bonus.q))}</li></ol></details>`).join("");
+  modal(`<h3>Lehrkraft-Modus</h3><p class="small">Auf diesem Gerät sind jetzt alle Akten offen. Strafzeit bisher: ${S.penalty} Min. Gelöst: ${Object.keys(S.solved).length} von ${AKTEN.length}.</p>${rows}
+   <div class="row"><button class="btn" id="tLage" type="button">Lagebesprechung öffnen</button><button class="btn ghost" id="tOff" type="button">Lehrkraft-Modus beenden</button><button class="btn red" id="tReset" type="button">Gerät zurücksetzen</button></div><div id="tMsg"></div>`, m => {
+    m.querySelector("#tLage").onclick = () => { close(); go("lage"); };
+    m.querySelector("#tOff").onclick = () => { S.teacher = false; save(); close(); render(); };
+    m.querySelector("#tReset").onclick = () => {
+      m.querySelector("#tMsg").innerHTML = `<div class="fb no">Wirklich alle Antworten, Bericht und Uhr auf diesem Gerät löschen? <button class="btn red" id="tReset2" type="button">Ja, zurücksetzen</button></div>`;
+      m.querySelector("#tReset2").onclick = () => { S = fresh(); save(); close(); render(); tick(); toast("Gerät zurückgesetzt."); };
+    };
+  });
+}
+
+let toastT;
+function toast(msg){
+  let t = document.querySelector(".toast"); if (!t){ t = document.createElement("div"); t.className="toast"; t.setAttribute("role","status"); document.body.appendChild(t); }
+  t.textContent = msg; clearTimeout(toastT); toastT = setTimeout(()=>t.remove(), 3800);
+}
+
+/* ---------- Fahndungsuhr ---------- */
+const tEl = document.getElementById("timer"), pEl = document.getElementById("pen");
+function tick(){
+  if (!S.start){ tEl.textContent = DURATION + ":00"; tEl.classList.remove("low"); pEl.textContent = "Fahndungsuhr noch nicht gestartet"; return; }
+  const left = DURATION*60 - Math.floor((Date.now()-S.start)/1000) - S.penalty*60;
+  const a = Math.abs(left), mm = Math.floor(a/60), ss = String(a%60).padStart(2,"0");
+  tEl.textContent = (left<0?"+":"") + mm + ":" + ss;
+  tEl.classList.toggle("low", left < 10*60);
+  pEl.textContent = left<0 ? "Die Täter sind über die Grenze! Ermittelt trotzdem weiter." : (S.penalty ? `davon ${S.penalty} Min. Abzug für Hinweise` : "Fahndungszeit");
+}
+setInterval(tick, 1000); tick();
+
+// Für den Druck der Akten (build_print.js) werden die Daten bereitgestellt.
+if (location.hash==="#druck") window.__SOKO = {AKTEN, BERICHT, map: mapSVG("druck"), cipher: caesar(CIPHER_PLAIN, CIPHER_KEY), IMG};
+
+render();
+})();
+</script>
