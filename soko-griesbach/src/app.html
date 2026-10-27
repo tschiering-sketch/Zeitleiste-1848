@@ -230,7 +230,7 @@ textarea.inp{width:100%;min-height:96px;resize:vertical;font-family:var(--font-d
 <header class="bar">
   <div class="brand"><b>Soko Griesbach</b><span>Badische Kriminalpolizei · Staatsanwaltschaft Offenburg · 1921</span></div>
   <div class="clock">
-    <div><div class="timer" id="timer">70:00</div><div class="pen" id="pen">Fahndungsuhr noch nicht gestartet</div></div>
+    <div><div class="timer" id="timer">72:00</div><div class="pen" id="pen">Fahndungsuhr noch nicht gestartet</div></div>
     <button class="barbtn" id="btnFunk" type="button">Funkcode eingeben</button>
     <button class="barbtn" id="btnLehrer" type="button">Lehrkraft</button>
   </div>
@@ -246,8 +246,8 @@ textarea.inp{width:100%;min-height:96px;resize:vertical;font-family:var(--font-d
 <script>
 (() => {
 "use strict";
-const IMG = {erzberger:"__IMG_erzberger__",helfferich:"__IMG_helfferich__",rathenau:"__IMG_rathenau__",kahr:"__IMG_kahr__",tatortskizze:"__IMG_tatortskizze__",boeschung:"__IMG_boeschung__",leichenschau:"__IMG_leichenschau__",fahndungsfoto:"__IMG_fahndungsfoto__",killinger:"__IMG_killinger__",hoffmann:"__IMG_hoffmann__"};
-const DURATION = 70; // Minuten Fahndungszeit (Akten 1–5); Einstieg 5' + Lagebesprechung 15' kommen hinzu
+const IMG = {erzberger:"__IMG_erzberger__",helfferich:"__IMG_helfferich__",rathenau:"__IMG_rathenau__",kahr:"__IMG_kahr__",tatortskizze:"__IMG_tatortskizze__",boeschung:"__IMG_boeschung__",leichenschau:"__IMG_leichenschau__",fahndungsfoto:"__IMG_fahndungsfoto__",killinger:"__IMG_killinger__",hoffmann:"__IMG_hoffmann__",telegramm:"__IMG_telegramm__",urteil:"__IMG_urteil__",aufruf:"__IMG_aufruf__",volk:"__IMG_volk__",trauerplakat:"__IMG_trauerplakat__"};
+const DURATION = 72; // Minuten Fahndungszeit (Akten I–VI); Einstieg 5' + Lagebesprechung 13' kommen hinzu
 const PENALTY = [1,2,4];
 const PIN = "1921";
 const LS = "sokoGriesbach_v1";
@@ -355,7 +355,7 @@ const AKTEN = [
    ok:"Stark ermittelt! Der Redner eröffnet die Sitzung und spricht vom „Vorsitzenden dieses Hauses“. Das kann nur der Reichstagspräsident sein, also Paul Löbe (im Amt 1920–1924). Der Reichspräsident leitete keine Reichstagssitzungen. Auch seriöse Online-Sammlungen können sich irren. Prüft deshalb immer die Quelle selbst."}}
 },
 {
- id:"a3", no:"III", title:"Fahndung", sub:"Wer sind „Berkner“ und „Briese“?", role:"Fahndung", min:13, code:"EHRHARDT",
+ id:"a3", no:"III", title:"Fahndung", sub:"Wer sind „Berkner“ und „Briese“?", role:"Fahndung", min:12, code:"EHRHARDT",
  az:"Az. St. 1921/26-08 · Fahndungsakte",
  auftrag:`Die Täter haben kaum versucht, ihre Spuren zu verwischen. Die badische Polizei kennt bald ihre echten Namen: <strong>Heinrich Tillessen</strong> und <strong>Heinrich Schulz</strong>. Findet heraus, was die beiden verbindet, und verfolgt ihren <strong>Fluchtweg</strong> auf der Karte.`,
  mats:[
@@ -389,7 +389,7 @@ const AKTEN = [
    ok:"Richtig, nach Bayern. Ehrhardt entzog sich 1920 der Verhaftung, indem er in die „Ordnungszelle“ Bayern floh (Historisches Lexikon Bayerns). Das ist die Spur zu Akte IV."}}
 },
 {
- id:"a4a", no:"IV a", title:"Das Netzwerk in München", sub:"Wer gab den Befehl?", role:"alle Rollen", min:12, code:"CONSUL",
+ id:"a4a", no:"IV a", title:"Das Netzwerk in München", sub:"Wer gab den Befehl?", role:"alle Rollen", min:11, code:"CONSUL",
  az:"Az. St. 1921/26-08 · Sonderakte München",
  auftrag:`Bei den Ermittlungen findet die Polizei <strong>verschlüsselte Anweisungen</strong>. Entschlüsselt die abgefangene Nachricht, findet die <strong>Zentrale</strong> und rekonstruiert, <strong>wer den Mordbefehl gab</strong>.`,
  mats:[
@@ -425,7 +425,7 @@ const AKTEN = [
    ok:"Genau. Gute Historiker und gute Ermittler trennen das, was belegt ist, von dem, was umstritten ist."}}
 },
 {
- id:"a4b", no:"IV b", title:"Die schützende Hand", sub:"Warum entkamen die Täter?", role:"alle Rollen", min:11, code:"ORDNUNGSZELLE",
+ id:"a4b", no:"IV b", title:"Die schützende Hand", sub:"Warum entkamen die Täter?", role:"alle Rollen", min:10, code:"ORDNUNGSZELLE",
  az:"Az. St. 1921/26-08 · Sonderakte Bayern",
  auftrag:`Die Täter sind bekannt und die Zentrale ist gefunden. Trotzdem entkommen Tillessen und Schulz. Findet heraus, <strong>wer sie in Bayern schützte</strong>, und beurteilt, <strong>warum die Ermittlungen scheiterten</strong>.`,
  mats:[
@@ -462,7 +462,7 @@ const AKTEN = [
    ok:"Genau. Beamte, die die Republik verachteten, schützten ihre Feinde. Man spricht von einer „Republik ohne Republikaner“ in Teilen von Justiz und Verwaltung."}}
 },
 {
- id:"a5", no:"V", title:"Abschluss und neue Spur", sub:"Bericht an den Staatsanwalt", role:"Aktenführung", min:10, code:"SAALECK",
+ id:"a5", no:"V", title:"Abschluss und neue Spur", sub:"Bericht an den Staatsanwalt", role:"Aktenführung", min:5, code:"RATHENAU",
  az:"Az. St. 1922 · Eingang Juni 1922",
  auftrag:`Schreibt euren <strong>Ermittlungsbericht</strong> (Reiter „Ermittlungsbericht“) und legt ihn dem Staatsanwalt vor. Danach geht ein neuer Hinweis ein: Die O.C. ist <strong>nicht</strong> zerschlagen. Wer ist das nächste Ziel?`,
  mats:[
@@ -477,8 +477,49 @@ const AKTEN = [
   {type:"check", q:"Euer Ermittlungsbericht ist ausgefüllt (Reiter „Ermittlungsbericht“) und dem Staatsanwalt (der Lehrkraft) vorgelegt.", label:"Ja, der Bericht ist fertig und vorgelegt.",
    ok:"Bericht eingegangen."},
   {type:"choice", q:"Wer ist nach den Akten das nächste Ziel der O.C.?", opts:["Philipp Scheidemann, er wurde aber schon angegriffen","Reichsaußenminister Walther Rathenau","Ministerpräsident Gustav von Kahr","Kapitän Hermann Ehrhardt"], a:1,
-   ok:"Eure Prognose stimmt, aber die Warnung kommt zu spät."},
-  {type:"multi", q:"Nach dem Telegramm: Was verbindet die Opfer Erzberger und Rathenau? Wählt alle zutreffenden Punkte.", opts:[
+   ok:"Eure Prognose stimmt, aber die Warnung kommt zu spät."}
+ ],
+ reveal:{after:1, html:`<div class="figs"><figure class="fig" style="max-width:420px"><div class="figimg"><img src="${IMG.telegramm}" alt="Telegramm der Telegraphie des Deutschen Reichs vom 24. Juni 1922"></div><figcaption>Eingang beim badischen Staatspräsidenten, 24. Juni 1922</figcaption></figure></div><div class="telegram">s berlin reichstag 24.6. 11.55 = staatspraesident hummel karlsruhe = reichsminister rathenau heute vormittag auf fahrt in das amt aus vorueberfahrendem auto erschoszen worden taeter unbekannt = nieser</div><p class="small">Originaltelegramm. Landesarchiv Baden-Württemberg, Abt. Generallandesarchiv Karlsruhe, Badisches Staatsministerium, Akte „Trauerfeiern für den ermordeten Reichsaußenminister Walther Rathenau“, Permalink 4-2015677, CC BY 3.0. Die Ermittlung geht weiter in Akte VI.</p>`},
+ hints:[
+  "Lest den Lagebericht M 5.1 genau. Scheidemann wurde schon angegriffen. Wer wird zusätzlich antisemitisch angefeindet?",
+  "Der Hetzvers M 5.2 nennt den Namen ausdrücklich.",
+  "Lösungsweg: Setzt den Haken, wenn der Bericht vorliegt. Das nächste Ziel ist Walther Rathenau."
+ ],
+ bonus:{title:"Kriminalrat-Akte: Was geschah mit Erzbergers Mördern?", intro:"Bringt das Schicksal der Täter in die richtige Reihenfolge.",
+  q:{type:"order", q:"Älteste Station oben:", items:["Flucht nach Ungarn, später Spanien bzw. Spanisch-Guinea","Rückkehr nach Deutschland und Straffreiheit durch die NS-Amnestie vom 21.3.1933","Eintritt in NSDAP und SA bzw. SS","Tillessen wird in Konstanz zu 15 Jahren Zuchthaus verurteilt (28.2.1947)","Schulz wird in Offenburg zu 12 Jahren verurteilt (Juli 1950)","Beide kommen 1952 frei"],
+   ok:"Richtig. Erst die Bundesrepublik bzw. die Justiz der Besatzungszeit verurteilte die Täter, mehr als 25 Jahre nach der Tat."}}
+},
+{
+ id:"a6", no:"VI", title:"Mord in der Koenigsallee", sub:"Berlin-Grunewald, 24. Juni 1922", role:"alle Rollen", min:10, code:"SAALECK",
+ az:"Az. 12 J. 2/1922 · Staatsgerichtshof zum Schutze der Republik",
+ auftrag:`Zehn Monate nach Erzberger schlägt dasselbe Netzwerk wieder zu. Wertet das <strong>Telegramm</strong>, das <strong>Urteil</strong> und die <strong>Plakate</strong> aus: Wer war beteiligt, wie reagierte die Republik, und was blieb wie im Fall Erzberger <strong>im Dunkeln</strong>?`,
+ mats:[
+  {no:"6.1", kind:"q", title:"Aus dem Urteil des Staatsgerichtshofs, Oktober 1922", wide:true, figs:[{img:"urteil", alt:"Erste Seite der Urteilsabschrift „Im Namen des Reichs“ mit Liste der Angeklagten", cap:"Erste Seite der Abschrift: „Im Namen des Reichs. In der Strafsache gegen den Studenten Ernst Werner Techow …“"}],
+   html:`<div class="doc"><p>„Am 24. Juni 1922 Vormittag gegen 10 3/4 Uhr ist auf der Königsallee in Berlin-Grunewald der Reichsminister Dr. Walter Rathenau erschossen worden. […]</p><p>Der Minister Dr. Rathenau befand sich in seinem Kraftwagen auf dem Weg von seiner Wohnung ins Auswärtige Amt. In einem Kraftwagen, der von Ernst Werner Techow gelenkt wurde und dem Wagen des Ministers folgte, saßen der Studierende der Rechtswissenschaft Erwin Kern und der Maschineningenieur Hermann Fischer. Dieser Wagen holte links den Wagen des Ministers ein und als er neben ihm gelangt war, gab von den beiden, Kern und Fischer, der eine aus einer Maschinenpistole eine Anzahl von Schüssen auf Dr. Rathenau ab, während der andere eine Handgranate in dessen Wagen warf, die alsbald zerknallte. […]</p><p>Mitte Juni kamen Kern und Fischer in Berlin zusammen und bezogen eine gemeinsame Wohnung. Zu ihnen gesellte sich zunächst der Angeklagte von Salomon. […] Inzwischen hatten Kern und Fischer von dem Plane eines Unterprimaners Heinz Stubenrauch gehört, den Minister Dr. Rathenau zu erschießen […]. Sie wandten sich an den Angeklagten Ernst Werner Techow, der der Organisation Consul angehörte und zu ihrem Adressen- und Befehlsempfänger bestellt war.“</p></div><p class="small">Ein Unterprimaner besuchte die vorletzte Klasse des Gymnasiums. Er war also ein Schüler.</p>`,
+   src:"Urteil des Staatsgerichtshofs zum Schutze der Republik, St.P.R. 6/22 (Abschrift, Auszüge). Landesarchiv Baden-Württemberg, Abt. Generallandesarchiv Karlsruhe, Nachlass Constantin Fehrenbach, Permalink 4-3954464, CC BY 3.0."},
+  {no:"6.2", kind:"d", title:"Ermittlungsstand: Die Beteiligten", html:`<dl class="kv"><dt>Erwin Kern</dt><dd>23, Jurastudent, ehemaliger Marineoffizier. Schoss mit einer Maschinenpistole MP 18.</dd><dt>Hermann Fischer</dt><dd>26, Maschineningenieur. Warf die Handgranate.</dd><dt>Ernst Werner Techow</dt><dd>20, Student, O.C.-Mitglied. Lenkte den Tatwagen.</dd><dt>Ernst von Salomon</dt><dd>19, O.C.-Mitglied. Spähte Fahrtstrecke und Wohnhaus aus und suchte einen Fahrer. Schrieb 1951 darüber den Bestseller „Der Fragebogen“.</dd><dt>Willi Günther</dt><dd>prahlte öffentlich mit der Tat. Wurde am 26.6. verhaftet und gestand.</dd><dt>Flucht</dt><dd>Kern und Fischer werden am 17.7.1922 auf Burg Saaleck an der Saale gestellt. Der Burgbesitzer ist O.C.-Mitglied. Ein Polizist trifft Kern tödlich, Fischer erschießt sich selbst.</dd></dl>`,
+   src:"Nach dem Artikel „Walther Rathenau“ der deutschsprachigen Wikipedia, Abschnitt Ermordung (Belege: Sabrow 1994), und dem Artikel „Organisation Consul“."},
+  {no:"6.3", kind:"q", title:"Plakate der Reichsregierung, Juni 1922", wide:true, figs:[{img:"aufruf", alt:"Orangefarbenes Plakat Aufruf! Der Mord an dem Reichsminister Dr. Rathenau, Es lebe die Republik", cap:"„Aufruf!“ (Druck: C. F. Müller, Karlsruhe)"},{img:"volk", alt:"Plakat An das deutsche Volk! mit Zeigefinger-Symbolen", cap:"„An das deutsche Volk!“ (Druck: Uehlin, Schopfheim)"}],
+   html:`<div class="doc"><p>„Der Mord an dem Reichsminister Dr. Rathenau hat die schweren Gefahren enthüllt, denen Deutschland durch innerpolitische Gährungen ausgesetzt ist. […] Eine ruchlose und nichtswürdige Verhetzung, welche sich gegen die Staatsform richtet und ihre Diener für vogelfrei erklärt, treibt immer wieder unklare, politisch verblendete, oder verwilderte Köpfe zu Mordversuch und Mord. Ein Netz von Verschwörung droht den inneren Frieden, die Grundlage einer deutschen Erneuerung, zu zerstören. Der Mord an Dr. Rathenau ist nur ein Glied in einer Kette wohlvorbereiteter Anschläge auf die Republik. Zuerst sollen die Führer der Republik, dann soll die Republik selbst fallen. […] Der Ruf: ‚Die Republik ist in Gefahr!‘ muß alle freiheitlichen, für den Aufbau eines demokratischen Staatswesens arbeitenden Schichten der Bevölkerung zusammenschließen und einigen. […] Es lebe die Republik! Die Reichsregierung. gez. Dr. Wirth.“</p></div>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, Plakatsammlung, Permalinks 5-133711 (datiert 24.6.1922) und 5-133710, CC BY 3.0. Wortlaut beider Fassungen gleich; Rechtschreibung des Originals."},
+  {no:"6.4", kind:"q", title:"Reichskanzler Joseph Wirth (Zentrum) im Reichstag, 25. Juni 1922", html:`<div class="doc"><p>„Da steht der Feind, der sein Gift in die Wunden eines Volkes träufelt. – Da steht der Feind – und darüber ist kein Zweifel: dieser Feind steht rechts!“</p></div><p class="small">Wirth zeigte bei diesen Worten auf die Bänke der DNVP, Helfferichs Partei. Helfferich hatte Rathenau am Vortag des Mordes im Reichstag scharf angegriffen.</p>`,
+   src:"Verhandlungen des Reichstags, I. Wahlperiode, Sitzung vom 25.6.1922 (Stenographischer Bericht). Vielfach abgedruckt, u. a. in LeMO (DHM)."},
+  {no:"6.5", kind:"q", title:"Trauerplakat aus Karlsruhe", figs:[{img:"trauerplakat", alt:"Plakat: Trauer-Kundgebung für Walter Rathenau im großen Saale der Festhalle, heute Montag abends 8 Uhr", cap:"„Alle Männer und Frauen, alle Freunde der Republik sind eingeladen …“"}],
+   html:`<p>Eingeladen haben drei Parteien: Zentrum, SPD und die Deutsche Demokratische Partei. Sie bildeten in der Nationalversammlung die „Weimarer Koalition“. Reichsweit demonstrierten nach dem Mord Millionen Menschen für die Republik.</p>`,
+   src:"Landesarchiv Baden-Württemberg, Abt. Generallandesarchiv Karlsruhe, Badisches Staatsministerium, Permalink 4-2015677 (Findbuch: „Plakat für die Trauerfeier in Karlsruhe, 25. Juni 1922“), CC BY 3.0."},
+  {no:"6.6", kind:"d", title:"Was danach geschah", html:`<dl class="kv"><dt>21.7.1922</dt><dd>Das <b>Republikschutzgesetz</b> tritt in Kraft (Reichstag: 303 zu 102 Stimmen). Es schafft einen Staatsgerichtshof, die O.C. wird verboten.</dd><dt>Bayern</dt><dd>BVP und DNVP stimmen dagegen. Bayern erlässt eine eigene Verordnung, die Prozesse an bayerische Volksgerichte zieht. Erst am 11.8.1922 einigen sich Reich und Bayern auf einen Kompromiss.</dd><dt>3.–14.10.1922</dt><dd>Prozess vor dem Staatsgerichtshof in Leipzig: Techow erhält 15 Jahre Zuchthaus (Beihilfe), von Salomon 5 Jahre, Karl Tillessen 3 und Plaas 2 Jahre. Das Gericht lässt offen, ob ein organisiertes Komplott hinter der Tat stand, und erklärt sie mit antisemitischer Hetze junger Fanatiker.</dd><dt>17.7.1933</dt><dd>Die Nationalsozialisten feiern Kern und Fischer bei einer Gedenkfeier auf Burg Saaleck, in Anwesenheit Ehrhardts und Himmlers.</dd></dl>`,
+   src:"Nach den Artikeln „Walther Rathenau“ und „Republikschutzgesetz“ der deutschsprachigen Wikipedia (Belege: Sabrow 1994)."}
+ ],
+ qs:[
+  {type:"choice", q:"Das Telegramm (Akte V) kam um 11.55 Uhr aus dem Reichstag. Was wussten die Behörden zu diesem Zeitpunkt?", opts:["Die Täter waren bereits verhaftet.","Rathenau war auf der Fahrt ins Amt aus einem vorbeifahrenden Auto erschossen worden. Die Täter waren unbekannt.","Rathenau war in seiner Villa überfallen worden.","Die O.C. hatte sich zu der Tat bekannt."], a:1,
+   ok:"Richtig. Rund eine Stunde nach der Tat stand nur fest, wie Rathenau starb, nicht wer ihn getötet hatte."},
+  {type:"match", q:"Wer spielte welche Rolle? Ordnet zu (M 6.1 und M 6.2).", rows:[
+    {t:"Ernst Werner Techow", a:0},{t:"Erwin Kern und Hermann Fischer", a:1},{t:"Ernst von Salomon", a:2},{t:"Heinz Stubenrauch", a:3}
+   ], cats:["lenkte den Tatwagen","saßen im Tatwagen: Maschinenpistole und Handgranate","spähte aus und suchte einen Fahrer","Schüler mit eigenem Mordplan"],
+   ok:"Richtig. Fast alle Beteiligten waren junge Männer zwischen 17 und 26 Jahren. Einer von ihnen war noch Schüler."},
+  {type:"choice", q:"Das Urteil hält fest, dass Techow der O.C. angehörte. Trotzdem ließ das Gericht offen, ob ein organisiertes Komplott dahinterstand. Was bedeutet das?", opts:["Das Gericht hat bewiesen, dass die O.C. nichts mit der Tat zu tun hatte.","Wie im Fall Erzberger wurde das Netzwerk der O.C. vor Gericht nicht aufgeklärt. Die Tat erschien als Werk einzelner junger Fanatiker.","Die O.C. wurde im Prozess vollständig zerschlagen.","Das Urteil hat mit der O.C. nichts zu tun."], a:1,
+   ok:"Richtig. Die Ausführenden wurden verurteilt, die Hintermänner in München blieben weitgehend unbehelligt. Das ist die Parallele zu Erzberger."},
+    {type:"multi", q:"Vergleicht beide Fälle: Was verbindet die Opfer Erzberger und Rathenau? Wählt alle zutreffenden Punkte.", opts:[
     {t:"Beide waren Demokraten und übernahmen Verantwortung für die junge Republik.", c:true},
     {t:"Beide galten der Rechten als „Erfüllungspolitiker“ bzw. „Novemberverbrecher“.", c:true},
     {t:"Beide waren Ziel jahrelanger Hetzkampagnen.", c:true},
@@ -487,15 +528,14 @@ const AKTEN = [
     {t:"Bei Rathenau kam offener Antisemitismus hinzu.", c:true}],
    ok:"Richtig. Mit diesen Erkenntnissen geht es in die Lagebesprechung."}
  ],
- reveal:{after:1, html:`<div class="telegram">Telegramm · Berlin · 24. Juni 1922 · <br>Reichsaussenminister Dr. Rathenau heute vormittag gegen 10.50 Uhr auf der Fahrt ins Auswaertige Amt in der Koenigsallee, Grunewald, aus überholendem Kraftwagen erschossen. Maschinenpistole und Handgranate. Täter flüchtig.</div><p class="small">Spielmaterial nach den Fakten: Abfahrt 10.45 Uhr. Fahrer Ernst Werner Techow (20), Schütze Erwin Kern (23) mit einer MP 18, Hermann Fischer (26) wirft eine Handgranate. Rathenau wird von fünf Schüssen getroffen und stirbt binnen Minuten. Alle drei gehören zur O.C. Kern und Fischer sterben am 17.7.1922 auf Burg Saaleck. Am 21.7.1922 folgt das Republikschutzgesetz. Bayern stellt sich erneut quer und erlässt eine eigene Verordnung, bis am 11.8.1922 ein Kompromiss gefunden wird.</p>`},
  hints:[
-  "Lest den Lagebericht M 5.1 genau. Scheidemann wurde schon angegriffen. Wer wird zusätzlich antisemitisch angefeindet?",
-  "Der Hetzvers M 5.2 nennt den Namen ausdrücklich.",
-  "Lösungsweg: Das Ziel ist Walther Rathenau. Gemeinsamkeiten: Demokraten, „Erfüllungspolitiker“, Hetzkampagnen, Täter aus der O.C., bei Rathenau zusätzlich Antisemitismus. Nicht richtig ist „beide Mitglieder der O.C.“."
+  "Das Telegramm steht am Ende von Akte V. Die Rollen der Beteiligten findet ihr im Urteil (M 6.1) und im Ermittlungsstand (M 6.2).",
+  "Achtung: Das Urteil sagt nur „der eine … der andere“. Wer genau schoss, steht in M 6.2. Für Frage 3 lest den Eintrag zum Prozess in M 6.6.",
+  "Lösungsweg: 1. Tat aus vorbeifahrendem Auto, Täter unbekannt. 2. Techow lenkte, Kern und Fischer im Tatwagen, Salomon spähte aus und suchte einen Fahrer, Stubenrauch war der Schüler mit eigenem Plan. 3. Das Netzwerk wurde nicht aufgeklärt. 4. Alles richtig außer „beide waren Mitglieder der O.C.“."
  ],
- bonus:{title:"Kriminalrat-Akte: Was geschah mit Erzbergers Mördern?", intro:"Bringt das Schicksal der Täter in die richtige Reihenfolge.",
-  q:{type:"order", q:"Älteste Station oben:", items:["Flucht nach Ungarn, später Spanien bzw. Spanisch-Guinea","Rückkehr nach Deutschland und Straffreiheit durch die NS-Amnestie vom 21.3.1933","Eintritt in NSDAP und SA bzw. SS","Tillessen wird in Konstanz zu 15 Jahren Zuchthaus verurteilt (28.2.1947)","Schulz wird in Offenburg zu 12 Jahren verurteilt (Juli 1950)","Beide kommen 1952 frei"],
-   ok:"Richtig. Erst die Bundesrepublik bzw. die Justiz der Besatzungszeit verurteilte die Täter, mehr als 25 Jahre nach der Tat."}}
+ bonus:{title:"Kriminalrat-Akte: Quellenkritik am Trauerplakat", intro:"Das Findbuch des Archivs datiert das Karlsruher Trauerplakat (M 6.5) auf den 25. Juni 1922. Der Mord geschah am Samstag, dem 24. Juni. Lest das Plakat genau.",
+  q:{type:"text", q:"An welchem Tag im Juni 1922 fand die Kundgebung laut Plakat tatsächlich statt? (Zahl)", accept:["26"], hintAccept:"Tag als Zahl, z. B. 25",
+   ok:"Stark ermittelt! Das Plakat sagt „heute Montag“. Der 24. Juni war ein Samstag, der Montag also der 26. Juni 1922. Auch Archivangaben muss man an der Quelle prüfen."}}
 }
 ];
 
@@ -515,7 +555,7 @@ function renderRegister(){
       <span class="no">${a.no}</span><span class="t">${esc(a.title)}</span><span class="st">${done?"erledigt":un?a.min+"′":"gesperrt"}</span><span class="sub">${esc(a.role)}</span></button>`);
   }
   items.push(`<button class="tab side" data-go="bericht" ${S.current==="bericht"?'aria-current="true"':""}><span class="no">✎</span><span class="t">Ermittlungsbericht</span><span class="st"></span><span class="sub">laufend ausfüllen</span></button>`);
-  const lageOpen = S.teacher || S.solved.a5;
+  const lageOpen = S.teacher || S.solved.a6;
   items.push(`<button class="tab side ${lageOpen?"":"locked"}" data-go="lage" ${S.current==="lage"?'aria-current="true"':""}><span class="no">⌖</span><span class="t">Lagebesprechung</span><span class="st">${lageOpen?"":"gesperrt"}</span><span class="sub">Plenum · 1921 und heute</span></button>`);
   reg.innerHTML = items.join("");
 }
@@ -524,7 +564,7 @@ reg.addEventListener("click", e => {
   const b = e.target.closest("[data-go]"); if(!b) return;
   const id = b.dataset.go;
   if (AKTEN.some(a=>a.id===id) && !isUnlocked(id)) { toast("Diese Akte ist noch gesperrt. Löst die vorige Akte oder gebt den Funkcode ein."); return; }
-  if (id==="lage" && !(S.teacher || S.solved.a5)) { toast("Die Lagebesprechung öffnet nach Akte V oder durch die Lehrkraft."); return; }
+  if (id==="lage" && !(S.teacher || S.solved.a6)) { toast("Die Lagebesprechung öffnet nach Akte VI oder durch die Lehrkraft."); return; }
   go(id);
 });
 
@@ -548,12 +588,12 @@ function renderStart(){
     <div class="eyebrow">Badische Kriminalpolizei · Sonderkommission · Eingang 26. August 1921</div>
     <h1>Mord auf der<br>Kniebisstraße</h1>
     <div class="telegram">Reichsfinanzminister a.D. Matthias Erzberger bei Bad Griesbach im Schwarzwald erschossen. Begleiter Abg. Diez schwer verletzt. Zwei Täter flüchtig. Soko Griesbach wird gebildet.</div>
-    <p class="lead">Ihr seid die Ermittlerinnen und Ermittler der Sonderkommission. In fünf Akten rekonstruiert ihr Tat, Motiv und Täter und folgt einer Spur, die immer wieder nach <b>Bayern</b> führt. Am Ende schreibt ihr einen Bericht an den Staatsanwalt. Die Behörden sind 1921 an diesem Fall gescheitert. Findet heraus, warum.</p>
+    <p class="lead">Ihr seid die Ermittlerinnen und Ermittler der Sonderkommission. In sechs Akten rekonstruiert ihr Tat, Motiv und Täter und folgt einer Spur, die immer wieder nach <b>Bayern</b> führt. Am Ende schreibt ihr einen Bericht an den Staatsanwalt. Die Behörden sind 1921 an diesem Fall gescheitert. Findet heraus, warum.</p>
     <div class="row">
       <label for="team" class="row"><b>Name des Ermittlungsteams:</b> <input class="inp w" id="team" value="${esc(S.team)}" placeholder="z. B. Team Diez"></label>
     </div>
     <div class="row">
-      <button class="btn red" id="btnStart" type="button" ${started?"disabled":""}>${started?"Fahndungsuhr läuft":"Fahndungsuhr starten (70 Minuten)"}</button>
+      <button class="btn red" id="btnStart" type="button" ${started?"disabled":""}>${started?"Fahndungsuhr läuft":`Fahndungsuhr starten (${DURATION} Minuten)`}</button>
       <button class="btn ghost" type="button" data-open="a1">Zu Akte I: Der Tatort</button>
     </div>
   </div>
@@ -812,7 +852,7 @@ function renderBericht(){
 /* ---------- Lagebesprechung ---------- */
 function renderLage(){
   view.innerHTML = `<article class="akte lage">
-  <div class="akte-head"><div class="aktenz"><span>Plenum · Beamer</span><span>ca. 15 Minuten</span></div><h2>Lagebesprechung</h2><div class="rolle"><span class="chip">Alle Teams</span><span class="chip red">1921 und heute</span></div></div>
+  <div class="akte-head"><div class="aktenz"><span>Plenum · Beamer</span><span>ca. 13 Minuten</span></div><h2>Lagebesprechung</h2><div class="rolle"><span class="chip">Alle Teams</span><span class="chip red">1921 und heute</span></div></div>
 
   <div class="sec"><h3>1 · Die Auflösung: Was aus den Tätern wurde</h3>
    <div class="tl">

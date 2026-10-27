@@ -95,16 +95,17 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 
 <h2>1  Ablauf (90 Minuten)</h2>
 <table class="t"><thead><tr><th style="width:13%">Zeit</th><th style="width:22%">Phase</th><th>Inhalt und Lehrkraft</th></tr></thead><tbody>
-<tr><td>0–5′</td><td>Alarm</td><td>Telegramm vorlesen, Inhaltswarnung (siehe 6), Rollen verteilen, Teamnamen eintragen. Alle Teams starten die Fahndungsuhr gleichzeitig (70 Min.).</td></tr>
+<tr><td>0–5′</td><td>Alarm</td><td>Telegramm vorlesen, Inhaltswarnung (siehe 6), Rollen verteilen, Teamnamen eintragen. Alle Teams starten die Fahndungsuhr gleichzeitig (72 Min.).</td></tr>
 <tr><td>5–17′</td><td>Akte I: Der Tatort</td><td>Tathergang, Täterzahl, Planung (Meldezettel Ulm, Anfragen in Beuron). Leitung: Spurensicherung.</td></tr>
 <tr><td>17–29′</td><td>Akte II: Opfer und Motiv</td><td>Waffenstillstand, Dolchstoßlegende, Helfferich-Kampagne, Attentat Hirschfeld, Reichstagsrede 1921, Hetze 1921 und heute (Lübcke). Leitung: Quellenanalyse.</td></tr>
-<tr><td>29–42′</td><td>Akte III: Fahndung</td><td>Identität der Täter, Marine-Brigade Ehrhardt, Leibwächter in Regensburg, Fluchtweg auf der Karte. Leitung: Fahndung.</td></tr>
-<tr><td>42–54′</td><td>Akte IV a: Das Netzwerk in München</td><td>Chiffre (Schlüssel 8), O.C.-Zentrale Trautenwolfstraße 8, Organigramm, Strategie. Alle Rollen.</td></tr>
-<tr><td>54–65′</td><td>Akte IV b: Die schützende Hand</td><td>Pöhner, Pässe, Ordnungszelle, Kahr, Freispruch Killinger, Urteil zum Scheitern der Ermittlungen. Alle Rollen.</td></tr>
-<tr><td>65–75′</td><td>Akte V: Abschluss und neue Spur</td><td>Bericht abgeben, Prognose, Telegramm vom 24.6.1922 (Rathenau), Gemeinsamkeiten der Opfer. Leitung: Aktenführung.</td></tr>
-<tr><td>75–90′</td><td>Lagebesprechung</td><td>Im Lehrkraft-Modus über den Beamer öffnen: Was aus den Tätern wurde, Ergebnis Bayern, Zeitsprung, Mustervergleich, Urteilsfragen.</td></tr>
+<tr><td>29–41′</td><td>Akte III: Fahndung</td><td>Identität der Täter, Marine-Brigade Ehrhardt, Leibwächter in Regensburg, Fluchtweg auf der Karte. Leitung: Fahndung.</td></tr>
+<tr><td>41–52′</td><td>Akte IV a: Das Netzwerk in München</td><td>Chiffre (Schlüssel 8), O.C.-Zentrale Trautenwolfstraße 8, Organigramm, Strategie. Alle Rollen.</td></tr>
+<tr><td>52–62′</td><td>Akte IV b: Die schützende Hand</td><td>Pöhner, Pässe, Ordnungszelle, Kahr, Freispruch Killinger, Urteil zum Scheitern der Ermittlungen. Alle Rollen.</td></tr>
+<tr><td>62–67′</td><td>Akte V: Abschluss und neue Spur</td><td>Bericht abgeben, Prognose zum nächsten Ziel, Originaltelegramm vom 24.6.1922. Leitung: Aktenführung.</td></tr>
+<tr><td>67–77′</td><td>Akte VI: Mord in der Koenigsallee</td><td>Rathenau-Mord: Urteil des Staatsgerichtshofs (Original), Beteiligte (darunter ein Schüler), Plakate „Die Republik ist in Gefahr!“, Wirth: „Der Feind steht rechts“, Karlsruher Trauerplakat, Republikschutzgesetz und Bayern. Gemeinsamkeiten der Opfer. Alle Rollen.</td></tr>
+<tr><td>77–90′</td><td>Lagebesprechung</td><td>Im Lehrkraft-Modus über den Beamer öffnen: Was aus den Tätern wurde, Ergebnis Bayern, Zeitsprung, Mustervergleich, Urteilsfragen.</td></tr>
 </tbody></table>
-<p class="small">Puffer: Wenn die Zeit knapp wird, können die Kriminalrat-Akten entfallen, außerdem Akte II, Frage 3 (Zuordnung). Teams, die zurückliegen, bekommen den Funkcode der nächsten Akte von der Lehrkraft. Sehr schnelle Teams lösen die Kriminalrat-Akten.</p>
+<p class="small">Puffer: Wenn die Zeit knapp wird, können die Kriminalrat-Akten entfallen, außerdem Akte II, Frage 3 (Zuordnung). Akte VI eignet sich auch als Einstieg in die Folgestunde. Teams, die zurückliegen, bekommen den Funkcode der nächsten Akte von der Lehrkraft. Sehr schnelle Teams lösen die Kriminalrat-Akten.</p>
 
 <h2>2  Lehrplanbezug und Kompetenzen</h2>
 <p>LehrplanPLUS Gymnasium Bayern, Geschichte 9, Lernbereich zur Weimarer Republik: Belastungen der jungen Demokratie, politische Gewalt von rechts, Dolchstoßlegende, Versailler Vertrag, Haltung Bayerns gegenüber dem Reich. <i>Bitte die genaue Lernbereichsbezeichnung und Formulierung im aktuellen Lehrplan abgleichen.</i></p>
@@ -130,7 +131,7 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 <ul>
 <li><b>Mehrere Geräte pro Team:</b> Jedes Gerät hat seinen eigenen Stand. Sobald ein Gerät eine Akte löst, erscheint ein <b>Funkcode</b>. Die anderen Geräte geben ihn über „Funkcode eingeben“ ein und sind auf demselben Stand.</li>
 <li><b>Hinweise:</b> drei Stufen pro Akte, kosten 1, 2 bzw. 4 Minuten. Stufe 3 enthält den Lösungsweg.</li>
-<li><b>Fahndungsuhr:</b> 70 Minuten. Bei Ablauf erscheint „Die Täter sind über die Grenze“, das Spiel läuft aber weiter. Es gibt keine Rangliste, sondern einen gemeinsamen Countdown.</li>
+<li><b>Fahndungsuhr:</b> 72 Minuten. Bei Ablauf erscheint „Die Täter sind über die Grenze“, das Spiel läuft aber weiter. Es gibt keine Rangliste, sondern einen gemeinsamen Countdown.</li>
 <li><b>Fotos:</b> In die App eingebettet sind Originalaufnahmen der Ermittler aus dem Staatsarchiv Freiburg: das Tatortfoto der Böschung (M 1.4), die Tatortskizze der Kriminalpolizei Offenburg (M 1.5), die Fotos der Leichenschau (M 1.8, unscharf gestellt, erst per Klick sichtbar), die Fahndungsfotos von Schulz und Tillessen (M 3.5) und die erkennungsdienstlichen Aufnahmen von Killinger und Hoffmann (M 4.4 b). Dazu kommen Porträts von Erzberger, Helfferich, Kahr und Rathenau. Nur verlinkt (Internet nötig) sind das Polizeifoto Erzbergers am Fundort, Pöhner, Ehrhardt und die Brigade Ehrhardt.</li>
 </ul>
 
@@ -185,14 +186,16 @@ H = f"""<!doctype html><html lang="de"><head><meta charset="utf-8"><title>Lehrer
 <ul>
 <li>Erzberger, Helfferich, Rathenau: Bain News Service, Library of Congress (George Grantham Bain Collection), keine bekannten Rechte. Kahr: Artur Braun 1920, gemeinfrei (Wikimedia Commons).</li>
 <li>Landesarchiv Baden-Württemberg, Abt. Staatsarchiv Freiburg, F 179/4 (Staatsanwaltschaft Offenburg), Lizenz CC BY 3.0: Lichtbildmappe aus dem Ermittlungsverfahren 1921/22, Permalink 5-68430 (Tatort Böschung, Leichenschau, Fahndungsfotos Schulz und Tillessen, Personenlichtbilder Killinger und Hoffmann), sowie „Fünf Pläne des Tatorts und der Umgebung“, Permalink 5-68524 (Tatortskizze; liegt bei den Akten des Verfahrens 1946–1952). Online sind je Akte nur die ersten zehn Seiten frei zugänglich.</li>
+<li>Akte V/VI, Landesarchiv Baden-Württemberg, CC BY 3.0: Generallandesarchiv Karlsruhe, Badisches Staatsministerium, „Trauerfeiern für den ermordeten Reichsaußenminister Walther Rathenau“, Permalink 4-2015677 (Telegramm Nieser an Hummel, 24.6.1922; Trauerplakat Karlsruhe); Generallandesarchiv Karlsruhe, Nachlass Constantin Fehrenbach, Urteil des Staatsgerichtshofs St.P.R. 6/22 (Abschrift), Permalink 4-3954464; Staatsarchiv Freiburg, Plakatsammlung, Permalinks 5-133711 und 5-133710 (Aufrufe der Reichsregierung).</li>
 <li>Nur verlinkt: Polizeifoto am Fundort 1921 (Busam, Oberkirch, gemeinfrei), Tillessen 1921 (Spaarnestad, gemeinfrei), Pöhner (gemeinfrei), Ehrhardt 1920 (Nationaal Archief, gemeinfrei), Brigade Ehrhardt (Bundesarchiv Bild 119-1983-0012, CC BY-SA 3.0 DE).</li>
 </ul>
 <h3>Kennzeichnung und offene Punkte</h3>
 <div class="info">
 <ul>
-<li><b>Rekonstruktion bzw. Spielmaterial</b> (in Gestaltung oder Wortlaut nachgestellt, inhaltlich belegt): Fernspruch 1.1, Aussage Diez 1.2, Meldezettel 1.6 (Inhalt belegt, Gestaltung nachgestellt), Chiffre 4.1 (frei erfunden; belegt ist nur, dass chiffrierte Anweisungen gefunden wurden), Telegramm vom 24.6.1922.</li>
+<li><b>Rekonstruktion bzw. Spielmaterial</b> (in Gestaltung oder Wortlaut nachgestellt, inhaltlich belegt): Fernspruch 1.1, Aussage Diez 1.2, Meldezettel 1.6 (Inhalt belegt, Gestaltung nachgestellt), Chiffre 4.1 (frei erfunden; belegt ist nur, dass chiffrierte Anweisungen gefunden wurden).</li>
 <li><b>Redner am 27.9.1921:</b> GHDI nennt Reichspräsident Ebert. Der Text selbst („Ich eröffne die erste Sitzung …“, „Vorsitzenden dieses Hauses“) weist auf Reichstagspräsident Paul Löbe hin. Diese Zuschreibung ergibt sich aus dem Text, bitte vor dem Einsatz im Original (Reichstagsprotokolle online) gegenprüfen.</li>
 <li><b>Nur über eine Quelle belegt:</b> das Geheimstatut „Verräter verfallen der Feme“ (Randecker 2021) und die Begleitung durch den Salzburger Polizeipräsidenten (Lexikon der Politischen Strafprozesse).</li>
+<li><b>Akte VI:</b> Telegramm, Urteilsauszüge (Abschrift im Nachlass Fehrenbach) und Plakate sind Originalquellen, vom Archivscan transkribiert; bitte vor dem Einsatz gegenlesen. Auslassungen sind mit […] markiert. Das Wirth-Zitat („Der Feind steht rechts“) ist vielfach belegt; die Seitenzahl im Reichstagsprotokoll habe ich nicht geprüft. Das Trauerplakat datiert das Findbuch auf den 25.6.1922, laut Plakat („heute Montag“) war es der 26.6.; das ist die Kriminalrat-Frage.</li>
 <li><b>Hetzvers zu Rathenau:</b> vielfach zitiert. Die Seitenangabe bei Sabrow 1999 wurde nicht am Original geprüft.</li>
 <li><b>BKA-Zahl 2024</b> (84.172 PMK-Straftaten) nach ZDFheute. Vor dem Einsatz aktuelle Zahlen prüfen, inzwischen liegt die Statistik 2025 vor (85.837).</li>
 </ul></div>

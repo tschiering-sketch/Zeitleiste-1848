@@ -152,7 +152,7 @@ function akteHTML(a) {
   const mats = `<section class="page"><h2 class="sec">Akte ${a.no} · Beweismittel</h2>${a.mats.map(matHTML).join("")}</section>`;
   const qs = `<section class="page"><h2 class="sec">Akte ${a.no} · Ermittlungsbogen</h2>
     ${a.qs.map((q, i) => qHTML(q, "Ermittlungsfrage " + (i + 1))).join("")}
-    ${a.reveal ? `<p class="small">Nach Frage 2 geht ein Telegramm ein. Es wird in der App angezeigt oder von der Lehrkraft ausgeteilt.</p>` : ""}
+    ${a.reveal ? `<p class="small">Nach Frage 2 geht das Originaltelegramm vom 24. Juni 1922 ein. Es wird in der App angezeigt.</p>` : ""}
     <div class="bonus"><h4>${esc(a.bonus.title)}</h4><p>${a.bonus.intro}</p>${qHTML(a.bonus.q, "Zusatzfrage")}</div></section>`;
   return cover + mats + qs;
 }
